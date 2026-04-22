@@ -546,64 +546,43 @@
             .section-title { font-size: 2.2rem; }
             
             header { 
-                justify-content: center; 
-                padding: 1rem; /* Compact header for mobile */
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1.5rem 1rem;
             }
-            .logo { font-size: 1.2rem; }
+            .logo { font-size: 1.4rem; }
             
-            /* Bottom Navigation for Mobile */
             nav { 
-                position: fixed;
-                bottom: 0;
-                left: 0;
                 width: 100%;
-                background: rgba(248, 245, 240, 0.95);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                display: flex;
-                justify-content: space-around;
-                padding: 0.8rem 0;
-                box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
-                border-top: 1px solid var(--glass-border);
-                z-index: 1000;
-                gap: 0;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.8rem;
             }
             
             nav a {
-                font-size: 0.75rem;
-                padding: 0.5rem;
-                text-align: center;
-                border-radius: 10px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 4px;
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+                border-radius: 20px;
+                background: rgba(255, 255, 255, 0.5);
+                border: 1px solid var(--glass-border);
             }
 
-            nav a::before {
-                font-size: 1.4rem;
-                margin-bottom: 2px;
-            }
+            nav a::before { display: none; }
             
-            nav a[data-target="view-home"]::before { content: '🏠'; }
-            nav a[data-target="view-verkaeufer"]::before { content: '🛍️'; }
-            nav a[data-target="view-zweck"]::before { content: '❤️'; }
-            nav a[data-target="view-spenden"]::before { content: '💰'; }
-
             .nav-donate-btn {
-                background: transparent !important;
-                color: var(--text-dark) !important;
-                box-shadow: none;
+                background: var(--accent-orange) !important;
+                color: var(--white) !important;
+                box-shadow: 0 4px 10px rgba(255, 123, 84, 0.3);
             }
             
-            .nav-donate-btn:hover, nav a.active-link {
-                background: rgba(69, 182, 156, 0.1) !important;
+            nav a.active-link {
+                background: var(--white) !important;
                 color: var(--accent-teal) !important;
-                box-shadow: none;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             }
 
             .page-view {
-                padding-bottom: 100px; /* Space for bottom nav */
+                padding-bottom: 50px;
             }
 
             .verkaeufer-grid { grid-template-columns: 1fr; gap: 2rem; }
