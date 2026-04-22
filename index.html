@@ -446,6 +446,47 @@
             margin-top: 1rem;
         }
 
+        /* Map styling */
+        .map-container {
+            margin-top: 2rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            height: 350px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        /* SOS Button */
+        .btn-sos {
+            background: var(--accent-blue);
+            color: var(--white) !important;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 90, 156, 0.3);
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+        .btn-sos:hover {
+            background: #004a80;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 90, 156, 0.4);
+        }
+
         /* Floating Coins Animation */
         .coin {
             position: absolute;
@@ -578,21 +619,41 @@
             <h2 class="section-title" style="margin-bottom: 2rem;">Allgemeine Informationen</h2>
             <div class="info-grid">
                 <div class="info-item">
-                    <h3>Wann & Wo?</h3>
-                    <ul>
+                    <h3><span style="margin-right: 10px;">📅</span> Wann & Wo?</h3>
+                    <ul style="background: rgba(255,255,255,0.4); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--glass-border);">
                         <li><strong>Datum:</strong> 11. September 2026</li>
                         <li><strong>Uhrzeit:</strong> 15:00 bis 18:00 Uhr</li>
                         <li><strong>Ort:</strong> Schulhof des Friedrich-Gymnasiums Luckenwalde</li>
+                        <li style="font-size: 0.9rem; opacity: 0.8; margin-top: 5px; display: block; padding-left: 30px;">Parkstraße 59, 14943 Luckenwalde</li>
                     </ul>
+                    
+                    <div class="map-container">
+                        <iframe 
+                            src="https://maps.google.com/maps?q=Friedrich-Gymnasium%20Parkstra%C3%9Fe%2059%20Luckenwalde&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
                 </div>
                 <div class="info-item">
-                    <h3>Verantwortliche</h3>
-                    <p style="margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-light);">Organisiert mit viel Engagement und Herz von:</p>
-                    <ul>
-                        <li>Julen</li>
-                        <li>Roman</li>
-                        <li>Carlos</li>
-                    </ul>
+                    <h3><span style="margin-right: 10px;">🤝</span> Verantwortliche</h3>
+                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--text-light);">Organisiert mit viel Engagement und Herz von:</p>
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                            <span style="font-size: 1.5rem;">👤</span> <strong>Julen</strong>
+                        </div>
+                        <div style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                            <span style="font-size: 1.5rem;">👤</span> <strong>Roman</strong>
+                        </div>
+                        <div style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                            <span style="font-size: 1.5rem;">👤</span> <strong>Carlos</strong>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; background: var(--accent-orange); color: white; padding: 1.5rem; border-radius: 20px; text-align: center;">
+                        <h4 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Mach mit!</h4>
+                        <p style="font-size: 0.95rem; opacity: 0.9;">Jede Spende und jeder Verkauf hilft Kindern in Not.</p>
+                    </div>
                 </div>
             </div>
             <div style="text-align: center; margin-top: 3rem;">
@@ -610,7 +671,7 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                 <div>
                     <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Was darf verkauft werden?</h4>
-                    <p style="color: var(--text-light);">Erlaubt sind gut erhaltene, gebrauchte Gegenstände wie Kleidung, Kinderspielzeug, Bücher, Deko-Artikel und Haushaltswaren. <strong>Bitte beachte:</strong> Der Verkauf von Neuwaren in Massen, Lebensmitteln oder kaputten Gegenständen ist nicht gestattet.</p>
+                    <p style="color: var(--text-light);">Erlaubt sind gut erhaltene, gebrauchte Gegenstände wie Kleidung, Kinderspielzeug, Bücher, Elektrogeräte, Deko-Artikel und Haushaltswaren. <strong>Bitte beachte:</strong> Der Verkauf von Neuwaren in Massen, Lebensmitteln oder kaputten Gegenständen ist nicht gestattet.</p>
                 </div>
                 <div>
                     <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Ablauf am Markttag</h4>
@@ -659,6 +720,12 @@
                 Mit unserer Aktion unterstützen wir Kinder, Jugendliche und Familien in schwierigen Lebenssituationen. Eure Spenden ermöglichen Schutz, Beratung und wertvolle pädagogische Begleitung für diejenigen, die es am meisten brauchen. 
                 <br><br><strong>Jeder Kauf und Verkauf zählt!</strong>
             </p>
+            
+            <div style="margin-top: 3rem;">
+                <a href="https://www.sos-kinderdorf.de/" target="_blank" class="btn-sos">
+                    <span>🌐</span> SOS-Kinderdorf Website besuchen
+                </a>
+            </div>
         </div>
     </div>
 
