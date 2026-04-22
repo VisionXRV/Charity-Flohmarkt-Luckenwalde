@@ -1085,8 +1085,10 @@
         }
 
         // --- Donation Logic ---
+        const CLOUD_URL = 'https://kvdb.io/LkwCharitySpenden2026/pot';
         const LOCAL_STORAGE_KEY = 'charity-flohmarkt-pot-v2';
-        let potTotal = parseInt(localStorage.getItem(LOCAL_STORAGE_KEY)) || 0;
+        
+        let potTotal = 0;
         let currentDonation = 0;
         const MAX_DONATION = 1000;
 
@@ -1096,9 +1098,39 @@
         const potWrapper = document.getElementById('potWrapper');
         const messageElement = document.getElementById('donationMessage');
 
-        // BroadcastChannel to sync across tabs
+        // Cloud Sync Logic
+        async function fetchCloudTotal() {
+            try {
+                const response = await fetch(CLOUD_URL);
+                if (response.ok) {
+                    const val = await response.text();
+                    const cloudValue = parseInt(val) || 0;
+                    if (cloudValue > potTotal) {
+                        potTotal = cloudValue;
+                        animatePotUpdate();
+                    }
+                }
+            } catch (e) {
+                console.log("Cloud-Sync fehlgeschlagen");
+            }
+        }
+
+        async function pushToCloud(newTotal) {
+            try {
+                await fetch(CLOUD_URL, {
+                    method: 'POST',
+                    body: newTotal.toString()
+                });
+            } catch (e) {
+                console.error("Cloud-Update fehlgeschlagen", e);
+            }
+        }
+
+        // Periodic sync (every 10 seconds)
+        setInterval(fetchCloudTotal, 10000);
+
+        // BroadcastChannel to sync across tabs (same user)
         const bc = new BroadcastChannel('donation_sync_v2');
-        
         bc.onmessage = (event) => {
             if (event.data.type === 'update_pot') {
                 potTotal = event.data.value;
@@ -1107,7 +1139,14 @@
         };
 
         // Init
-        potTotalElement.innerText = potTotal + ' €';
+        window.addEventListener('DOMContentLoaded', () => {
+            const local = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if(local) {
+                potTotal = parseInt(local);
+                potTotalElement.innerText = potTotal + ' €';
+            }
+            fetchCloudTotal();
+        });
 
         function addAmount(amount) {
             if (currentDonation + amount <= MAX_DONATION) {
@@ -1143,64 +1182,43 @@
                 setTimeout(() => {
                     const coin = document.createElement('div');
                     coin.className = 'coin';
-                    // Random position around top of pot
                     const left = 30 + Math.random() * 40; 
                     coin.style.left = left + '%';
                     coin.style.animation = 'coinDrop 1s ease-in forwards';
                     potWrapper.appendChild(coin);
-                    
-                    // Cleanup
-                    setTimeout(() => {
-                        coin.remove();
-                    }, 1000);
+                    setTimeout(() => { coin.remove(); }, 1000);
                 }, i * 150);
             }
         }
 
         function animatePotUpdate() {
             potTotalElement.innerText = potTotal + ' €';
-            
-            // Trigger pot swell animation
             potContainer.style.animation = 'none';
             potContainer.offsetHeight; // force reflow
             potContainer.style.animation = 'fillPotAnim 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            
-            // Restore floating animation after
             setTimeout(() => {
                 potContainer.style.animation = 'float-pot 6s ease-in-out infinite';
             }, 600);
         }
 
-        function sendDonation() {
+        async function sendDonation() {
             if (currentDonation > 0) {
-                // Visual effect
                 createCoins();
-
-                setTimeout(() => {
-                    // Update Total after coins "fall" in
+                setTimeout(async () => {
                     potTotal += currentDonation;
                     localStorage.setItem(LOCAL_STORAGE_KEY, potTotal);
-                    
-                    // Sync other tabs
+                    await pushToCloud(potTotal);
                     bc.postMessage({ type: 'update_pot', value: potTotal });
-                    
-                    // Animate
                     animatePotUpdate();
-
-                    // Reset
                     currentDonation = 0;
                     updateDisplay();
-                    
-                    // Message
                     showMessage('Vielen Dank für deine großzügige Spende! ✿', 'var(--accent-teal)');
-                    
                     setTimeout(() => {
                         if(messageElement.innerText.includes('Vielen Dank')) {
                             clearMessage();
                         }
                     }, 4000);
-                }, 800); // delay to match coin animation roughly
-
+                }, 800);
             } else {
                 showMessage('Bitte wähle zuerst einen Betrag aus!', 'red');
             }
