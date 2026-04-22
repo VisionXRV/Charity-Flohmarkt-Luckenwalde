@@ -518,6 +518,75 @@
             box-shadow: 0 6px 20px rgba(0, 90, 156, 0.4);
         }
 
+        /* Form styling */
+        .registration-form {
+            display: grid;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            text-align: left;
+        }
+        .form-group label {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+        .form-input, .form-select, .form-textarea {
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.8);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(255, 123, 84, 0.1);
+        }
+        .form-checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        .form-disclaimer {
+            font-size: 0.85rem;
+            color: var(--accent-orange-dark);
+            font-weight: 600;
+            background: rgba(255, 123, 84, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-orange);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        .success-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            z-index: 100;
+            animation: fadeInPage 0.4s ease-out;
+        }
+
         /* Floating Coins Animation */
         .coin {
             position: absolute;
@@ -611,6 +680,7 @@
         <nav id="main-nav">
             <a onclick="navigateTo('view-home')" class="nav-link active-link" data-target="view-home">Infos</a>
             <a onclick="navigateTo('view-verkaeufer')" class="nav-link" data-target="view-verkaeufer">Für Verkäufer</a>
+            <a onclick="navigateTo('view-anmeldung')" class="nav-link" data-target="view-anmeldung">Anmelden</a>
             <a onclick="navigateTo('view-zweck')" class="nav-link" data-target="view-zweck">Guter Zweck</a>
             <a onclick="navigateTo('view-spenden')" class="nav-link nav-donate-btn" data-target="view-spenden">Spenden</a>
         </nav>
@@ -666,8 +736,9 @@
                     </div>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 3rem;">
-                 <button class="btn-send" style="width: auto; padding: 1rem 3rem;" onclick="navigateTo('view-spenden')">Direkt zum Spendentopf</button>
+            <div style="text-align: center; margin-top: 3rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
+                 <button class="btn-send" style="width: auto; padding: 1rem 3rem;" onclick="navigateTo('view-anmeldung')">Jetzt anmelden</button>
+                 <button class="btn-send" style="width: auto; padding: 1rem 3rem; background: var(--accent-orange);" onclick="navigateTo('view-spenden')">Zum Spendentopf</button>
             </div>
         </div>
     </div>
@@ -694,25 +765,111 @@
             </div>
         </div>
 
-        <div class="glass-card verkaeufer-grid">
-            <div>
-                <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">Anmeldung in 3 Schritten</h3>
-                <ul class="steps-list">
-                    <li><strong>E-Mail schreiben:</strong> Sende uns eine kurze Nachricht mit deinem Namen und der Art der Dinge, die du verkaufen möchtest.</li>
-                    <li><strong>Bestätigung abwarten:</strong> Du erhältst von uns eine Rückmeldung inkl. deiner Standnummer.</li>
-                    <li><strong>Gebühr bezahlen:</strong> Die Standgebühr von 10 € wird ganz unkompliziert am Markttag in bar beim Aufbau eingesammelt.</li>
-                </ul>
+    </div>
+
+    <!-- 2.1 Anmeldung View -->
+    <div id="view-anmeldung" class="page-view container">
+        <h2 class="section-title">Anmeldung für Standbetreiber</h2>
+        
+        <div class="glass-card verkaeufer-grid" style="position: relative;">
+            <div id="successOverlay" class="success-overlay">
+                <span style="font-size: 4rem; margin-bottom: 1rem;">🎉</span>
+                <h3 style="color: var(--accent-teal); font-size: 2rem; margin-bottom: 0.5rem;">Anmeldung erfolgreich!</h3>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">Vielen Dank, <strong id="successName"></strong>! Dein Stand ist reserviert. Wir freuen uns auf dich am 11. September.</p>
+                <button class="btn-send" style="width: auto;" onclick="closeSuccess()">Zurück zur Übersicht</button>
             </div>
-            <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-soft);">
-                <h3 style="color: var(--accent-teal); font-size: 1.5rem; margin-bottom: 1rem;">Wichtige Eckdaten</h3>
-                <p style="margin-bottom: 1rem; font-size: 1.1rem;"><strong>Anmeldefrist:</strong> Bis spätestens 1. September 2026</p>
-                <p style="margin-bottom: 1rem; font-size: 1.1rem;"><strong>Standgebühr:</strong> 10 € pro Tisch</p>
-                <div style="margin-top: 2rem; padding-top: 1rem; border-top: 2px solid var(--bg-gradient-1);">
-                    <p style="font-weight: 600; margin-bottom: 0.5rem;">Anmeldungen richten an:</p>
-                    <a href="mailto:info@flohmarkt-luckenwalde.de" style="color: var(--accent-orange); font-size: 1.2rem; font-weight: 800; text-decoration: none; word-break: break-all;">info@flohmarkt-luckenwalde.de</a>
+
+            <div>
+                <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1rem;">Jetzt Standplatz sichern</h3>
+                <div class="form-disclaimer">
+                    🎈 <strong>HINWEIS:</strong> Dies ist eine reine Spaß-Webseite! Bitte gib <u>KEINE</u> echten Namen oder privaten Daten an. Genieße das Erlebnis!
+                </div>
+                
+                <form id="registrationForm" class="registration-form" onsubmit="handleRegistration(event)">
+                    <div class="form-group">
+                        <label for="reg-name">Dein Name (oder Pseudonym)</label>
+                        <input type="text" id="reg-name" class="form-input" placeholder="z.B. Flohmarkt-König" required>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="reg-size">Standgröße</label>
+                            <select id="reg-size" class="form-select" required>
+                                <option value="small">Klein (2m) - 10€</option>
+                                <option value="medium">Mittel (4m) - 18€</option>
+                                <option value="large">Groß (6m) - 25€</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-items">Was verkaufst du?</label>
+                            <select id="reg-items" class="form-select" required>
+                                <option value="clothes">Kleidung</option>
+                                <option value="toys">Spielzeug</option>
+                                <option value="books">Bücher</option>
+                                <option value="electronics">Elektrogeräte</option>
+                                <option value="mix">Gemischt</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="margin-bottom: 0.5rem;">Benötigst du Extras? (gegen Gebühr)</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; background: rgba(255,255,255,0.4); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                            <label class="form-checkbox-group" style="font-size: 0.85rem;">
+                                <input type="checkbox" name="extra" value="ständer"> Kleiderständer (+5€)
+                            </label>
+                            <label class="form-checkbox-group" style="font-size: 0.85rem;">
+                                <input type="checkbox" name="extra" value="tisch"> Zusatztisch (+3€)
+                            </label>
+                            <label class="form-checkbox-group" style="font-size: 0.85rem;">
+                                <input type="checkbox" name="extra" value="stuhl"> Klappstuhl (+2€)
+                            </label>
+                            <label class="form-checkbox-group" style="font-size: 0.85rem;">
+                                <input type="checkbox" name="extra" value="schirm"> Sonnenschirm (+5€)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-wishes">Spezielle Wünsche oder Anmerkungen</label>
+                        <textarea id="reg-wishes" class="form-textarea" placeholder="z.B. Standplatz im Schatten, nähe zum Eingang..." rows="2"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-pay">Fake-Bezahlung (4-stelliger Spaß-Code)</label>
+                        <input type="password" id="reg-pay" class="form-input" maxlength="4" placeholder="****" required>
+                    </div>
+
+                    <label class="form-checkbox-group">
+                        <input type="checkbox" required style="width: 18px; height: 18px; margin-top: 3px;">
+                        <span>Ich akzeptiere, dass 70% meiner Standgebühr an SOS-Kinderdorf gespendet werden. ❤</span>
+                    </label>
+
+                    <button type="submit" class="btn-send">Kostenpflichtig reservieren (Spaß)</button>
+                </form>
+            </div>
+            
+            <div style="background: var(--bg-gradient-2); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+                <h3 style="color: var(--accent-teal); font-size: 1.5rem; margin-bottom: 1rem;">Warum anmelden?</h3>
+                <ul style="list-style: none; display: grid; gap: 1rem;">
+                    <li style="display: flex; gap: 10px; align-items: center;">
+                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Garantierter Standplatz mit Tisch
+                    </li>
+                    <li style="display: flex; gap: 10px; align-items: center;">
+                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Sichtbarkeit im Marktplatz-Plan
+                    </li>
+                    <li style="display: flex; gap: 10px; align-items: center;">
+                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Du unterstützt Kinder in Not
+                    </li>
+                </ul>
+                
+                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); text-align: center;">
+                    <p style="font-size: 0.9rem; color: var(--text-light);">Fragen zur Anmeldung?</p>
+                    <a href="mailto:info@flohmarkt-luckenwalde.de" style="color: var(--accent-orange); font-weight: 700;">info@flohmarkt-luckenwalde.de</a>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- 3. Guter Zweck View -->
@@ -920,6 +1077,32 @@
             } else {
                 showMessage('Bitte wähle zuerst einen Betrag aus!', 'red');
             }
+        }
+
+        // --- Registration Logic ---
+        function handleRegistration(event) {
+            event.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const successOverlay = document.getElementById('successOverlay');
+            const successName = document.getElementById('successName');
+            
+            successName.innerText = name;
+            successOverlay.style.display = 'flex';
+            
+            // Save to fake registration list
+            const registrations = JSON.parse(localStorage.getItem('charity-registrations') || '[]');
+            registrations.push({ 
+                name, 
+                size: document.getElementById('reg-size').value,
+                items: document.getElementById('reg-items').value,
+                date: new Date().toLocaleDateString('de-DE') 
+            });
+            localStorage.setItem('charity-registrations', JSON.stringify(registrations));
+        }
+        
+        function closeSuccess() {
+            document.getElementById('successOverlay').style.display = 'none';
+            document.getElementById('registrationForm').reset();
         }
     </script>
 </body>
