@@ -772,50 +772,66 @@
             width: 100%;
             height: 100%;
             background: var(--bg-base);
-            z-index: 2000;
+            z-index: 9999; /* Ensure it's above everything */
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .loader-content {
             text-align: center;
             z-index: 2;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-soft);
         }
 
         .loader-flower {
             font-size: 5rem;
-            animation: spin-slow 4s linear infinite;
-            margin-bottom: 2rem;
+            animation: spin-premium 6s linear infinite;
+            margin-bottom: 1.5rem;
             display: inline-block;
+            filter: drop-shadow(0 0 15px rgba(255, 123, 84, 0.3));
+        }
+
+        @keyframes spin-premium {
+            from { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            to { transform: rotate(360deg) scale(1); }
         }
 
         .loader-bar-container {
-            width: 250px;
-            height: 8px;
+            width: 280px;
+            height: 10px;
             background: rgba(0, 0, 0, 0.05);
-            border-radius: 10px;
+            border-radius: 20px;
             overflow: hidden;
-            margin: 1rem auto;
+            margin: 1.5rem auto;
+            position: relative;
         }
 
         .loader-bar {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-orange), var(--accent-teal));
-            animation: loadProgress 2.5s ease-in-out forwards;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-teal), var(--accent-yellow));
+            background-size: 200% 100%;
+            animation: loadProgress 2s ease-in-out forwards, gradientShift 3s linear infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
 
         @keyframes loadProgress {
-            0% {
-                width: 0%;
-            }
-
-            100% {
-                width: 100%;
-            }
+            0% { width: 0%; }
+            100% { width: 100%; }
         }
 
         .bg-flowers {
@@ -830,19 +846,26 @@
 
         .floating-flower {
             position: absolute;
-            font-size: 2rem;
-            opacity: 0.2;
-            animation: float-flower 10s infinite linear;
-            will-change: transform;
+            font-size: 1.5rem;
+            opacity: 0;
+            will-change: transform, opacity;
+            animation: flowerFall linear forwards;
         }
 
-        @keyframes float-flower {
-            from {
-                transform: translate3d(0, -50px, 0) rotate(0deg);
+        @keyframes flowerFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg) translateX(0);
+                opacity: 0;
             }
-
-            to {
-                transform: translate3d(100px, 100vh, 0) rotate(360deg);
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg) translateX(100px);
+                opacity: 0;
             }
         }
 
@@ -978,12 +1001,12 @@
     <div id="loaderOverlay">
         <div class="bg-flowers" id="bgFlowers"></div>
         <div class="loader-content">
-            <span class="loader-flower">✿</span>
-            <h2 style="color: var(--accent-teal); font-weight: 800;">Spendentopf wird vorbereitet...</h2>
+            <span class="loader-flower" id="loaderIcon">✿</span>
+            <h2 id="loaderTitle" style="color: var(--accent-teal); font-weight: 800; margin-bottom: 0.5rem;">Herzlich Willkommen!</h2>
             <div class="loader-bar-container">
                 <div class="loader-bar"></div>
             </div>
-            <p style="color: var(--text-light); font-weight: 600;">Wir verbinden dich mit der Cloud</p>
+            <p id="loaderStatus" style="color: var(--text-light); font-weight: 600;">Inhalte werden geladen...</p>
         </div>
     </div>
 
@@ -1413,40 +1436,63 @@
         function navigateTo(viewId) {
             // Cool loading screen for donation view
             if (viewId === 'view-spenden') {
-                showLoader(() => finalizeNavigation(viewId));
+                showLoader({
+                    title: 'Spendentopf wird vorbereitet...',
+                    status: 'Wir verbinden dich mit der Cloud',
+                    duration: 2000
+                }, () => finalizeNavigation(viewId));
             } else {
                 finalizeNavigation(viewId);
             }
         }
 
-        function showLoader(callback) {
+        function showLoader(options, callback) {
             const loader = document.getElementById('loaderOverlay');
             const bgFlowers = document.getElementById('bgFlowers');
+            const titleEl = document.getElementById('loaderTitle');
+            const statusEl = document.getElementById('loaderStatus');
+            const iconEl = document.getElementById('loaderIcon');
 
-            // Add some floating flowers
+            // Set content
+            if (options.title) titleEl.innerText = options.title;
+            if (options.status) statusEl.innerText = options.status;
+            if (options.icon) iconEl.innerText = options.icon;
+
+            // Clear and add flowers
             bgFlowers.innerHTML = '';
-            const symbols = ['✿', '❀', '❁', '🌸', '🌼'];
-            for (let i = 0; i < 15; i++) {
+            const symbols = ['✿', '❀', '❁', '🌸', '🌼', '✨', '🍃'];
+            const colors = ['var(--accent-orange)', 'var(--accent-teal)', 'var(--accent-yellow)', '#FFB7C5'];
+            
+            for (let i = 0; i < 30; i++) {
                 const f = document.createElement('div');
                 f.className = 'floating-flower';
                 f.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                f.style.color = colors[Math.floor(Math.random() * colors.length)];
                 f.style.left = Math.random() * 100 + '%';
-                f.style.top = '-50px';
-                f.style.animationDuration = (5 + Math.random() * 10) + 's';
-                f.style.animationDelay = (Math.random() * 5) + 's';
+                f.style.fontSize = (1 + Math.random() * 2) + 'rem';
+                
+                const duration = 3 + Math.random() * 4;
+                const delay = Math.random() * 2;
+                
+                f.style.animationDuration = duration + 's';
+                f.style.animationDelay = delay + 's';
+                
+                // Add horizontal variance
+                f.style.setProperty('--target-x', (Math.random() * 200 - 100) + 'px');
+                
                 bgFlowers.appendChild(f);
             }
 
             loader.style.display = 'flex';
+            loader.style.opacity = '1';
+
             setTimeout(() => {
                 loader.style.opacity = '0';
-                loader.style.transition = 'opacity 0.5s ease';
                 setTimeout(() => {
                     loader.style.display = 'none';
-                    loader.style.opacity = '1';
-                    callback();
-                }, 500);
-            }, 2500);
+                    if (callback) callback();
+                }, 800);
+            }, options.duration || 2500);
         }
 
         function finalizeNavigation(viewId) {
@@ -1648,7 +1694,17 @@
         }
 
         // Initialize total cost on load
-        window.addEventListener('DOMContentLoaded', updateTotalCost);
+        window.addEventListener('DOMContentLoaded', () => {
+            updateTotalCost();
+            
+            // Show loader on every page load/reload
+            showLoader({
+                title: 'Herzlich Willkommen!',
+                status: 'Der Charity-Flohmarkt lädt...',
+                duration: 3000,
+                icon: '🌸'
+            });
+        });
     </script>
 </body>
 
