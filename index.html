@@ -467,14 +467,82 @@
             100% { transform: translateY(150px) scale(0.5); opacity: 0; }
         }
 
-        /* Responsive */
+        /* Responsive - Mobile Optimization */
         @media (max-width: 768px) {
-            .motto { font-size: 2.5rem; }
-            nav { display: none; /* Fallback for very small screens */ }
-            header { justify-content: center; }
-            .verkaeufer-grid { grid-template-columns: 1fr; }
+            .motto { font-size: 2.2rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+            .section-title { font-size: 2.2rem; }
+            
+            header { 
+                justify-content: center; 
+                padding: 1rem;
+            }
+            .logo { font-size: 1.2rem; }
+            
+            /* Bottom Navigation for Mobile */
+            nav { 
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: rgba(248, 245, 240, 0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                display: flex;
+                justify-content: space-around;
+                padding: 0.8rem 0;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+                border-top: 1px solid var(--glass-border);
+                z-index: 1000;
+                gap: 0;
+            }
+            
+            nav a {
+                font-size: 0.75rem;
+                padding: 0.5rem;
+                text-align: center;
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+            }
+
+            nav a::before {
+                font-size: 1.4rem;
+                margin-bottom: 2px;
+            }
+            
+            nav a[data-target="view-home"]::before { content: '🏠'; }
+            nav a[data-target="view-verkaeufer"]::before { content: '🛍️'; }
+            nav a[data-target="view-zweck"]::before { content: '❤️'; }
+            nav a[data-target="view-spenden"]::before { content: '💰'; }
+
+            .nav-donate-btn {
+                background: transparent !important;
+                color: var(--text-dark) !important;
+                box-shadow: none;
+            }
+            
+            .nav-donate-btn:hover, nav a.active-link {
+                background: rgba(69, 182, 156, 0.1) !important;
+                color: var(--accent-teal) !important;
+                box-shadow: none;
+            }
+
+            .page-view {
+                padding-bottom: 100px; /* Space for bottom nav */
+            }
+
+            .verkaeufer-grid { grid-template-columns: 1fr; gap: 2rem; }
             .pot-container { width: 250px; height: 250px; }
             .pot-total { font-size: 3rem; }
+            
+            .btn-amount { padding: 0.8rem 1.2rem; font-size: 1rem; }
+            .current-amount-display { font-size: 2.2rem; min-width: 150px; padding: 1rem 2rem; }
+            .glass-card { padding: 1.5rem; }
+            
+            .info-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -535,24 +603,42 @@
 
     <!-- 2. Verkäufer View -->
     <div id="view-verkaeufer" class="page-view container">
-        <h2 class="section-title">Teilnahme für Verkäufer</h2>
+        <h2 class="section-title">Informationen für Verkäufer</h2>
         
+        <div class="glass-card" style="margin-bottom: 2rem;">
+            <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">Ausführliche Richtlinien zum Verkauf</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                <div>
+                    <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Was darf verkauft werden?</h4>
+                    <p style="color: var(--text-light);">Erlaubt sind gut erhaltene, gebrauchte Gegenstände wie Kleidung, Kinderspielzeug, Bücher, Deko-Artikel und Haushaltswaren. <strong>Bitte beachte:</strong> Der Verkauf von Neuwaren in Massen, Lebensmitteln oder kaputten Gegenständen ist nicht gestattet.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Ablauf am Markttag</h4>
+                    <p style="color: var(--text-light);">Der Aufbau beginnt ab <strong>13:30 Uhr</strong>. Bitte erscheine pünktlich, um Chaos zu vermeiden. Der Abbau startet ab 18:00 Uhr. Denke daran, deinen Platz sauber zu hinterlassen und nicht verkaufte Artikel wieder mitzunehmen.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Selbst mitbringen</h4>
+                    <p style="color: var(--text-light);">Einen Tisch bekommst du von uns gestellt. Kleiderstangen dürfen gerne selbst mitgebracht werden (bitte bei der Anmeldung kurz erwähnen). Vergiss außerdem nicht, ausreichend <strong>Wechselgeld</strong> für deine eigene Kasse mitzubringen!</p>
+                </div>
+            </div>
+        </div>
+
         <div class="glass-card verkaeufer-grid">
             <div>
-                <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">So funktioniert's</h3>
+                <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">Anmeldung in 3 Schritten</h3>
                 <ul class="steps-list">
-                    <li><strong>Konzept:</strong> Jede teilnehmende Person kann einen eigenen Stand aufstellen und gebrauchte Dinge verkaufen.</li>
-                    <li><strong>Anmeldung:</strong> Eine vorherige Anmeldung ist für alle Standbetreiber verpflichtend!</li>
-                    <li><strong>Leistung:</strong> Jeder angemeldete Stand erhält von uns einen Tisch und ausreichend Platz auf dem Schulhof.</li>
+                    <li><strong>E-Mail schreiben:</strong> Sende uns eine kurze Nachricht mit deinem Namen und der Art der Dinge, die du verkaufen möchtest.</li>
+                    <li><strong>Bestätigung abwarten:</strong> Du erhältst von uns eine Rückmeldung inkl. deiner Standnummer.</li>
+                    <li><strong>Gebühr bezahlen:</strong> Die Standgebühr von 10 € wird ganz unkompliziert am Markttag in bar beim Aufbau eingesammelt.</li>
                 </ul>
             </div>
             <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-soft);">
                 <h3 style="color: var(--accent-teal); font-size: 1.5rem; margin-bottom: 1rem;">Wichtige Eckdaten</h3>
-                <p style="margin-bottom: 1rem; font-size: 1.1rem;"><strong>Frist:</strong> Bis spätestens 1. September 2026</p>
+                <p style="margin-bottom: 1rem; font-size: 1.1rem;"><strong>Anmeldefrist:</strong> Bis spätestens 1. September 2026</p>
                 <p style="margin-bottom: 1rem; font-size: 1.1rem;"><strong>Standgebühr:</strong> 10 € pro Tisch</p>
                 <div style="margin-top: 2rem; padding-top: 1rem; border-top: 2px solid var(--bg-gradient-1);">
-                    <p style="font-weight: 600; margin-bottom: 0.5rem;">Fragen & Anmeldungen an:</p>
-                    <a href="mailto:info@flohmarkt-luckenwalde.de" style="color: var(--accent-orange); font-size: 1.2rem; font-weight: 800; text-decoration: none;">info@flohmarkt-luckenwalde.de</a>
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">Anmeldungen richten an:</p>
+                    <a href="mailto:info@flohmarkt-luckenwalde.de" style="color: var(--accent-orange); font-size: 1.2rem; font-weight: 800; text-decoration: none; word-break: break-all;">info@flohmarkt-luckenwalde.de</a>
                 </div>
             </div>
         </div>
@@ -756,4 +842,3 @@
     </script>
 </body>
 </html>
-
