@@ -1,1 +1,759 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity-Flohmarkt Luckenwalde</title>
+    <!-- Modern and friendly Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Premium Beige & Joyful Color Palette */
+            --bg-base: #F8F5F0;
+            --bg-gradient-1: #F0E6D2;
+            --bg-gradient-2: #FFFBF4;
+            --accent-orange: #FF7B54;
+            --accent-orange-dark: #E0603D;
+            --accent-yellow: #FFD56F;
+            --accent-teal: #45B69C;
+            --accent-blue: #005A9C;
+            --text-dark: #3A322B;
+            --text-light: #6A5F52;
+            --white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --shadow-soft: 0 8px 32px 0 rgba(110, 100, 90, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: radial-gradient(circle at 15% 50%, var(--bg-gradient-2), transparent 25%),
+                              radial-gradient(circle at 85% 30%, var(--bg-gradient-1), transparent 25%);
+            color: var(--text-dark);
+            font-family: 'Nunito', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Background Decorations */
+        .glass-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float-blob 20s infinite alternate ease-in-out;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--accent-yellow); }
+        .blob-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: var(--bg-gradient-1); animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 60%; width: 40vw; height: 40vw; background: rgba(69, 182, 156, 0.2); animation-delay: -10s; }
+
+        @keyframes float-blob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(10%, 10%) scale(1.1); }
+        }
+
+        /* SPA Layout */
+        .page-view {
+            display: none;
+            flex-grow: 1;
+            padding-top: 100px; /* Space for fixed header */
+            padding-bottom: 50px;
+            animation: fadeInPage 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Header / Nav */
+        header {
+            background: rgba(248, 245, 240, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--accent-orange);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            animation: spin-slow 10s linear infinite;
+        }
+
+        @keyframes spin-slow { 100% { transform: rotate(360deg); } }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active-link {
+            background: var(--white);
+            color: var(--accent-teal);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-donate-btn {
+            background: var(--accent-orange);
+            color: var(--white) !important;
+            padding: 0.6rem 1.5rem !important;
+            border-radius: 50px !important;
+            box-shadow: 0 4px 15px rgba(255, 123, 84, 0.4);
+        }
+
+        .nav-donate-btn:hover {
+            background: var(--accent-orange-dark) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 123, 84, 0.5);
+            color: var(--white) !important;
+        }
+
+        /* Shared Components */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(110, 100, 90, 0.15);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--accent-teal);
+            font-weight: 800;
+        }
+
+        /* --- Home View --- */
+        .hero-section {
+            text-align: center;
+            padding: 4rem 0 2rem 0;
+        }
+
+        .motto {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 4px 20px rgba(255, 123, 84, 0.15); /* Soft glowing shadow */
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+            font-weight: 600;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-item h3 {
+            color: var(--accent-orange);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-item ul { list-style: none; }
+        .info-item ul li {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .info-item ul li::before {
+            content: '✿';
+            color: var(--accent-yellow);
+            font-size: 1.2rem;
+        }
+
+        /* --- Verkäufer View --- */
+        .verkaeufer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .steps-list {
+            list-style: none;
+            counter-reset: my-counter;
+        }
+
+        .steps-list li {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 4rem;
+            font-size: 1.1rem;
+        }
+
+        .steps-list li::before {
+            counter-increment: my-counter;
+            content: counter(my-counter);
+            position: absolute;
+            left: 0;
+            top: -5px;
+            width: 35px;
+            height: 35px;
+            background: var(--accent-teal);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- Guter Zweck View --- */
+        .zweck-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .sos-logo {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--accent-blue);
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
+
+        .highlight-box {
+            background: rgba(255, 213, 111, 0.3);
+            border: 2px dashed var(--accent-orange);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .highlight-box p {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-orange);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        .zweck-text { font-size: 1.2rem; }
+
+        /* --- Spenden View --- */
+        .donation-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .pot-wrapper {
+            position: relative;
+            margin: 3rem 0;
+        }
+
+        .pot-container {
+            width: 320px;
+            height: 320px;
+            background: linear-gradient(135deg, var(--accent-yellow) 0%, #FFB703 100%);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-dark);
+            box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6), inset 0 -10px 20px rgba(0,0,0,0.1);
+            animation: float-pot 6s ease-in-out infinite;
+            border: 10px solid var(--white);
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes float-pot {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes fillPotAnim {
+            0% { transform: scale(1); box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6); }
+            50% { transform: scale(1.1); box-shadow: 0 30px 70px rgba(255, 213, 111, 0.9); }
+            100% { transform: scale(1); box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6); }
+        }
+
+        .pot-total {
+            font-size: 4rem;
+            font-weight: 900;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1;
+        }
+
+        .pot-label {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .donation-controls {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: var(--shadow-soft);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .amount-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-amount {
+            background: var(--bg-base);
+            color: var(--text-dark);
+            border: 2px solid var(--bg-gradient-1);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-amount:hover {
+            background: var(--accent-orange);
+            color: var(--white);
+            border-color: var(--accent-orange);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 123, 84, 0.3);
+        }
+        
+        .btn-reset {
+            background: var(--bg-gradient-1);
+            border-color: var(--bg-gradient-1);
+        }
+
+        .btn-amount:active { transform: scale(0.95); }
+
+        .current-amount-display {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent-teal);
+            margin: 1rem 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-send {
+            background: var(--accent-teal);
+            color: white;
+            padding: 1.2rem 4rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+            box-shadow: 0 8px 25px rgba(69, 182, 156, 0.4);
+            transition: all 0.3s;
+        }
+
+        .btn-send:hover {
+            background: #3aa289;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(69, 182, 156, 0.5);
+        }
+
+        .donation-message {
+            font-size: 1.2rem;
+            font-weight: 700;
+            height: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        /* Floating Coins Animation */
+        .coin {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #FFD700;
+            border-radius: 50%;
+            border: 2px solid #DAA520;
+            box-shadow: inset 0 0 5px rgba(255,255,255,0.8), 0 5px 10px rgba(0,0,0,0.2);
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        @keyframes coinDrop {
+            0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+            20% { opacity: 1; transform: translateY(-50px) scale(1); }
+            80% { opacity: 1; transform: translateY(100px) scale(1); }
+            100% { transform: translateY(150px) scale(0.5); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .motto { font-size: 2.5rem; }
+            nav { display: none; /* Fallback for very small screens */ }
+            header { justify-content: center; }
+            .verkaeufer-grid { grid-template-columns: 1fr; }
+            .pot-container { width: 250px; height: 250px; }
+            .pot-total { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Decorative Background -->
+    <div class="glass-blob blob-1"></div>
+    <div class="glass-blob blob-2"></div>
+    <div class="glass-blob blob-3"></div>
+
+    <header>
+        <a class="logo" onclick="navigateTo('view-home')">
+            <span class="logo-icon">✿</span> Charity-Flohmarkt
+        </a>
+        <nav id="main-nav">
+            <a onclick="navigateTo('view-home')" class="nav-link active-link" data-target="view-home">Infos</a>
+            <a onclick="navigateTo('view-verkaeufer')" class="nav-link" data-target="view-verkaeufer">Für Verkäufer</a>
+            <a onclick="navigateTo('view-zweck')" class="nav-link" data-target="view-zweck">Guter Zweck</a>
+            <a onclick="navigateTo('view-spenden')" class="nav-link nav-donate-btn" data-target="view-spenden">Spenden</a>
+        </nav>
+    </header>
+
+    <!-- VIEWS -->
+    
+    <!-- 1. Home / Info View -->
+    <div id="view-home" class="page-view active container">
+        <div class="hero-section">
+            <h1 class="motto">Ihr Beitrag macht den Unterschied</h1>
+            <p class="hero-subtitle">Ein fröhlicher Charity-Flohmarkt für gebrauchte Gegenstände. Mach mit und hilf dabei, Großes zu bewirken!</p>
+        </div>
+
+        <div class="glass-card">
+            <h2 class="section-title" style="margin-bottom: 2rem;">Allgemeine Informationen</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Wann & Wo?</h3>
+                    <ul>
+                        <li><strong>Datum:</strong> 11. September 2026</li>
+                        <li><strong>Uhrzeit:</strong> 15:00 bis 18:00 Uhr</li>
+                        <li><strong>Ort:</strong> Schulhof des Friedrich-Gymnasiums Luckenwalde</li>
+                    </ul>
+                </div>
+                <div class="info-item">
+                    <h3>Verantwortliche</h3>
+                    <p style="margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-light);">Organisiert mit viel Engagement und Herz von:</p>
+                    <ul>
+                        <li>Julen</li>
+                        <li>Roman</li>
+                        <li>Carlos</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                 <button class="btn-send" style="width: auto; padding: 1rem 3rem;" onclick="navigateTo('view-spenden')">Direkt zum Spendentopf</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Verkäufer View -->
+    <div id="view-verkaeufer" class="page-view container">
+        <h2 class="section-title">Teilnahme für Verkäufer</h2>
+        
+        <div class="glass-card verkaeufer-grid">
+            <div>
+                <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">So funktioniert's</h3>
+                <ul class="steps-list">
+                    <li><strong>Konzept:</strong> Jede teilnehmende Person kann einen eigenen Stand aufstellen und gebrauchte Dinge verkaufen.</li>
+                    <li><strong>Anmeldung:</strong> Eine vorherige Anmeldung ist für alle Standbetreiber verpflichtend!</li>
+                    <li><strong>Leistung:</strong> Jeder angemeldete Stand erhält von uns einen Tisch und ausreichend Platz auf dem Schulhof.</li>
+                </ul>
+            </div>
+            <div style="background: var(--white); padding: 2rem; border-radius: 20px; box-shadow: var(--shadow-soft);">
+                <h3 style="color: var(--accent-teal); font-size: 1.5rem; margin-bottom: 1rem;">Wichtige Eckdaten</h3>
+                <p style="margin-bottom: 1rem; font-size: 1.1rem;"><strong>Frist:</strong> Bis spätestens 1. September 2026</p>
+                <p style="margin-bottom: 1rem; font-size: 1.1rem;"><strong>Standgebühr:</strong> 10 € pro Tisch</p>
+                <div style="margin-top: 2rem; padding-top: 1rem; border-top: 2px solid var(--bg-gradient-1);">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">Fragen & Anmeldungen an:</p>
+                    <a href="mailto:info@flohmarkt-luckenwalde.de" style="color: var(--accent-orange); font-size: 1.2rem; font-weight: 800; text-decoration: none;">info@flohmarkt-luckenwalde.de</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Guter Zweck View -->
+    <div id="view-zweck" class="page-view container">
+        <h2 class="section-title">Der gute Zweck</h2>
+        
+        <div class="glass-card zweck-content">
+            <div class="sos-logo">SOS-Kinderdorf</div>
+            
+            <div class="highlight-box">
+                <p>70 % aller Einnahmen (aus Standgebühren und Verkäufen) gehen direkt an SOS-Kinderdorf!</p>
+            </div>
+            
+            <p class="zweck-text">
+                Mit unserer Aktion unterstützen wir Kinder, Jugendliche und Familien in schwierigen Lebenssituationen. Eure Spenden ermöglichen Schutz, Beratung und wertvolle pädagogische Begleitung für diejenigen, die es am meisten brauchen. 
+                <br><br><strong>Jeder Kauf und Verkauf zählt!</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- 4. Spenden View -->
+    <div id="view-spenden" class="page-view container">
+        <h2 class="section-title">Virtueller Spendentopf</h2>
+        
+        <div class="donation-layout">
+            <div class="pot-wrapper" id="potWrapper">
+                <div class="pot-container" id="potContainer">
+                    <div class="pot-total" id="potTotal">0 €</div>
+                    <div class="pot-label">Bisher gesammelt</div>
+                </div>
+            </div>
+
+            <div class="donation-controls">
+                <p style="font-weight: 700; color: var(--text-light); margin-bottom: 1rem; font-size: 1.1rem;">Dein Spendenbetrag (max. 1000 €):</p>
+                
+                <div class="amount-buttons">
+                    <button class="btn-amount" onclick="addAmount(15)">+ 15 €</button>
+                    <button class="btn-amount" onclick="addAmount(50)">+ 50 €</button>
+                    <button class="btn-amount" onclick="addAmount(100)">+ 100 €</button>
+                    <button class="btn-amount btn-reset" onclick="resetAmount()">Zurücksetzen</button>
+                </div>
+                
+                <div class="current-amount-display" id="currentAmount">0 €</div>
+                
+                <button class="btn-send" onclick="sendDonation()">Spende Senden</button>
+                <div class="donation-message" id="donationMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Navigation Logic (SPA) ---
+        function navigateTo(viewId) {
+            // Hide all views
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            // Show target view
+            const target = document.getElementById(viewId);
+            if(target) {
+                target.classList.add('active');
+            }
+
+            // Update Nav Links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if(link.getAttribute('data-target') === viewId) {
+                    link.classList.add('active-link');
+                } else {
+                    link.classList.remove('active-link');
+                }
+            });
+            
+            // Scroll to top when changing pages
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- Donation Logic ---
+        const LOCAL_STORAGE_KEY = 'charity-flohmarkt-pot-v2';
+        let potTotal = parseInt(localStorage.getItem(LOCAL_STORAGE_KEY)) || 0;
+        let currentDonation = 0;
+        const MAX_DONATION = 1000;
+
+        const potTotalElement = document.getElementById('potTotal');
+        const currentAmountElement = document.getElementById('currentAmount');
+        const potContainer = document.getElementById('potContainer');
+        const potWrapper = document.getElementById('potWrapper');
+        const messageElement = document.getElementById('donationMessage');
+
+        // BroadcastChannel to sync across tabs
+        const bc = new BroadcastChannel('donation_sync_v2');
+        
+        bc.onmessage = (event) => {
+            if (event.data.type === 'update_pot') {
+                potTotal = event.data.value;
+                animatePotUpdate();
+            }
+        };
+
+        // Init
+        potTotalElement.innerText = potTotal + ' €';
+
+        function addAmount(amount) {
+            if (currentDonation + amount <= MAX_DONATION) {
+                currentDonation += amount;
+                updateDisplay();
+                clearMessage();
+            } else {
+                showMessage('Maximaler Betrag pro Vorgang sind 1000 €!', 'red');
+            }
+        }
+
+        function resetAmount() {
+            currentDonation = 0;
+            updateDisplay();
+            clearMessage();
+        }
+
+        function updateDisplay() {
+            currentAmountElement.innerText = currentDonation + ' €';
+        }
+
+        function showMessage(msg, color) {
+            messageElement.innerText = msg;
+            messageElement.style.color = color;
+        }
+
+        function clearMessage() {
+            messageElement.innerText = '';
+        }
+
+        function createCoins() {
+            for(let i=0; i<5; i++) {
+                setTimeout(() => {
+                    const coin = document.createElement('div');
+                    coin.className = 'coin';
+                    // Random position around top of pot
+                    const left = 30 + Math.random() * 40; 
+                    coin.style.left = left + '%';
+                    coin.style.animation = 'coinDrop 1s ease-in forwards';
+                    potWrapper.appendChild(coin);
+                    
+                    // Cleanup
+                    setTimeout(() => {
+                        coin.remove();
+                    }, 1000);
+                }, i * 150);
+            }
+        }
+
+        function animatePotUpdate() {
+            potTotalElement.innerText = potTotal + ' €';
+            
+            // Trigger pot swell animation
+            potContainer.style.animation = 'none';
+            potContainer.offsetHeight; // force reflow
+            potContainer.style.animation = 'fillPotAnim 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            
+            // Restore floating animation after
+            setTimeout(() => {
+                potContainer.style.animation = 'float-pot 6s ease-in-out infinite';
+            }, 600);
+        }
+
+        function sendDonation() {
+            if (currentDonation > 0) {
+                // Visual effect
+                createCoins();
+
+                setTimeout(() => {
+                    // Update Total after coins "fall" in
+                    potTotal += currentDonation;
+                    localStorage.setItem(LOCAL_STORAGE_KEY, potTotal);
+                    
+                    // Sync other tabs
+                    bc.postMessage({ type: 'update_pot', value: potTotal });
+                    
+                    // Animate
+                    animatePotUpdate();
+
+                    // Reset
+                    currentDonation = 0;
+                    updateDisplay();
+                    
+                    // Message
+                    showMessage('Vielen Dank für deine großzügige Spende! ✿', 'var(--accent-teal)');
+                    
+                    setTimeout(() => {
+                        if(messageElement.innerText.includes('Vielen Dank')) {
+                            clearMessage();
+                        }
+                    }, 4000);
+                }, 800); // delay to match coin animation roughly
+
+            } else {
+                showMessage('Bitte wähle zuerst einen Betrag aus!', 'red');
+            }
+        }
+    </script>
+</body>
+</html>
 
