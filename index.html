@@ -1053,8 +1053,9 @@
         <div class="donation-layout">
             <div class="pot-wrapper" id="potWrapper">
                 <div class="pot-container" id="potContainer">
-                    <div class="pot-total" id="potTotal">0 €</div>
+                    <div class="pot-total" id="potTotal">0,00 €</div>
                     <div class="pot-label">Bisher gesammelt</div>
+                    <div id="cloudStatus" style="font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-top: 5px;">☁ Cloud wird geladen...</div>
                 </div>
             </div>
 
@@ -1115,21 +1116,28 @@
         const potContainer = document.getElementById('potContainer');
         const potWrapper = document.getElementById('potWrapper');
         const messageElement = document.getElementById('donationMessage');
+        const cloudStatus = document.getElementById('cloudStatus');
 
         // Cloud Sync Logic
         async function fetchCloudTotal() {
             try {
-                const response = await fetch(CLOUD_URL);
+                // cache: 'no-store' verhindert, dass der Browser alte Werte anzeigt
+                const response = await fetch(CLOUD_URL, { cache: 'no-store' });
                 if (response.ok) {
                     const val = await response.text();
-                    const cloudValue = parseInt(val) || 0;
+                    const cloudValue = parseFloat(val) || 0;
+                    
+                    // Wir nehmen immer den höchsten Wert (Cloud vs Lokal)
                     if (cloudValue > potTotal) {
                         potTotal = cloudValue;
                         animatePotUpdate();
                     }
+                    cloudStatus.innerText = '☁ Cloud Aktiv (Synchronisiert)';
+                    cloudStatus.style.color = 'white';
                 }
             } catch (e) {
-                console.log("Cloud-Sync fehlgeschlagen");
+                cloudStatus.innerText = '☁ Cloud Offline (Lokal-Modus)';
+                cloudStatus.style.color = '#ff9999';
             }
         }
 
@@ -1137,17 +1145,18 @@
             try {
                 await fetch(CLOUD_URL, {
                     method: 'POST',
-                    body: newTotal.toString()
+                    body: newTotal.toString(),
+                    mode: 'cors'
                 });
             } catch (e) {
                 console.error("Cloud-Update fehlgeschlagen", e);
             }
         }
 
-        // Periodic sync (every 10 seconds)
-        setInterval(fetchCloudTotal, 10000);
+        // Schnellerer Sync (alle 5 Sekunden)
+        setInterval(fetchCloudTotal, 5000);
 
-        // BroadcastChannel to sync across tabs (same user)
+        // BroadcastChannel für Tabs im selben Browser
         const bc = new BroadcastChannel('donation_sync_v2');
         bc.onmessage = (event) => {
             if (event.data.type === 'update_pot') {
@@ -1156,12 +1165,12 @@
             }
         };
 
-        // Init
+        // Initialisierung
         window.addEventListener('DOMContentLoaded', () => {
             const local = localStorage.getItem(LOCAL_STORAGE_KEY);
             if(local) {
-                potTotal = parseInt(local);
-                potTotalElement.innerText = potTotal + ' €';
+                potTotal = parseFloat(local);
+                updateDisplay();
             }
             fetchCloudTotal();
         });
@@ -1183,7 +1192,8 @@
         }
 
         function updateDisplay() {
-            currentAmountElement.innerText = currentDonation + ' €';
+            potTotalElement.innerText = potTotal.toFixed(2).replace('.', ',') + ' €';
+            currentAmountElement.innerText = currentDonation.toFixed(2).replace('.', ',') + ' €';
         }
 
         function showMessage(msg, color) {
