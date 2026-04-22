@@ -1077,29 +1077,12 @@
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
     <script>
         // ############################################################
-        // HIER DEINEN FIREBASE-CODE VON SCHRITT 4 EINFÜGEN:
-        const firebaseConfig = {
-          apiKey: "AIzaSyBJsjozLSze5pysA6Uv9wUxAUfOWBzdQYE",
-          authDomain: "charitybot-c07c2.firebaseapp.com",
-          databaseURL: "https://charitybot-c07c2-default-rtdb.firebaseio.com/", // Falls du Europa gewählt hast: europe-west1.firebasedatabase.app
-          projectId: "charitybot-c07c2",
-          storageBucket: "charitybot-c07c2.firebasestorage.app",
-          messagingSenderId: "865870789525",
-          appId: "1:865870789525:web:b4b9105281ff29d6ea549c",
-          measurementId: "G-9XLDVKZ4F2"
-        };
+        // ZERO-CONFIG CLOUD (Keine Anmeldung nötig!)
+        const CLOUD_ID = 'charity-lkw-2026-pot-xyz'; 
+        const CLOUD_URL = `https://api.keyvalue.xyz/${CLOUD_ID}/pot`;
         // ############################################################
-
-        // Firebase Initialisierung
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const potRef = database.ref('spendentopf/total');
 
         // --- Navigation Logic (SPA) ---
         function navigateTo(viewId) {
@@ -1139,27 +1122,45 @@
         const messageElement = document.getElementById('donationMessage');
         const cloudStatus = document.getElementById('cloudStatus');
 
-        // REAL-TIME SYNC: Wenn sich in der Firebase etwas ändert, merken es alle sofort!
-        potRef.on('value', (snapshot) => {
-            const val = snapshot.val();
-            if (val !== null) {
-                potTotal = parseFloat(val);
-                animatePotUpdate();
-                cloudStatus.innerText = '☁ Firebase Echtzeit Aktiv';
-                cloudStatus.style.color = 'white';
-            } else {
-                // Wenn die Datenbank ganz leer ist, setzen wir sie einmalig auf 0
-                potRef.set(0);
-                cloudStatus.innerText = '☁ Firebase Initialisiert (0€)';
+        // EINFACHE CLOUD-LOGIK (Kein Firebase nötig)
+        async function syncPot() {
+            try {
+                const response = await fetch(CLOUD_URL);
+                if (response.ok) {
+                    const val = await response.text();
+                    const cloudValue = parseFloat(val) || 0;
+                    if (cloudValue > potTotal) {
+                        potTotal = cloudValue;
+                        animatePotUpdate();
+                    }
+                    cloudStatus.innerText = '☁ Cloud Aktiv (Verbunden)';
+                    cloudStatus.style.color = 'white';
+                } else if (response.status === 404) {
+                    // Initialisierung falls der Key noch nicht existiert
+                    await pushToCloud(potTotal);
+                }
+            } catch (e) {
+                cloudStatus.innerText = '☁ Lokal-Modus (Offline)';
+                cloudStatus.style.color = 'rgba(255,255,255,0.5)';
             }
-        }, (error) => {
-            console.error("Firebase Fehler:", error);
-            // Wir zeigen den Fehler direkt auf der Seite an, um ihn zu finden:
-            cloudStatus.innerText = '☁ Fehler: ' + error.code + ' (Rules oder URL prüfen!)';
-            cloudStatus.style.color = '#ff9999';
-            if (error.code === 'PERMISSION_DENIED') {
-                cloudStatus.innerText = '☁ Fehler: Regeln in Firebase auf "true" setzen!';
+        }
+
+        async function pushToCloud(val) {
+            try {
+                await fetch(`${CLOUD_URL}/${val}`, { method: 'POST' });
+            } catch (e) { console.log("Cloud-Update fehlgeschlagen"); }
+        }
+
+        // Alle 5 Sekunden prüfen
+        setInterval(syncPot, 5000);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const local = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if(local) {
+                potTotal = parseFloat(local);
+                updateDisplay();
             }
+            syncPot();
         });
 
         function addAmount(amount) {
@@ -1219,12 +1220,14 @@
         async function sendDonation() {
             if (currentDonation > 0) {
                 createCoins();
-                setTimeout(() => {
-                    // Wir rechnen Cloud-Wert + Spende direkt in der Firebase (Atomar!)
-                    potRef.transaction((currentValue) => {
-                        return (currentValue || 0) + currentDonation;
-                    });
-
+                setTimeout(async () => {
+                    potTotal += currentDonation;
+                    localStorage.setItem(LOCAL_STORAGE_KEY, potTotal);
+                    
+                    // In die Cloud pushen
+                    await pushToCloud(potTotal);
+                    
+                    animatePotUpdate();
                     currentDonation = 0;
                     updateDisplay();
                     showMessage('Vielen Dank für deine großzügige Spende! ✿', 'var(--accent-teal)');
