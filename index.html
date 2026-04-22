@@ -1102,7 +1102,6 @@
         const potRef = database.ref('spendentopf/total');
 
         // --- Navigation Logic (SPA) ---
-        // --- Navigation Logic (SPA) ---
         function navigateTo(viewId) {
             // Hide all views
             document.querySelectorAll('.page-view').forEach(view => {
@@ -1148,10 +1147,19 @@
                 animatePotUpdate();
                 cloudStatus.innerText = '☁ Firebase Echtzeit Aktiv';
                 cloudStatus.style.color = 'white';
+            } else {
+                // Wenn die Datenbank ganz leer ist, setzen wir sie einmalig auf 0
+                potRef.set(0);
+                cloudStatus.innerText = '☁ Firebase Initialisiert (0€)';
             }
         }, (error) => {
-            cloudStatus.innerText = '☁ Fehler: Firebase Config prüfen!';
+            console.error("Firebase Fehler:", error);
+            // Wir zeigen den Fehler direkt auf der Seite an, um ihn zu finden:
+            cloudStatus.innerText = '☁ Fehler: ' + error.code + ' (Rules oder URL prüfen!)';
             cloudStatus.style.color = '#ff9999';
+            if (error.code === 'PERMISSION_DENIED') {
+                cloudStatus.innerText = '☁ Fehler: Regeln in Firebase auf "true" setzen!';
+            }
         });
 
         function addAmount(amount) {
