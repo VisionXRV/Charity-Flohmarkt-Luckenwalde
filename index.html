@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charity-Flohmarkt Luckenwalde</title>
     <!-- Modern and friendly Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Poppins:wght@400;600;800;900&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             /* Premium Beige & Joyful Color Palette */
@@ -34,7 +37,7 @@
         body {
             background-color: var(--bg-base);
             background-image: radial-gradient(circle at 15% 50%, var(--bg-gradient-2), transparent 25%),
-                              radial-gradient(circle at 85% 30%, var(--bg-gradient-1), transparent 25%);
+                radial-gradient(circle at 85% 30%, var(--bg-gradient-1), transparent 25%);
             color: var(--text-dark);
             font-family: 'Nunito', sans-serif;
             line-height: 1.6;
@@ -44,33 +47,66 @@
             flex-direction: column;
         }
 
-        h1, h2, h3, h4 {
+        h1,
+        h2,
+        h3,
+        h4 {
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Background Decorations */
+        /* Background Decorations - Optimized for performance */
         .glass-blob {
             position: fixed;
             border-radius: 50%;
             filter: blur(80px);
             z-index: -1;
             opacity: 0.6;
+            will-change: transform;
             animation: float-blob 20s infinite alternate ease-in-out;
         }
-        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--accent-yellow); }
-        .blob-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: var(--bg-gradient-1); animation-delay: -5s; }
-        .blob-3 { top: 40%; left: 60%; width: 40vw; height: 40vw; background: rgba(69, 182, 156, 0.2); animation-delay: -10s; }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: var(--accent-yellow);
+        }
+
+        .blob-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: var(--bg-gradient-1);
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            top: 40%;
+            left: 60%;
+            width: 40vw;
+            height: 40vw;
+            background: rgba(69, 182, 156, 0.2);
+            animation-delay: -10s;
+        }
 
         @keyframes float-blob {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(10%, 10%) scale(1.1); }
+            0% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate3d(10%, 10%, 0) scale(1.1);
+            }
         }
 
         /* SPA Layout */
         .page-view {
             display: none;
             flex-grow: 1;
-            padding-top: 2rem; /* Reduced because header is now sticky */
+            padding-top: 2rem;
+            /* Reduced because header is now sticky */
             padding-bottom: 50px;
             animation: fadeInPage 0.4s ease-out forwards;
         }
@@ -80,8 +116,13 @@
         }
 
         @keyframes fadeInPage {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         /* Header / Nav */
@@ -97,7 +138,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .logo {
@@ -116,7 +157,11 @@
             animation: spin-slow 10s linear infinite;
         }
 
-        @keyframes spin-slow { 100% { transform: rotate(360deg); } }
+        @keyframes spin-slow {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
         nav {
             display: flex;
@@ -134,10 +179,11 @@
             cursor: pointer;
         }
 
-        nav a:hover, nav a.active-link {
+        nav a:hover,
+        nav a.active-link {
             background: var(--white);
             color: var(--accent-teal);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         .nav-donate-btn {
@@ -189,7 +235,8 @@
         /* --- Home View --- */
         .hero-section {
             text-align: center;
-            padding: 6rem 0 2rem 0; /* Increased top padding for headline */
+            padding: 6rem 0 2rem 0;
+            /* Increased top padding for headline */
         }
 
         .motto {
@@ -200,7 +247,8 @@
             background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-teal) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 4px 20px rgba(255, 123, 84, 0.15); /* Soft glowing shadow */
+            text-shadow: 0px 4px 20px rgba(255, 123, 84, 0.15);
+            /* Soft glowing shadow */
         }
 
         .hero-subtitle {
@@ -224,7 +272,10 @@
             margin-bottom: 1rem;
         }
 
-        .info-item ul { list-style: none; }
+        .info-item ul {
+            list-style: none;
+        }
+
         .info-item ul li {
             margin-bottom: 0.8rem;
             font-size: 1.1rem;
@@ -232,6 +283,7 @@
             align-items: center;
             gap: 10px;
         }
+
         .info-item ul li::before {
             content: '✿';
             color: var(--accent-yellow);
@@ -245,7 +297,7 @@
             gap: 3rem;
             align-items: center;
         }
-        
+
         .steps-list {
             list-style: none;
             counter-reset: my-counter;
@@ -339,7 +391,9 @@
             margin: 0;
         }
 
-        .zweck-text { font-size: 1.2rem; }
+        .zweck-text {
+            font-size: 1.2rem;
+        }
 
         /* --- Spenden View --- */
         .donation-layout {
@@ -364,7 +418,7 @@
             justify-content: center;
             align-items: center;
             color: var(--text-dark);
-            box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6), inset 0 -10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6), inset 0 -10px 20px rgba(0, 0, 0, 0.1);
             animation: float-pot 6s ease-in-out infinite;
             border: 10px solid var(--white);
             position: relative;
@@ -372,14 +426,32 @@
         }
 
         @keyframes float-pot {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
-        
+
         @keyframes fillPotAnim {
-            0% { transform: scale(1); box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6); }
-            50% { transform: scale(1.1); box-shadow: 0 30px 70px rgba(255, 213, 111, 0.9); }
-            100% { transform: scale(1); box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6); }
+            0% {
+                transform: scale(1);
+                box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6);
+            }
+
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 30px 70px rgba(255, 213, 111, 0.9);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6);
+            }
         }
 
         .pot-total {
@@ -433,13 +505,15 @@
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(255, 123, 84, 0.3);
         }
-        
+
         .btn-reset {
             background: var(--bg-gradient-1);
             border-color: var(--bg-gradient-1);
         }
 
-        .btn-amount:active { transform: scale(0.95); }
+        .btn-amount:active {
+            transform: scale(0.95);
+        }
 
         .current-amount-display {
             font-size: 3rem;
@@ -487,13 +561,13 @@
             border: 1px solid var(--glass-border);
             position: relative;
         }
-        
+
         .map-container iframe {
             width: 100%;
             height: 100%;
             border: 0;
         }
-        
+
         /* SOS Button */
         .btn-sos {
             background: var(--accent-blue);
@@ -512,6 +586,7 @@
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
         }
+
         .btn-sos:hover {
             background: #004a80;
             transform: translateY(-3px);
@@ -524,18 +599,23 @@
             gap: 1.2rem;
             margin-top: 1.5rem;
         }
+
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
             text-align: left;
         }
+
         .form-group label {
             font-weight: 700;
             color: var(--text-dark);
             font-size: 0.95rem;
         }
-        .form-input, .form-select, .form-textarea {
+
+        .form-input,
+        .form-select,
+        .form-textarea {
             padding: 0.8rem 1rem;
             border-radius: 12px;
             border: 1px solid var(--glass-border);
@@ -544,12 +624,16 @@
             font-size: 1rem;
             transition: all 0.3s;
         }
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
             outline: none;
             border-color: var(--accent-orange);
             background: var(--white);
             box-shadow: 0 0 0 4px rgba(255, 123, 84, 0.1);
         }
+
         .form-checkbox-group {
             display: flex;
             align-items: flex-start;
@@ -559,6 +643,7 @@
             font-size: 0.9rem;
             margin-top: 0.5rem;
         }
+
         .form-disclaimer {
             font-size: 0.85rem;
             color: var(--accent-orange-dark);
@@ -570,7 +655,7 @@
             margin-bottom: 1rem;
             line-height: 1.4;
         }
-        
+
         .price-summary {
             background: var(--accent-teal);
             color: white;
@@ -587,7 +672,7 @@
             margin-bottom: 0.5rem;
             border: 1px solid var(--glass-border);
             border-radius: 12px;
-            background: rgba(255,255,255,0.4);
+            background: rgba(255, 255, 255, 0.4);
             overflow: hidden;
         }
 
@@ -596,7 +681,7 @@
             cursor: pointer;
             font-weight: 800;
             color: var(--accent-teal);
-            background: rgba(255,255,255,0.6);
+            background: rgba(255, 255, 255, 0.6);
             transition: background 0.3s;
             list-style: none;
             display: flex;
@@ -642,7 +727,7 @@
             animation: fadeInPage 0.4s ease-out;
         }
 
-        /* Floating Coins Animation */
+        /* Floating Coins Animation - Hardware Accelerated */
         .coin {
             position: absolute;
             width: 30px;
@@ -650,39 +735,148 @@
             background: #FFD700;
             border-radius: 50%;
             border: 2px solid #DAA520;
-            box-shadow: inset 0 0 5px rgba(255,255,255,0.8), 0 5px 10px rgba(0,0,0,0.2);
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.8), 0 5px 10px rgba(0, 0, 0, 0.2);
             z-index: 3;
             pointer-events: none;
             opacity: 0;
+            will-change: transform, opacity;
         }
 
         @keyframes coinDrop {
-            0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
-            20% { opacity: 1; transform: translateY(-50px) scale(1); }
-            80% { opacity: 1; transform: translateY(100px) scale(1); }
-            100% { transform: translateY(150px) scale(0.5); opacity: 0; }
+            0% {
+                transform: translate3d(0, -100px, 0) scale(0.5);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+                transform: translate3d(0, -50px, 0) scale(1);
+            }
+
+            80% {
+                opacity: 1;
+                transform: translate3d(0, 100px, 0) scale(1);
+            }
+
+            100% {
+                transform: translate3d(0, 150px, 0) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Flower Loading Overlay */
+        #loaderOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-base);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .loader-flower {
+            font-size: 5rem;
+            animation: spin-slow 4s linear infinite;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .loader-bar-container {
+            width: 250px;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem auto;
+        }
+
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-teal));
+            animation: loadProgress 2.5s ease-in-out forwards;
+        }
+
+        @keyframes loadProgress {
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        .bg-flowers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-flower {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: float-flower 10s infinite linear;
+            will-change: transform;
+        }
+
+        @keyframes float-flower {
+            from {
+                transform: translate3d(0, -50px, 0) rotate(0deg);
+            }
+
+            to {
+                transform: translate3d(100px, 100vh, 0) rotate(360deg);
+            }
         }
 
         /* Responsive - Mobile Optimization */
         @media (max-width: 768px) {
-            .motto { font-size: 2.2rem; }
-            .hero-subtitle { font-size: 1.1rem; }
-            .section-title { font-size: 2.2rem; }
-            
-            header { 
+            .motto {
+                font-size: 2.2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            header {
                 flex-direction: column;
                 gap: 1.5rem;
                 padding: 1.5rem 1rem;
             }
-            .logo { font-size: 1.4rem; }
-            
-            nav { 
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            nav {
                 width: 100%;
                 justify-content: center;
                 flex-wrap: wrap;
                 gap: 0.8rem;
             }
-            
+
             nav a {
                 font-size: 0.9rem;
                 padding: 0.5rem 1rem;
@@ -691,46 +885,79 @@
                 border: 1px solid var(--glass-border);
             }
 
-            nav a::before { display: none; }
-            
+            nav a::before {
+                display: none;
+            }
+
             .nav-donate-btn {
                 background: var(--accent-orange) !important;
                 color: var(--white) !important;
                 box-shadow: 0 4px 10px rgba(255, 123, 84, 0.3);
             }
-            
+
             nav a.active-link {
                 background: var(--white) !important;
                 color: var(--accent-teal) !important;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             }
 
             .page-view {
                 padding-bottom: 50px;
             }
 
-            .verkaeufer-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .pot-container { width: 250px; height: 250px; }
-            .pot-total { font-size: 3rem; }
-            
-            .btn-amount { padding: 0.8rem 1.2rem; font-size: 1rem; }
-            .current-amount-display { font-size: 2.2rem; min-width: 150px; padding: 1rem 2rem; }
-            .glass-card { padding: 1.5rem; }
-            
-            .info-grid { grid-template-columns: 1fr; }
+            .verkaeufer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .pot-container {
+                width: 250px;
+                height: 250px;
+            }
+
+            .pot-total {
+                font-size: 3rem;
+            }
+
+            .btn-amount {
+                padding: 0.8rem 1.2rem;
+                font-size: 1rem;
+            }
+
+            .current-amount-display {
+                font-size: 2.2rem;
+                min-width: 150px;
+                padding: 1rem 2rem;
+            }
+
+            .glass-card {
+                padding: 1.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
 
             /* Registration Form Mobile Fixes */
-            .registration-form { gap: 1rem; }
-            .form-group { grid-column: span 1 !important; }
-            .category-content { 
-                grid-template-columns: 1fr; 
-                gap: 0.8rem; 
+            .registration-form {
+                gap: 1rem;
             }
+
+            .form-group {
+                grid-column: span 1 !important;
+            }
+
+            .category-content {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
             .form-checkbox-group {
                 padding: 0.5rem;
-                background: rgba(255,255,255,0.3);
+                background: rgba(255, 255, 255, 0.3);
                 border-radius: 8px;
             }
+
             .price-summary {
                 font-size: 1.2rem;
                 text-align: center;
@@ -739,12 +966,26 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Decorative Background -->
     <div class="glass-blob blob-1"></div>
     <div class="glass-blob blob-2"></div>
     <div class="glass-blob blob-3"></div>
+
+    <!-- Loading Screen Overlay -->
+    <div id="loaderOverlay">
+        <div class="bg-flowers" id="bgFlowers"></div>
+        <div class="loader-content">
+            <span class="loader-flower">✿</span>
+            <h2 style="color: var(--accent-teal); font-weight: 800;">Spendentopf wird vorbereitet...</h2>
+            <div class="loader-bar-container">
+                <div class="loader-bar"></div>
+            </div>
+            <p style="color: var(--text-light); font-weight: 600;">Wir verbinden dich mit der Cloud</p>
+        </div>
+    </div>
 
     <header>
         <a class="logo" onclick="navigateTo('view-home')">
@@ -755,17 +996,19 @@
             <a onclick="navigateTo('view-verkaeufer')" class="nav-link" data-target="view-verkaeufer">Für Verkäufer</a>
             <a onclick="navigateTo('view-anmeldung')" class="nav-link" data-target="view-anmeldung">Anmelden</a>
             <a onclick="navigateTo('view-zweck')" class="nav-link" data-target="view-zweck">Guter Zweck</a>
-            <a onclick="navigateTo('view-spenden')" class="nav-link nav-donate-btn" data-target="view-spenden">Spenden</a>
+            <a onclick="navigateTo('view-spenden')" class="nav-link nav-donate-btn"
+                data-target="view-spenden">Spenden</a>
         </nav>
     </header>
 
     <!-- VIEWS -->
-    
+
     <!-- 1. Home / Info View -->
     <div id="view-home" class="page-view active container">
         <div class="hero-section">
             <h1 class="motto">Ihr Beitrag macht den Unterschied</h1>
-            <p class="hero-subtitle">Ein fröhlicher Charity-Flohmarkt für gebrauchte Gegenstände. Mach mit und hilf dabei, Großes zu bewirken!</p>
+            <p class="hero-subtitle">Ein fröhlicher Charity-Flohmarkt für gebrauchte Gegenstände. Mach mit und hilf
+                dabei, Großes zu bewirken!</p>
         </div>
 
         <div class="glass-card">
@@ -773,45 +1016,56 @@
             <div class="info-grid">
                 <div class="info-item">
                     <h3><span style="margin-right: 10px;">📅</span> Wann & Wo?</h3>
-                    <ul style="background: rgba(255,255,255,0.4); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+                    <ul
+                        style="background: rgba(255,255,255,0.4); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--glass-border);">
                         <li><strong>Datum:</strong> 11. September 2026</li>
                         <li><strong>Uhrzeit:</strong> 15:00 bis 18:00 Uhr</li>
                         <li><strong>Ort:</strong> Schulhof des Friedrich-Gymnasiums Luckenwalde</li>
-                        <li style="font-size: 0.9rem; opacity: 0.8; margin-top: 5px; display: block; padding-left: 30px;">Parkstraße 59, 14943 Luckenwalde</li>
+                        <li
+                            style="font-size: 0.9rem; opacity: 0.8; margin-top: 5px; display: block; padding-left: 30px;">
+                            Parkstraße 59, 14943 Luckenwalde</li>
                     </ul>
-                    
+
                     <div class="map-container">
-                        <iframe 
-                            src="https://maps.google.com/maps?q=Friedrich-Gymnasium%20Parkstra%C3%9Fe%2059%20Luckenwalde&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                            allowfullscreen="" 
-                            loading="lazy">
+                        <iframe
+                            src="https://maps.google.com/maps?q=Friedrich-Gymnasium%20Parkstra%C3%9Fe%2059%20Luckenwalde&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            allowfullscreen="" loading="lazy">
                         </iframe>
                     </div>
                 </div>
                 <div class="info-item">
                     <h3><span style="margin-right: 10px;">🤝</span> Verantwortliche</h3>
-                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--text-light);">Organisiert mit viel Engagement und Herz von:</p>
+                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--text-light);">Organisiert mit viel
+                        Engagement und Herz von:</p>
                     <div style="display: grid; gap: 1rem;">
-                        <div style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                        <div
+                            style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
                             <span style="font-size: 1.5rem;">👤</span> <strong>Julen</strong>
                         </div>
-                        <div style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                        <div
+                            style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
                             <span style="font-size: 1.5rem;">👤</span> <strong>Roman</strong>
                         </div>
-                        <div style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                        <div
+                            style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
                             <span style="font-size: 1.5rem;">👤</span> <strong>Carlos</strong>
                         </div>
                     </div>
-                    
-                    <div style="margin-top: 2rem; background: var(--accent-orange); color: white; padding: 1.5rem; border-radius: 20px; text-align: center;">
+
+                    <div
+                        style="margin-top: 2rem; background: var(--accent-orange); color: white; padding: 1.5rem; border-radius: 20px; text-align: center;">
                         <h4 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Mach mit!</h4>
-                        <p style="font-size: 0.95rem; opacity: 0.9;">Jede Spende und jeder Verkauf hilft Kindern in Not.</p>
+                        <p style="font-size: 0.95rem; opacity: 0.9;">Jede Spende und jeder Verkauf hilft Kindern in Not.
+                        </p>
                     </div>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 3rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
-                 <button class="btn-send" style="width: auto; padding: 1rem 3rem;" onclick="navigateTo('view-anmeldung')">Jetzt anmelden</button>
-                 <button class="btn-send" style="width: auto; padding: 1rem 3rem; background: var(--accent-orange);" onclick="navigateTo('view-spenden')">Zum Spendentopf</button>
+            <div
+                style="text-align: center; margin-top: 3rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
+                <button class="btn-send" style="width: auto; padding: 1rem 3rem;"
+                    onclick="navigateTo('view-anmeldung')">Jetzt anmelden</button>
+                <button class="btn-send" style="width: auto; padding: 1rem 3rem; background: var(--accent-orange);"
+                    onclick="navigateTo('view-spenden')">Zum Spendentopf</button>
             </div>
         </div>
     </div>
@@ -819,21 +1073,29 @@
     <!-- 2. Verkäufer View -->
     <div id="view-verkaeufer" class="page-view container">
         <h2 class="section-title">Informationen für Verkäufer</h2>
-        
+
         <div class="glass-card" style="margin-bottom: 2rem;">
-            <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">Ausführliche Richtlinien zum Verkauf</h3>
+            <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">Ausführliche Richtlinien
+                zum Verkauf</h3>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                 <div>
                     <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Was darf verkauft werden?</h4>
-                    <p style="color: var(--text-light);">Erlaubt sind gut erhaltene, gebrauchte Gegenstände wie Kleidung, Kinderspielzeug, Bücher, Elektrogeräte, Deko-Artikel und Haushaltswaren. <strong>Bitte beachte:</strong> Der Verkauf von Neuwaren in Massen, Lebensmitteln oder kaputten Gegenständen ist nicht gestattet.</p>
+                    <p style="color: var(--text-light);">Erlaubt sind gut erhaltene, gebrauchte Gegenstände wie
+                        Kleidung, Kinderspielzeug, Bücher, Elektrogeräte, Deko-Artikel und Haushaltswaren. <strong>Bitte
+                            beachte:</strong> Der Verkauf von Neuwaren in Massen, Lebensmitteln oder kaputten
+                        Gegenständen ist nicht gestattet.</p>
                 </div>
                 <div>
                     <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Ablauf am Markttag</h4>
-                    <p style="color: var(--text-light);">Der Aufbau beginnt ab <strong>13:30 Uhr</strong>. Bitte erscheine pünktlich, um Chaos zu vermeiden. Der Abbau startet ab 18:00 Uhr. Denke daran, deinen Platz sauber zu hinterlassen und nicht verkaufte Artikel wieder mitzunehmen.</p>
+                    <p style="color: var(--text-light);">Der Aufbau beginnt ab <strong>13:30 Uhr</strong>. Bitte
+                        erscheine pünktlich, um Chaos zu vermeiden. Der Abbau startet ab 18:00 Uhr. Denke daran, deinen
+                        Platz sauber zu hinterlassen und nicht verkaufte Artikel wieder mitzunehmen.</p>
                 </div>
                 <div>
                     <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Selbst mitbringen</h4>
-                    <p style="color: var(--text-light);">Einen Tisch bekommst du von uns gestellt. Kleiderstangen dürfen gerne selbst mitgebracht werden (bitte bei der Anmeldung kurz erwähnen). Vergiss außerdem nicht, ausreichend <strong>Wechselgeld</strong> für deine eigene Kasse mitzubringen!</p>
+                    <p style="color: var(--text-light);">Einen Tisch bekommst du von uns gestellt. Kleiderstangen dürfen
+                        gerne selbst mitgebracht werden (bitte bei der Anmeldung kurz erwähnen). Vergiss außerdem nicht,
+                        ausreichend <strong>Wechselgeld</strong> für deine eigene Kasse mitzubringen!</p>
                 </div>
             </div>
         </div>
@@ -843,101 +1105,142 @@
     <!-- 2.1 Anmeldung View -->
     <div id="view-anmeldung" class="page-view container">
         <h2 class="section-title">Anmeldung für Standbetreiber</h2>
-        
+
         <div class="glass-card verkaeufer-grid" style="position: relative;">
             <div id="successOverlay" class="success-overlay">
                 <span style="font-size: 4rem; margin-bottom: 1rem;">🎉</span>
-                <h3 style="color: var(--accent-teal); font-size: 2rem; margin-bottom: 0.5rem;">Anmeldung erfolgreich!</h3>
-                <p style="font-size: 1.2rem; margin-bottom: 2rem;">Vielen Dank, <strong id="successName"></strong>! Dein Stand ist reserviert. Wir freuen uns auf dich am 11. September.</p>
+                <h3 style="color: var(--accent-teal); font-size: 2rem; margin-bottom: 0.5rem;">Anmeldung erfolgreich!
+                </h3>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">Vielen Dank, <strong id="successName"></strong>! Dein
+                    Stand ist reserviert. Wir freuen uns auf dich am 11. September.</p>
                 <button class="btn-send" style="width: auto;" onclick="closeSuccess()">Zurück zur Übersicht</button>
             </div>
 
             <div>
-                <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1rem;">Jetzt Standplatz sichern</h3>
+                <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1rem;">Jetzt Standplatz
+                    sichern</h3>
                 <div class="form-disclaimer">
-                    🎈 <strong>HINWEIS:</strong> Dies ist eine reine Spaß-Webseite! Bitte gib <u>KEINE</u> echten Namen oder privaten Daten an. Genieße das Erlebnis!
+                    🎈 <strong>HINWEIS:</strong> Dies ist eine reine Spaß-Webseite! Bitte gib <u>KEINE</u> echten Namen
+                    oder privaten Daten an. Genieße das Erlebnis!
                 </div>
-                
+
                 <form id="registrationForm" class="registration-form" onsubmit="handleRegistration(event)">
                     <div class="form-group">
                         <label for="reg-name">Dein Name (oder Pseudonym)</label>
                         <input type="text" id="reg-name" class="form-input" placeholder="z.B. Flohmarkt-König" required>
                     </div>
-                    
+
                     <div class="form-group" style="grid-column: span 2;">
                         <label>Was verkaufst du? (Kategorien aufklappen)</label>
                         <div style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
-                            
+
                             <details class="category-details">
                                 <summary>👗 Kleidung & Mode</summary>
                                 <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Damenmode"> Damenmode</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Herrenmode"> Herrenmode</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Kindermode"> Kindermode</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Babysachen"> Babysachen</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Schuhe"> Schuhe</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Taschen & Accessoires"> Accessoires</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Damenmode"> Damenmode</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Herrenmode"> Herrenmode</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Kindermode"> Kindermode</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Babysachen"> Babysachen</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Schuhe"> Schuhe</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Taschen & Accessoires"> Accessoires</label>
                                 </div>
                             </details>
 
                             <details class="category-details">
                                 <summary>📱 Elektronik & Technik</summary>
                                 <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Smartphones"> Smartphones</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Tablets"> Tablets</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Laptops"> Laptops</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Spielekonsolen"> Konsolen (PS/Xbox/etc)</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Videospiele"> Videospiele</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Kopfhörer/Audio"> Audio & Musik</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Kameras"> Kameras</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Smartphones"> Smartphones</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Tablets"> Tablets</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Laptops"> Laptops</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Spielekonsolen"> Konsolen (PS/Xbox/etc)</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Videospiele"> Videospiele</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Kopfhörer/Audio"> Audio & Musik</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Kameras"> Kameras</label>
                                 </div>
                             </details>
 
                             <details class="category-details">
                                 <summary>🍳 Küchen- & Haushaltsgeräte</summary>
                                 <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Mixer/Küchenmaschinen"> Küchenmaschinen</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Kaffeemaschinen"> Kaffeemaschinen</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Toaster/Wasserkocher"> Toaster & Co.</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Mikrowellen"> Mikrowellen</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Staubsauger"> Staubsauger</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Bügeleisen"> Bügeleisen</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Mixer/Küchenmaschinen"> Küchenmaschinen</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Kaffeemaschinen"> Kaffeemaschinen</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Toaster/Wasserkocher"> Toaster & Co.</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Mikrowellen"> Mikrowellen</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Staubsauger"> Staubsauger</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Bügeleisen"> Bügeleisen</label>
                                 </div>
                             </details>
 
                             <details class="category-details">
                                 <summary>📚 Medien & Bücher</summary>
                                 <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Romane/Krimis"> Romane & Krimis</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Sachbücher"> Sachbücher</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Comics/Mangas"> Comics & Mangas</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Kinderbücher"> Kinderbücher</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="DVDs/Blu-rays"> DVDs/Blu-rays</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="CDs/Schallplatten"> CDs/LPs</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Romane/Krimis"> Romane & Krimis</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Sachbücher"> Sachbücher</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Comics/Mangas"> Comics & Mangas</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Kinderbücher"> Kinderbücher</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="DVDs/Blu-rays"> DVDs/Blu-rays</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="CDs/Schallplatten"> CDs/LPs</label>
                                 </div>
                             </details>
 
                             <details class="category-details">
                                 <summary>🎨 Hobby, Sport & Freizeit</summary>
                                 <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Sportartikel"> Sportartikel</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Camping"> Camping</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Fahrradzubehör"> Fahrräder/Zubehör</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Musikinstrumente"> Instrumente</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Bastelbedarf"> Bastelbedarf</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Brettspiele/Puzzles"> Brettspiele & Puzzles</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Sportartikel"> Sportartikel</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Camping"> Camping</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Fahrradzubehör"> Fahrräder/Zubehör</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Musikinstrumente"> Instrumente</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Bastelbedarf"> Bastelbedarf</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Brettspiele/Puzzles"> Brettspiele & Puzzles</label>
                                 </div>
                             </details>
 
                             <details class="category-details">
                                 <summary>🏠 Wohnen & Sonstiges</summary>
                                 <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Dekoartikel"> Dekoartikel</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Geschirr"> Geschirr & Glas</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Schmuck"> Schmuck & Uhren</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Werkzeug"> Werkzeug</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Garten"> Gartenbedarf</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item" value="Antiquitäten"> Antiquitäten</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Dekoartikel"> Dekoartikel</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Geschirr"> Geschirr & Glas</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Schmuck"> Schmuck & Uhren</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Werkzeug"> Werkzeug</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Garten"> Gartenbedarf</label>
+                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                            value="Antiquitäten"> Antiquitäten</label>
                                 </div>
                             </details>
 
@@ -955,18 +1258,23 @@
 
                     <div class="form-group">
                         <label style="margin-bottom: 0.5rem;">Benötigst du Extras? (gegen Gebühr)</label>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; background: rgba(255,255,255,0.4); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; background: rgba(255,255,255,0.4); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border);">
                             <label class="form-checkbox-group" style="font-size: 0.85rem;">
-                                <input type="checkbox" name="extra" value="5" onchange="updateTotalCost()"> Kleiderständer (+5€)
+                                <input type="checkbox" name="extra" value="5" onchange="updateTotalCost()">
+                                Kleiderständer (+5€)
                             </label>
                             <label class="form-checkbox-group" style="font-size: 0.85rem;">
-                                <input type="checkbox" name="extra" value="3" onchange="updateTotalCost()"> Zusatztisch (+3€)
+                                <input type="checkbox" name="extra" value="3" onchange="updateTotalCost()"> Zusatztisch
+                                (+3€)
                             </label>
                             <label class="form-checkbox-group" style="font-size: 0.85rem;">
-                                <input type="checkbox" name="extra" value="2" onchange="updateTotalCost()"> Klappstuhl (+2€)
+                                <input type="checkbox" name="extra" value="2" onchange="updateTotalCost()"> Klappstuhl
+                                (+2€)
                             </label>
                             <label class="form-checkbox-group" style="font-size: 0.85rem;">
-                                <input type="checkbox" name="extra" value="5" onchange="updateTotalCost()"> Sonnenschirm (+5€)
+                                <input type="checkbox" name="extra" value="5" onchange="updateTotalCost()"> Sonnenschirm
+                                (+5€)
                             </label>
                         </div>
                     </div>
@@ -977,12 +1285,14 @@
 
                     <div class="form-group">
                         <label for="reg-wishes">Spezielle Wünsche oder Anmerkungen</label>
-                        <textarea id="reg-wishes" class="form-textarea" placeholder="z.B. Standplatz im Schatten, nähe zum Eingang..." rows="2"></textarea>
+                        <textarea id="reg-wishes" class="form-textarea"
+                            placeholder="z.B. Standplatz im Schatten, nähe zum Eingang..." rows="2"></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="reg-pay">Fake-Bezahlung (4-stelliger Spaß-Code)</label>
-                        <input type="password" id="reg-pay" class="form-input" maxlength="4" placeholder="****" required>
+                        <input type="password" id="reg-pay" class="form-input" maxlength="4" placeholder="****"
+                            required>
                     </div>
 
                     <label class="form-checkbox-group">
@@ -993,24 +1303,30 @@
                     <button type="submit" class="btn-send">Kostenpflichtig reservieren (Spaß)</button>
                 </form>
             </div>
-            
-            <div style="background: var(--bg-gradient-2); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+
+            <div
+                style="background: var(--bg-gradient-2); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
                 <h3 style="color: var(--accent-teal); font-size: 1.5rem; margin-bottom: 1rem;">Warum anmelden?</h3>
                 <ul style="list-style: none; display: grid; gap: 1rem;">
                     <li style="display: flex; gap: 10px; align-items: center;">
-                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Garantierter Standplatz mit Tisch
+                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Garantierter Standplatz mit
+                        Tisch
                     </li>
                     <li style="display: flex; gap: 10px; align-items: center;">
-                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Sichtbarkeit im Marktplatz-Plan
+                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Sichtbarkeit im
+                        Marktplatz-Plan
                     </li>
                     <li style="display: flex; gap: 10px; align-items: center;">
-                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Du unterstützt Kinder in Not
+                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Du unterstützt Kinder in
+                        Not
                     </li>
                 </ul>
-                
-                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); text-align: center;">
+
+                <div
+                    style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); text-align: center;">
                     <p style="font-size: 0.9rem; color: var(--text-light);">Fragen zur Anmeldung?</p>
-                    <a href="mailto:info@flohmarkt-luckenwalde.de" style="color: var(--accent-orange); font-weight: 700;">info@flohmarkt-luckenwalde.de</a>
+                    <a href="mailto:info@flohmarkt-luckenwalde.de"
+                        style="color: var(--accent-orange); font-weight: 700;">info@flohmarkt-luckenwalde.de</a>
                 </div>
             </div>
         </div>
@@ -1020,25 +1336,32 @@
     <!-- 3. Guter Zweck View -->
     <div id="view-zweck" class="page-view container">
         <h2 class="section-title">Unser Engagement</h2>
-        
+
         <div class="sos-container">
             <div class="sos-brand">
                 SOS-KINDERDORF <span class="sos-dot"></span>
             </div>
-            
+
             <div class="zweck-card">
-                <div class="highlight-box" style="background: rgba(0, 90, 156, 0.05); border: 2px solid var(--accent-blue); border-style: dashed;">
-                    <p style="color: var(--accent-blue); font-size: 1.5rem;">70 % aller Einnahmen gehen direkt an SOS-Kinderdorf!</p>
+                <div class="highlight-box"
+                    style="background: rgba(0, 90, 156, 0.05); border: 2px solid var(--accent-blue); border-style: dashed;">
+                    <p style="color: var(--accent-blue); font-size: 1.5rem;">70 % aller Einnahmen gehen direkt an
+                        SOS-Kinderdorf!</p>
                 </div>
-                
-                <p class="zweck-text" style="font-size: 1.2rem; color: var(--text-dark); margin: 2rem 0; text-align: left; line-height: 1.8;">
-                    Wir glauben daran, dass jeder Mensch ein liebevolles Zuhause verdient. Mit unserem Charity-Flohmarkt unterstützen wir die wertvolle Arbeit von <strong>SOS-Kinderdorf</strong>. 
+
+                <p class="zweck-text"
+                    style="font-size: 1.2rem; color: var(--text-dark); margin: 2rem 0; text-align: left; line-height: 1.8;">
+                    Wir glauben daran, dass jeder Mensch ein liebevolles Zuhause verdient. Mit unserem Charity-Flohmarkt
+                    unterstützen wir die wertvolle Arbeit von <strong>SOS-Kinderdorf</strong>.
                     <br><br>
-                    Ihre Teilnahme ermöglicht es, Kindern und Jugendlichen in schwierigen Lebenslagen Schutz, Geborgenheit und eine Perspektive für die Zukunft zu geben. Gemeinsam schaffen wir Momente der Hoffnung und konkrete Hilfe dort, wo sie am dringendsten benötigt wird.
+                    Ihre Teilnahme ermöglicht es, Kindern und Jugendlichen in schwierigen Lebenslagen Schutz,
+                    Geborgenheit und eine Perspektive für die Zukunft zu geben. Gemeinsam schaffen wir Momente der
+                    Hoffnung und konkrete Hilfe dort, wo sie am dringendsten benötigt wird.
                 </p>
-                
+
                 <div style="text-align: center; margin-top: 2rem;">
-                    <a href="https://www.sos-kinderdorf.de/" target="_blank" class="btn-sos" style="margin-top: 0; background: var(--accent-blue); padding: 1.2rem 3rem;">
+                    <a href="https://www.sos-kinderdorf.de/" target="_blank" class="btn-sos"
+                        style="margin-top: 0; background: var(--accent-blue); padding: 1.2rem 3rem;">
                         <span style="font-size: 1.2rem;">❤</span> Offizielle Website besuchen
                     </a>
                 </div>
@@ -1049,28 +1372,30 @@
     <!-- 4. Spenden View -->
     <div id="view-spenden" class="page-view container">
         <h2 class="section-title">Virtueller Spendentopf</h2>
-        
+
         <div class="donation-layout">
             <div class="pot-wrapper" id="potWrapper">
                 <div class="pot-container" id="potContainer">
                     <div class="pot-total" id="potTotal">0,00 €</div>
                     <div class="pot-label">Bisher gesammelt</div>
-                    <div id="cloudStatus" style="font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-top: 5px;">☁ Firebase wird geladen...</div>
+                    <div id="cloudStatus" style="font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-top: 5px;">☁
+                        Firebase wird geladen...</div>
                 </div>
             </div>
 
             <div class="donation-controls">
-                <p style="font-weight: 700; color: var(--text-light); margin-bottom: 1rem; font-size: 1.1rem;">Dein Spendenbetrag (max. 1000 €):</p>
-                
+                <p style="font-weight: 700; color: var(--text-light); margin-bottom: 1rem; font-size: 1.1rem;">Dein
+                    Spendenbetrag (max. 1000 €):</p>
+
                 <div class="amount-buttons">
                     <button class="btn-amount" onclick="addAmount(15)">+ 15 €</button>
                     <button class="btn-amount" onclick="addAmount(50)">+ 50 €</button>
                     <button class="btn-amount" onclick="addAmount(100)">+ 100 €</button>
                     <button class="btn-amount btn-reset" onclick="resetAmount()">Zurücksetzen</button>
                 </div>
-                
+
                 <div class="current-amount-display" id="currentAmount">0 €</div>
-                
+
                 <button class="btn-send" onclick="sendDonation()">Spende Senden</button>
                 <div class="donation-message" id="donationMessage"></div>
             </div>
@@ -1080,31 +1405,70 @@
     <script>
         // ############################################################
         // ZERO-CONFIG CLOUD (Keine Anmeldung nötig!)
-        const CLOUD_ID = 'charity-lkw-2026-pot-xyz'; 
+        const CLOUD_ID = 'charity-lkw-2026-pot-xyz';
         const CLOUD_URL = `https://api.keyvalue.xyz/${CLOUD_ID}/pot`;
         // ############################################################
 
         // --- Navigation Logic (SPA) ---
         function navigateTo(viewId) {
+            // Cool loading screen for donation view
+            if (viewId === 'view-spenden') {
+                showLoader(() => finalizeNavigation(viewId));
+            } else {
+                finalizeNavigation(viewId);
+            }
+        }
+
+        function showLoader(callback) {
+            const loader = document.getElementById('loaderOverlay');
+            const bgFlowers = document.getElementById('bgFlowers');
+
+            // Add some floating flowers
+            bgFlowers.innerHTML = '';
+            const symbols = ['✿', '❀', '❁', '🌸', '🌼'];
+            for (let i = 0; i < 15; i++) {
+                const f = document.createElement('div');
+                f.className = 'floating-flower';
+                f.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                f.style.left = Math.random() * 100 + '%';
+                f.style.top = '-50px';
+                f.style.animationDuration = (5 + Math.random() * 10) + 's';
+                f.style.animationDelay = (Math.random() * 5) + 's';
+                bgFlowers.appendChild(f);
+            }
+
+            loader.style.display = 'flex';
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    loader.style.opacity = '1';
+                    callback();
+                }, 500);
+            }, 2500);
+        }
+
+        function finalizeNavigation(viewId) {
             // Hide all views
             document.querySelectorAll('.page-view').forEach(view => {
                 view.classList.remove('active');
             });
             // Show target view
             const target = document.getElementById(viewId);
-            if(target) {
+            if (target) {
                 target.classList.add('active');
             }
 
             // Update Nav Links
             document.querySelectorAll('.nav-link').forEach(link => {
-                if(link.getAttribute('data-target') === viewId) {
+                if (link.getAttribute('data-target') === viewId) {
                     link.classList.add('active-link');
                 } else {
                     link.classList.remove('active-link');
                 }
             });
-            
+
             // Scroll to top when changing pages
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1156,7 +1520,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             const local = localStorage.getItem(LOCAL_STORAGE_KEY);
-            if(local) {
+            if (local) {
                 potTotal = parseFloat(local);
                 updateDisplay();
             }
@@ -1194,11 +1558,11 @@
         }
 
         function createCoins() {
-            for(let i=0; i<5; i++) {
+            for (let i = 0; i < 5; i++) {
                 setTimeout(() => {
                     const coin = document.createElement('div');
                     coin.className = 'coin';
-                    const left = 30 + Math.random() * 40; 
+                    const left = 30 + Math.random() * 40;
                     coin.style.left = left + '%';
                     coin.style.animation = 'coinDrop 1s ease-in forwards';
                     potWrapper.appendChild(coin);
@@ -1223,17 +1587,17 @@
                 setTimeout(async () => {
                     potTotal += currentDonation;
                     localStorage.setItem(LOCAL_STORAGE_KEY, potTotal);
-                    
+
                     // In die Cloud pushen
                     await pushToCloud(potTotal);
-                    
+
                     animatePotUpdate();
                     currentDonation = 0;
                     updateDisplay();
                     showMessage('Vielen Dank für deine großzügige Spende! ✿', 'var(--accent-teal)');
-                    
+
                     setTimeout(() => {
-                        if(messageElement.innerText.includes('Vielen Dank')) {
+                        if (messageElement.innerText.includes('Vielen Dank')) {
                             clearMessage();
                         }
                     }, 4000);
@@ -1249,25 +1613,25 @@
             const name = document.getElementById('reg-name').value;
             const successOverlay = document.getElementById('successOverlay');
             const successName = document.getElementById('successName');
-            
+
             successName.innerText = name;
             successOverlay.style.display = 'flex';
-            
+
             // Collect checked items
             const checkedItems = Array.from(document.querySelectorAll('input[name="sale-item"]:checked'))
-                                      .map(cb => cb.value);
-            
+                .map(cb => cb.value);
+
             // Save to fake registration list
             const registrations = JSON.parse(localStorage.getItem('charity-registrations') || '[]');
-            registrations.push({ 
-                name, 
+            registrations.push({
+                name,
                 size: document.getElementById('reg-size').value,
                 items: checkedItems.length > 0 ? checkedItems.join(', ') : 'Keine Angaben',
-                date: new Date().toLocaleDateString('de-DE') 
+                date: new Date().toLocaleDateString('de-DE')
             });
             localStorage.setItem('charity-registrations', JSON.stringify(registrations));
         }
-        
+
         function closeSuccess() {
             document.getElementById('successOverlay').style.display = 'none';
             document.getElementById('registrationForm').reset();
@@ -1279,7 +1643,7 @@
             const extras = document.querySelectorAll('input[name="extra"]:checked');
             let extrasCost = 0;
             extras.forEach(ex => extrasCost += parseInt(ex.value));
-            
+
             document.getElementById('totalRegCost').innerText = sizeCost + extrasCost;
         }
 
@@ -1287,4 +1651,5 @@
         window.addEventListener('DOMContentLoaded', updateTotalCost);
     </script>
 </body>
+
 </html>
