@@ -93,6 +93,11 @@ function resetAmount() {
     if (typeof clearMessage === 'function') clearMessage();
 }
 
+// --- Global Exports (for HTML onclick) ---
+window.addAmount = addAmount;
+window.resetAmount = resetAmount;
+window.sendDonation = sendDonation;
+
 function updateDisplay() {
     if (potTotalElement) potTotalElement.innerText = Math.floor(potTotal) + ' €';
     if (currentAmountElement) currentAmountElement.innerText = Math.floor(currentDonation) + ' €';
