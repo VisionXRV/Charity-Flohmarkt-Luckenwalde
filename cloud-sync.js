@@ -6,7 +6,7 @@
 // ############################################################
 // SUPABASE CONFIGURATION
 const SUPABASE_URL = 'https://mgpspiiahhiyvwdnvxzf.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_yiXxbpIqxagjGPnnI7B4Jw__9oZoh_O';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ncHNwaWlhaGhpeXZ3ZG52eHpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NDI4ODQsImV4cCI6MjA5MjUxODg4NH0.PAH24J1hymsS7eEaKdSX8XHm3QS7oeK4vwvHlt6My1k';
 let supabase;
 
 try {
@@ -41,13 +41,13 @@ async function syncPot() {
     if (!supabase) return;
     try {
         const { data, error } = await supabase
-            .from('spenden')
-            .select('betrag')
+            .from('Spenden')
+            .select('spend')
             .eq('id', 1)
             .single();
 
         if (data) {
-            const cloudValue = parseFloat(data.betrag) || 0;
+            const cloudValue = parseFloat(data.spend) || 0;
             if (cloudValue > potTotal) {
                 potTotal = cloudValue;
                 animatePotUpdate();
@@ -56,9 +56,17 @@ async function syncPot() {
                 cloudStatus.innerText = '☁ Supabase Aktiv (Verbunden)';
                 cloudStatus.style.color = 'white';
             }
-        } else if (error && cloudStatus) {
-            cloudStatus.innerText = '☁ Lokal-Modus (Fehler)';
-            cloudStatus.style.color = 'rgba(255,255,255,0.5)';
+        } else if (error) {
+            // Falls die Zeile noch nicht existiert (id=1), legen wir sie an
+            if (error.code === 'PGRST116') {
+                await supabase.from('Spenden').insert([{ id: 1, spend: 0 }]);
+                if (cloudStatus) cloudStatus.innerText = '☁ Supabase Initialisiert';
+            } else {
+                if (cloudStatus) {
+                    cloudStatus.innerText = '☁ Lokal-Modus (Fehler)';
+                    cloudStatus.style.color = 'rgba(255,255,255,0.5)';
+                }
+            }
         }
     } catch (e) {
         if (cloudStatus) cloudStatus.innerText = '☁ Verbindungsproblem';
@@ -69,8 +77,8 @@ async function pushToCloud(val) {
     if (!supabase) return;
     try {
         await supabase
-            .from('spenden')
-            .update({ betrag: val })
+            .from('Spenden')
+            .update({ spend: val })
             .eq('id', 1);
     } catch (e) { 
         console.log("Cloud-Update fehlgeschlagen"); 
@@ -133,8 +141,8 @@ async function sendDonation() {
         createCoins();
         setTimeout(async () => {
             if (supabase) {
-                const { data: currentData } = await supabase.from('spenden').select('betrag').eq('id', 1).single();
-                const neuerGesamtstand = (parseFloat(currentData?.betrag) || 0) + currentDonation;
+                const { data: currentData } = await supabase.from('Spenden').select('spend').eq('id', 1).single();
+                const neuerGesamtstand = (parseFloat(currentData?.spend) || 0) + currentDonation;
                 potTotal = neuerGesamtstand;
                 await pushToCloud(potTotal);
             } else {
@@ -185,9 +193,9 @@ window.addEventListener('DOMContentLoaded', () => {
     // REALTIME SUBSCRIPTION (True Live Sync)
     if (supabase) {
         supabase
-            .channel('public:spenden')
-            .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'spenden', filter: 'id=eq.1' }, payload => {
-                const newVal = parseFloat(payload.new.betrag) || 0;
+            .channel('public:Spenden')
+            .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'Spenden', filter: 'id=eq.1' }, payload => {
+                const newVal = parseFloat(payload.new.spend) || 0;
                 if (newVal !== potTotal) {
                     potTotal = newVal;
                     animatePotUpdate();
