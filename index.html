@@ -58,9 +58,11 @@
         .glass-blob {
             position: fixed;
             border-radius: 50%;
-            filter: blur(60px); /* Slightly reduced blur for performance */
+            filter: blur(60px);
+            /* Slightly reduced blur for performance */
             z-index: -1;
-            opacity: 0.4; /* Slightly more subtle */
+            opacity: 0.4;
+            /* Slightly more subtle */
             pointer-events: none;
             backface-visibility: hidden;
         }
@@ -859,24 +861,118 @@
 
         @keyframes coinDrop {
             0% {
-                transform: translate3d(0, -100px, 0) scale(0.5);
+                transform: translate3d(0, 0, 0) scale(0.5) rotate(0deg);
                 opacity: 0;
             }
 
-            20% {
+            10% {
                 opacity: 1;
-                transform: translate3d(0, -50px, 0) scale(1);
-            }
-
-            80% {
-                opacity: 1;
-                transform: translate3d(0, 100px, 0) scale(1);
             }
 
             100% {
-                transform: translate3d(0, 150px, 0) scale(0.5);
-                opacity: 0;
+                transform: translate3d(var(--target-x, 50px), 110vh, 0) scale(1) rotate(720deg);
+                opacity: 0.3;
             }
+        }
+
+        /* --- Multi-Step Registration Styles --- */
+        .step-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            z-index: 99999;
+            animation: fadeInOverlay 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .no-scroll {
+            overflow: hidden !important;
+        }
+
+        @keyframes fadeInOverlay {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .spinner-ring {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(69, 182, 156, 0.1);
+            border-radius: 50%;
+            border-top: 8px solid var(--accent-teal);
+            animation: spin-ring 1s linear infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes spin-ring {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-icon-large {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 900;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 90, 156, 0.3);
+        }
+
+        .checkmark-circle {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-teal);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(69, 182, 156, 0.3);
+            animation: popCheck 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popCheck {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .verification-input {
+            width: 200px;
+            text-align: center;
+            font-size: 2.5rem;
+            letter-spacing: 15px;
+            padding: 1rem;
+            border: 2px solid var(--bg-gradient-1);
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .verification-input:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 4px rgba(69, 182, 156, 0.1);
         }
 
         /* Flower Loading Overlay */
@@ -993,17 +1089,129 @@
             }
 
             10% {
-                opacity: 0.8;
+                opacity: 0.6;
             }
 
             90% {
-                opacity: 0.8;
+                opacity: 0.6;
             }
 
             100% {
                 transform: translateY(110vh) rotate(720deg) translateX(100px);
                 opacity: 0;
             }
+        }
+
+        /* --- Credits Specific Enhancements --- */
+        .credits-vibe {
+            background: linear-gradient(135deg, rgba(255, 123, 84, 0.1) 0%, rgba(69, 182, 156, 0.1) 100%);
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            border-radius: 50px;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--glass-border);
+        }
+
+        .credits-header {
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin-bottom: 3rem;
+            text-align: center;
+            line-height: 1;
+            z-index: 2;
+        }
+
+        .credits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            width: 100%;
+            max-width: 1000px;
+            z-index: 2;
+        }
+
+        .credit-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 35px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--white);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .credit-card:hover {
+            transform: translateY(-15px) rotate(2deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            background: var(--white);
+        }
+
+        .credit-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .credit-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-teal);
+        }
+
+        .credit-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .credit-list li {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+        }
+
+        .credit-list li strong {
+            color: var(--accent-orange);
+            display: block;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .thanks-message {
+            margin-top: 5rem;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-orange);
+            text-align: center;
+            animation: pulse-soft 3s infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .credits-blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-yellow) 0%, transparent 70%);
+            filter: blur(80px);
+            opacity: 0.3;
+            z-index: 1;
+            animation: move-blob 20s infinite alternate;
+        }
+
+        @keyframes move-blob {
+            0% { transform: translate(-20%, -20%); }
+            100% { transform: translate(50%, 50%); }
         }
 
         /* Responsive - Mobile Optimization */
@@ -1135,6 +1343,43 @@
             .scroll-indicator {
                 bottom: 10px;
             }
+
+            /* Credits Mobile Fixes */
+            .credits-vibe {
+                padding: 3rem 1.2rem;
+                border-radius: 30px;
+                min-height: auto;
+            }
+
+            .credits-header {
+                font-size: 2.2rem;
+                margin-bottom: 2rem;
+            }
+
+            .credits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .credit-card {
+                padding: 1.8rem;
+                border-radius: 25px;
+            }
+
+            .credit-icon {
+                font-size: 2.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .credit-card h3 {
+                font-size: 1.4rem;
+            }
+
+            .thanks-message {
+                font-size: 1.4rem;
+                margin-top: 3rem;
+                line-height: 1.4;
+            }
         }
 
         /* Scroll Down Indicator */
@@ -1167,9 +1412,22 @@
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-            40% {transform: translateX(-50%) translateY(-10px);}
-            60% {transform: translateX(-50%) translateY(-5px);}
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
         }
 
         /* Back to Top Button */
@@ -1237,7 +1495,8 @@
         <nav id="main-nav">
             <a class="nav-link active-link" data-target="view-home" onclick="navigateTo('view-home')">Home</a>
             <a class="nav-link" data-target="view-lkw-news" onclick="navigateTo('view-lkw-news')">Kapazität</a>
-            <a class="nav-link" data-target="view-verkaeufer" onclick="navigateTo('view-verkaeufer')">Infos zum Verkauf</a>
+            <a class="nav-link" data-target="view-verkaeufer" onclick="navigateTo('view-verkaeufer')">Infos zum
+                Verkauf</a>
             <a class="nav-link" data-target="view-anmeldung" onclick="navigateTo('view-anmeldung')">Anmeldung</a>
             <a class="nav-link" data-target="view-credits" onclick="navigateTo('view-credits')">Credits</a>
         </nav>
@@ -1256,8 +1515,9 @@
                 Ein fröhlicher Charity-Flohmarkt für
                 gebrauchte Gegenstände. Mach mit und hilf
                 dabei, Großes zu bewirken Komm Vorbei ! ✿</p>
-            
-            <div class="scroll-indicator active" onclick="document.querySelector('.glass-card').scrollIntoView({behavior: 'smooth'})">
+
+            <div class="scroll-indicator active"
+                onclick="document.querySelector('.glass-card').scrollIntoView({behavior: 'smooth'})">
                 <span>Mehr entdecken</span>
                 <i>▼</i>
             </div>
@@ -1320,7 +1580,7 @@
                 </div>
                 <p class="disclaimer-text reveal" style="transition-delay: 0.5s;">
                     * Hinweis: Diese Webseite dient ausschließlich Demonstrationszwecken. <br>
-                    Es findet kein reales Event statt.
+                    Es findet kein reales Event statt. Außerdem hat die Website viele funktionen die einer echten bezahlung sehr änlich sind. Dies ist nur Effect . Viel Spaß
                 </p>
             </div>
         </div>
@@ -1362,21 +1622,11 @@
     <div id="view-anmeldung" class="page-view container">
         <h2 class="section-title">Anmeldung für Standbetreiber</h2>
 
-        <div class="glass-card verkaeufer-grid" style="position: relative;">
-            <div id="successOverlay" class="success-overlay">
-                <span style="font-size: 4rem; margin-bottom: 1rem;">🎉</span>
-                <h3 style="color: var(--accent-teal); font-size: 2rem; margin-bottom: 0.5rem;">Anmeldung erfolgreich!
-                </h3>
-                <p style="font-size: 1.2rem; margin-bottom: 2rem;">Vielen Dank, <strong id="successName"></strong>! Dein
-                    Stand ist reserviert. Wir freuen uns auf dich am 11. September.</p>
-                <button class="btn-send" style="width: auto;" onclick="closeSuccess()">Zurück zur Übersicht</button>
-            </div>
-
             <div>
                 <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1rem;">Jetzt Standplatz
                     sichern</h3>
                 <div class="form-disclaimer">
-                    🎈 <strong>HINWEIS:</strong> Dies ist eine reine Demo-Webseite! Bitte gib <u>KEINE</u> echten Namen
+                    🎈 <strong>HINWEIS:</strong> Dies ist eine reine Demo-Webseite die ein vermittelt was angemeldet zu haben. Das heißt du kannst einfach irgendwas eingeben und du kommst weiter. Bitte gib <u>KEINE</u> echten Namen
                     oder privaten Daten an.Viel Spaß !!
                 </div>
 
@@ -1630,59 +1880,85 @@
     <div id="view-lkw-news" class="page-view container" style="position: relative; overflow-y: hidden; height: auto;">
         <div class="bg-flowers" id="capacityFlowers" style="z-index: 0; opacity: 0.3;"></div>
         <h2 class="section-title" style="margin-bottom: 1.5rem;">Projekt-Fortschritt</h2>
-        
+
         <div class="glass-card reveal" style="margin-bottom: 1.5rem;">
             <div class="card-header-flex">
                 <h3 style="color: var(--accent-blue);">Kapazitätsplanung</h3>
-                <span style="background: var(--accent-yellow); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 800; font-size: 0.8rem;">RESERVIERUNGSSTAND: 65%</span>
+                <span
+                    style="background: var(--accent-yellow); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 800; font-size: 0.8rem;">RESERVIERUNGSSTAND:
+                    67%</span>
             </div>
-            <div style="width: 100%; height: 20px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; margin-bottom: 1rem;">
-                <div style="width: 65%; height: 100%; background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow)); border-radius: 10px; transition: width 1s ease-out;"></div>
+            <div
+                style="width: 100%; height: 20px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; margin-bottom: 1rem;">
+                <div
+                    style="width: 65%; height: 100%; background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow)); border-radius: 10px; transition: width 1s ease-out;">
+                </div>
             </div>
-            <p style="font-size: 0.9rem; color: var(--text-light);">Aktuell sind 65% der verfügbaren Standflächen für den 11. September reserviert. Die Logistikplanung für den Transport der Sachspenden läuft nach Plan.</p>
+            <p style="font-size: 0.9rem; color: var(--text-light);">Aktuell sind 67% der verfügbaren Standflächen für
+                den 11. September reserviert. Die Logistikplanung für den Transport der Sachspenden läuft nach Plan.</p>
         </div>
 
         <div class="info-grid">
             <div class="glass-card reveal-left">
                 <h4 style="color: var(--accent-orange); margin-bottom: 1rem;">Logistik-Update</h4>
-                <p>Die Zufahrt zum Schulhof für den Aufbau ist am Veranstaltungstag ab 13:00 Uhr über das Haupttor an der Parkstraße koordiniert. Einweiser werden vor Ort sein.</p>
+                <p>Die Zufahrt zum Schulhof für den Aufbau ist am Veranstaltungstag ab 13:00 Uhr über das Nebentor an
+                    der Parkstraße koordiniert. Einweiser werden vor Ort sein.</p>
             </div>
             <div class="glass-card reveal-right">
                 <h4 style="color: var(--accent-teal); margin-bottom: 1rem;">Meilenstein</h4>
-                <p>Wir haben bereits Zusagen für über 100 hochwertige Sachspenden erhalten. Der Erlös aus dem Verkauf geht zu 70% an die SOS-Kinderdorf Projekte.</p>
+                <p>Wir haben bereits Zusagen für über 100 hochwertige Sachspenden erhalten. Der Erlös aus dem Verkauf
+                    geht zu 70% an die SOS-Kinderdorf Projekte.</p>
             </div>
         </div>
-        
+
         <div style="text-align: center; margin-top: 2rem;">
-            <button class="btn-amount" onclick="simulateRefresh()" id="refreshBtn">Logistik-Daten aktualisieren ↻</button>
+            <button class="btn-amount" onclick="simulateRefresh()" id="refreshBtn">Logistik-Daten aktualisieren
+                ↻</button>
         </div>
     </div>
 
     <!-- 7. Credits View -->
-    <div id="view-credits" class="page-view container" style="position: relative; overflow-y: hidden; height: auto;">
-        <div class="bg-flowers" id="creditsFlowers" style="z-index: 0; opacity: 0.4;"></div>
-        <h2 class="section-title">Projekt-Credits</h2>
-        <div class="glass-card reveal" style="position: relative; z-index: 1;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-                <div>
-                    <h3 style="color: var(--accent-orange); margin-bottom: 1rem;">Technik & Realisierung</h3>
-                    <ul style="list-style: none; display: grid; gap: 0.8rem;">
-                        <li><strong>Programmierung:</strong> Antigravity AI</li>
-                        <li><strong>Hosting:</strong> GitHub Pages</li>
-                        <li><strong>Infrastruktur:</strong> Google Server</li>
+    <div id="view-credits" class="page-view container" style="position: relative; overflow: visible; height: auto;">
+        <div class="bg-flowers" id="creditsFlowers" style="z-index: 0; opacity: 0.6;"></div>
+        
+        <div class="credits-vibe reveal">
+            <div class="credits-blob"></div>
+            
+            <h2 class="section-title credits-header">Die Köpfe hinter dem Projekt</h2>
+            
+            <div class="credits-grid">
+                <!-- Card 1: Tech -->
+                <div class="credit-card reveal" style="transition-delay: 0.1s;">
+                    <span class="credit-icon">💻</span>
+                    <h3>Technik & Realisierung</h3>
+                    <ul class="credit-list">
+                        <li><strong>Programmierung & KI</strong>Antigravity</li>
+                        <li><strong>Hosting & Deployment</strong>GitHub Pages</li>
+                        <li><strong>Backend & Logic</strong>Google Infrastructure</li>
                     </ul>
                 </div>
-                <div>
-                    <h3 style="color: var(--accent-teal); margin-bottom: 1rem;">Idee & Konzept</h3>
-                    <ul style="list-style: none; display: grid; gap: 0.8rem;">
-                        <li><strong>Initiatoren:</strong> Julen & Roman</li>
-                        <li><strong>Projekt:</strong> LER-Schulprojekt</li>
-                        <li><strong>Team:</strong> Julen, Carlos & Roman</li>
+                
+                <!-- Card 2: Concept -->
+                <div class="credit-card reveal" style="transition-delay: 0.3s;">
+                    <span class="credit-icon">💡</span>
+                    <h3>Idee & Konzept</h3>
+                    <ul class="credit-list">
+                        <li><strong>Programmierung & Design</strong>Carlos</li>
+                        <li><strong>Schulprojekt</strong>LER </li>
+                        <li><strong>Kreativ-Team</strong>Julen, Carlos & Roman</li>
                     </ul>
+                </div>
+
+                <!-- Card 3: Support -->
+                <div class="credit-card reveal" style="transition-delay: 0.5s;">
+                    <span class="credit-icon">❤</span>
+                
                 </div>
             </div>
-            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); text-align: center;">
-                <p style="font-size: 1.1rem; color: var(--text-dark); font-weight: 700;">"Dieses Projekt zeigt, was wir gemeinsam als Team erreichen können. Vielen Dank an alle Beteiligten! ✿"</p>
+            
+            <div class="thanks-message reveal" style="transition-delay: 0.7s;">
+                "Zusammen können wir Großes bewegen!" <br>
+                Vielen Dank für Ihren Besuch! ✿
             </div>
         </div>
     </div>
@@ -1769,8 +2045,9 @@
             if (!container) return;
 
             container.innerHTML = '';
-            const symbols = ['✿', '❀', '❁', '🌸', '🌼', '✨', '🍃'];
-            const colors = ['var(--accent-orange)', 'var(--accent-teal)', 'var(--accent-yellow)', '#FFB7C5'];
+
+            const symbols = ['✿', '❀', '❁', '🌸', '🌼', '✨', '🍃', '💮'];
+            const colors = ['var(--accent-orange)', 'var(--accent-teal)', 'var(--accent-yellow)', '#FFB7C5', '#FFFFFF'];
 
             for (let i = 0; i < count; i++) {
                 const f = document.createElement('div');
@@ -1778,16 +2055,18 @@
                 f.innerText = symbols[Math.floor(Math.random() * symbols.length)];
                 f.style.color = colors[Math.floor(Math.random() * colors.length)];
                 f.style.left = Math.random() * 100 + '%';
-                f.style.fontSize = (1 + Math.random() * 2) + 'rem';
-                
-                const duration = (4 + Math.random() * 6);
+                f.style.fontSize = (0.8 + Math.random() * 1.5) + 'rem';
+
+                const duration = (6 + Math.random() * 10);
                 f.style.animationDuration = duration + 's';
-                f.style.animationDelay = (Math.random() * (infinite ? 10 : 2)) + 's';
                 
+                // Stagger the initial delay significantly for global flow
+                f.style.animationDelay = (Math.random() * (infinite ? 15 : 2)) + 's';
+
                 if (infinite) {
                     f.style.animationIterationCount = 'infinite';
                 }
-                
+
                 f.style.setProperty('--target-x', (Math.random() * 200 - 100) + 'px');
                 container.appendChild(f);
             }
@@ -1800,10 +2079,10 @@
             const statusEl = document.getElementById('loaderStatus');
             const iconEl = document.getElementById('loaderIcon');
 
-            if (!loader) { 
+            if (!loader) {
                 if (midCallback) midCallback();
                 if (finalCallback) finalCallback();
-                return; 
+                return;
             }
 
             if (options.title && titleEl) titleEl.innerText = options.title;
@@ -1819,7 +2098,7 @@
 
             // Execute the switch while loader is fully opaque
             const duration = options.duration || 2500;
-            
+
             setTimeout(() => {
                 if (midCallback) midCallback();
             }, Math.min(800, duration / 2));
@@ -1844,7 +2123,7 @@
 
                 // Special background animations
                 if (viewId === 'view-credits') {
-                    createFlowers('creditsFlowers', 25, true);
+                    createFlowers('creditsFlowers', 40, true);
                 } else if (viewId === 'view-lkw-news') {
                     createFlowers('capacityFlowers', 20, true);
                 }
@@ -1868,28 +2147,83 @@
         function handleRegistration(event) {
             event.preventDefault();
             const name = document.getElementById('reg-name').value;
-            const successOverlay = document.getElementById('successOverlay');
-            const successName = document.getElementById('successName');
+            
+            // Disable scrolling
+            document.body.classList.add('no-scroll');
+            
+            // Scroll to top of registration for context (optional but good)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            if (successName) successName.innerText = name;
-            if (successOverlay) successOverlay.style.display = 'flex';
+            // Step 1: Processing
+            const processingStep = document.getElementById('processingStep');
+            if (processingStep) {
+                processingStep.style.display = 'flex';
+                
+                // Simulate 5 seconds processing as requested
+                setTimeout(() => {
+                    processingStep.style.display = 'none';
+                    // Step 2: Verification
+                    const verificationStep = document.getElementById('verificationStep');
+                    if (verificationStep) verificationStep.style.display = 'flex';
+                }, 5000);
+            }
 
+            // Store data temporarily for the success screen
+            window.tempUserName = name;
+            
+            // Capture all form data
             const checkedItems = Array.from(document.querySelectorAll('input[name="sale-item"]:checked'))
                 .map(cb => cb.value);
 
-            const registrations = JSON.parse(localStorage.getItem('charity-registrations') || '[]');
-            registrations.push({
+            window.tempRegistrationData = {
                 name,
                 size: document.getElementById('reg-size').value,
                 items: checkedItems.length > 0 ? checkedItems.join(', ') : 'Keine Angaben',
                 date: new Date().toLocaleDateString('de-DE')
-            });
-            localStorage.setItem('charity-registrations', JSON.stringify(registrations));
+            };
+        }
+
+        function submitVerification() {
+            const code = document.getElementById('verificationCode').value;
+            if (code.length < 4) {
+                alert('Bitte gib einen 4-stelligen Code ein.');
+                return;
+            }
+
+            const verificationStep = document.getElementById('verificationStep');
+            const processingStep = document.getElementById('processingStep');
+            
+            // Show processing first before hiding verification to avoid flickering
+            processingStep.style.display = 'flex';
+            verificationStep.style.display = 'none';
+            
+            // Second loading - increased to 4 seconds for better "feel"
+            setTimeout(() => {
+                // Final Success
+                const finalSuccess = document.getElementById('finalSuccessStep');
+                const successName = document.getElementById('successNameFinal');
+                
+                if (successName) successName.innerText = window.tempUserName;
+                
+                // Show success before hiding processing
+                finalSuccess.style.display = 'flex';
+                processingStep.style.display = 'none';
+                
+                // Finalize data storage
+                const registrations = JSON.parse(localStorage.getItem('charity-registrations') || '[]');
+                registrations.push(window.tempRegistrationData);
+                localStorage.setItem('charity-registrations', JSON.stringify(registrations));
+                
+                // Add coins effect for celebration - improved
+                for(let i=0; i<25; i++) {
+                    setTimeout(createCoin, i * 80);
+                }
+            }, 4000);
         }
 
         function closeSuccess() {
-            const overlay = document.getElementById('successOverlay');
-            if (overlay) overlay.style.display = 'none';
+            document.querySelectorAll('.step-overlay').forEach(el => el.style.display = 'none');
+            document.body.classList.remove('no-scroll');
             const form = document.getElementById('registrationForm');
             if (form) form.reset();
             updateTotalCost();
@@ -1911,10 +2245,10 @@
         // Initialization
         window.addEventListener('DOMContentLoaded', () => {
             updateTotalCost();
-            
+
             // Initial call to reveal visible elements
             setTimeout(initScrollReveals, 500);
-            
+
             showLoader({
                 title: 'Herzlich Willkommen!',
                 status: 'Der Charity-Flohmarkt lädt...',
@@ -1946,18 +2280,71 @@
                 }, 2000);
             }, 1500);
         }
+
+        function createCoin() {
+            const coin = document.createElement('div');
+            coin.className = 'coin';
+            // Random horizontal position and size
+            const size = 20 + Math.random() * 20;
+            coin.style.width = size + 'px';
+            coin.style.height = size + 'px';
+            coin.style.left = (Math.random() * 100) + '%';
+            coin.style.top = '-50px';
+            coin.style.zIndex = '1000000'; // Above everything
+            
+            document.body.appendChild(coin);
+            
+            // More dynamic drop animation
+            const duration = 1.5 + Math.random() * 1.5;
+            const xMovement = (Math.random() * 200 - 100) + 'px';
+            coin.style.setProperty('--target-x', xMovement);
+            
+            coin.style.animation = `coinDrop ${duration}s cubic-bezier(0.1, 0.5, 0.9, 0.5) forwards`;
+            
+            // Cleanup
+            setTimeout(() => {
+                coin.remove();
+            }, duration * 1000);
+        }
     </script>
     <footer>
         <p>&copy; 2026 LER-Schulprojekt "Charity-Flohmarkt Luckenwalde"</p>
         <div style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">
-            <span id="fleaCounter" style="cursor: pointer; background: rgba(255,255,255,0.1); padding: 0.3rem 0.8rem; border-radius: 10px;" onclick="countFlea()">
+            <span id="fleaCounter"
+                style="cursor: pointer; background: rgba(255,255,255,0.1); padding: 0.3rem 0.8rem; border-radius: 10px;"
+                onclick="countFlea()">
                 🪲 Gefundene Flöhe: <span id="fleaCount">0</span>
             </span>
         </div>
-        <p class="disclaimer-text">Dies ist eine reine Spaß-Webseite im Rahmen eines Schulprojekts. Es findet kein realer Verkauf statt.</p>
+        <p class="disclaimer-text">Dies ist eine reine Spaß-Webseite im Rahmen eines Schulprojekts. Es findet kein
+            realer Verkauf statt.</p>
     </footer>
 
     <button id="backToTop" class="back-to-top" onclick="scrollToTop()">▲</button>
+
+    <!-- Multi-Step Overlays (Moved to Body End for Fixed Positioning) -->
+    <div id="processingStep" class="step-overlay">
+        <div class="spinner-ring"></div>
+        <h3 style="color: var(--accent-teal); font-size: clamp(1.5rem, 5vw, 2rem);">Wird bearbeitet...</h3>
+        <p style="font-size: 1.1rem; color: var(--text-light); padding: 0 10%;">Bitte haben Sie einen Augenblick Geduld.</p>
+    </div>
+
+    <div id="verificationStep" class="step-overlay">
+        <div class="info-icon-large">i</div>
+        <h3 style="color: var(--accent-blue); font-size: clamp(1.5rem, 5vw, 2rem);">Verifizierung notwendig</h3>
+        <p style="font-size: 1.1rem; color: var(--text-light); padding: 0 10%;">Bitte gib deinen 4-stelligen Bestätigungscode ein.</p>
+        <input type="password" id="verificationCode" class="verification-input" maxlength="4" placeholder="****" inputmode="numeric">
+        <button class="btn-send" style="width: auto; padding: 1rem 3rem;" onclick="submitVerification()">Code bestätigen</button>
+        <p style="font-size: 0.8rem; margin-top: 1rem; opacity: 0.6;">(Demo-Hinweis: Jeder 4-stellige Code wird akzeptiert)</p>
+    </div>
+
+    <div id="finalSuccessStep" class="step-overlay">
+        <div class="checkmark-circle">✔</div>
+        <h3 style="color: var(--accent-teal); font-size: clamp(1.8rem, 6vw, 2.5rem);">Bestellung erledigt!</h3>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; padding: 0 10%;">Vielen Dank, <strong id="successNameFinal"></strong>! Dein
+            Stand ist erfolgreich reserviert.</p>
+        <button class="btn-send" style="width: auto;" onclick="closeSuccess()">Zurück zur Übersicht</button>
+    </div>
 </body>
 
 </html>
