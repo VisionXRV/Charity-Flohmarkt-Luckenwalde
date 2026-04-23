@@ -900,8 +900,15 @@
         }
 
         @keyframes fadeInOverlay {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .spinner-ring {
@@ -916,8 +923,13 @@
         }
 
         @keyframes spin-ring {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .info-icon-large {
@@ -952,9 +964,17 @@
         }
 
         @keyframes popCheck {
-            0% { transform: scale(0); }
-            80% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(0);
+            }
+
+            80% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         .verification-input {
@@ -1194,8 +1214,17 @@
         }
 
         @keyframes pulse-soft {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
         }
 
         .credits-blob {
@@ -1210,8 +1239,13 @@
         }
 
         @keyframes move-blob {
-            0% { transform: translate(-20%, -20%); }
-            100% { transform: translate(50%, 50%); }
+            0% {
+                transform: translate(-20%, -20%);
+            }
+
+            100% {
+                transform: translate(50%, 50%);
+            }
         }
 
         /* Responsive - Mobile Optimization */
@@ -1382,9 +1416,9 @@
             }
         }
 
-        /* Scroll Down Indicator */
+        /* Scroll Down Indicator - Now Global & Fixed */
         .scroll-indicator {
-            position: absolute;
+            position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
@@ -1396,14 +1430,18 @@
             font-weight: 800;
             font-size: 0.9rem;
             cursor: pointer;
-            z-index: 5;
+            z-index: 1000;
             animation: bounce 2s infinite;
             opacity: 0;
-            transition: opacity 0.5s;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            pointer-events: none;
         }
 
         .scroll-indicator.active {
             opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
 
         .scroll-indicator i {
@@ -1515,12 +1553,6 @@
                 Ein fröhlicher Charity-Flohmarkt für
                 gebrauchte Gegenstände. Mach mit und hilf
                 dabei, Großes zu bewirken Komm Vorbei ! ✿</p>
-
-            <div class="scroll-indicator active"
-                onclick="document.querySelector('.glass-card').scrollIntoView({behavior: 'smooth'})">
-                <span>Mehr entdecken</span>
-                <i>▼</i>
-            </div>
         </div>
 
         <div class="glass-card reveal" style="transition-delay: 0.2s;">
@@ -1580,7 +1612,8 @@
                 </div>
                 <p class="disclaimer-text reveal" style="transition-delay: 0.5s;">
                     * Hinweis: Diese Webseite dient ausschließlich Demonstrationszwecken. <br>
-                    Es findet kein reales Event statt. Außerdem hat die Website viele funktionen die einer echten bezahlung sehr änlich sind. Dies ist nur Effect . Viel Spaß
+                    Es findet kein reales Event statt. Außerdem hat die Website viele funktionen die einer echten
+                    bezahlung sehr änlich sind. Dies ist nur Effect . Viel Spaß
                 </p>
             </div>
         </div>
@@ -1622,221 +1655,222 @@
     <div id="view-anmeldung" class="page-view container">
         <h2 class="section-title">Anmeldung für Standbetreiber</h2>
 
-            <div>
-                <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1rem;">Jetzt Standplatz
-                    sichern</h3>
-                <div class="form-disclaimer">
-                    🎈 <strong>HINWEIS:</strong> Dies ist eine reine Demo-Webseite die ein vermittelt was angemeldet zu haben. Das heißt du kannst einfach irgendwas eingeben und du kommst weiter. Bitte gib <u>KEINE</u> echten Namen
-                    oder privaten Daten an.Viel Spaß !!
+        <div>
+            <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1rem;">Jetzt Standplatz
+                sichern</h3>
+            <div class="form-disclaimer">
+                🎈 <strong>HINWEIS:</strong> Dies ist eine reine Demo-Webseite die ein vermittelt was angemeldet zu
+                haben. Das heißt du kannst einfach irgendwas eingeben und du kommst weiter. Bitte gib <u>KEINE</u>
+                echten Namen
+                oder privaten Daten an.Viel Spaß !!
+            </div>
+
+            <form id="registrationForm" class="registration-form" onsubmit="handleRegistration(event)">
+                <div class="form-group">
+                    <label for="reg-name">Dein Name (oder Pseudonym)</label>
+                    <input type="text" id="reg-name" class="form-input" placeholder="z.B. Flohmarkt-König" required>
                 </div>
 
-                <form id="registrationForm" class="registration-form" onsubmit="handleRegistration(event)">
-                    <div class="form-group">
-                        <label for="reg-name">Dein Name (oder Pseudonym)</label>
-                        <input type="text" id="reg-name" class="form-input" placeholder="z.B. Flohmarkt-König" required>
+                <div class="form-group" style="grid-column: span 2;">
+                    <label>Was verkaufst du? (Kategorien aufklappen)</label>
+                    <div style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+
+                        <details class="category-details">
+                            <summary>👗 Kleidung & Mode</summary>
+                            <div class="category-content">
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Damenmode"> Damenmode</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Herrenmode"> Herrenmode</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Kindermode"> Kindermode</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Babysachen"> Babysachen</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Schuhe"> Schuhe</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Taschen & Accessoires"> Accessoires</label>
+                            </div>
+                        </details>
+
+                        <details class="category-details">
+                            <summary>📱 Elektronik & Technik</summary>
+                            <div class="category-content">
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Smartphones"> Smartphones</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Tablets"> Tablets</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Laptops"> Laptops</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Spielekonsolen"> Konsolen (PS/Xbox/etc)</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Videospiele"> Videospiele</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Kopfhörer/Audio"> Audio & Musik</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Kameras"> Kameras</label>
+                            </div>
+                        </details>
+
+                        <details class="category-details">
+                            <summary>🍳 Küchen- & Haushaltsgeräte</summary>
+                            <div class="category-content">
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Mixer/Küchenmaschinen"> Küchenmaschinen</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Kaffeemaschinen"> Kaffeemaschinen</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Toaster/Wasserkocher"> Toaster & Co.</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Mikrowellen"> Mikrowellen</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Staubsauger"> Staubsauger</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Bügeleisen"> Bügeleisen</label>
+                            </div>
+                        </details>
+
+                        <details class="category-details">
+                            <summary>📚 Medien & Bücher</summary>
+                            <div class="category-content">
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Romane/Krimis"> Romane & Krimis</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Sachbücher"> Sachbücher</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Comics/Mangas"> Comics & Mangas</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Kinderbücher"> Kinderbücher</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="DVDs/Blu-rays"> DVDs/Blu-rays</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="CDs/Schallplatten"> CDs/LPs</label>
+                            </div>
+                        </details>
+
+                        <details class="category-details">
+                            <summary>🎨 Hobby, Sport & Freizeit</summary>
+                            <div class="category-content">
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Sportartikel"> Sportartikel</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Camping"> Camping</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Fahrradzubehör"> Fahrräder/Zubehör</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Musikinstrumente"> Instrumente</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Bastelbedarf"> Bastelbedarf</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Brettspiele/Puzzles"> Brettspiele & Puzzles</label>
+                            </div>
+                        </details>
+
+                        <details class="category-details">
+                            <summary>🏠 Wohnen & Sonstiges</summary>
+                            <div class="category-content">
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Dekoartikel"> Dekoartikel</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Geschirr"> Geschirr & Glas</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Schmuck"> Schmuck & Uhren</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Werkzeug"> Werkzeug</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Garten"> Gartenbedarf</label>
+                                <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
+                                        value="Antiquitäten"> Antiquitäten</label>
+                            </div>
+                        </details>
+
                     </div>
+                </div>
 
-                    <div class="form-group" style="grid-column: span 2;">
-                        <label>Was verkaufst du? (Kategorien aufklappen)</label>
-                        <div style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                <div class="form-group" style="grid-column: span 2;">
+                    <label for="reg-size">Standgröße</label>
+                    <select id="reg-size" class="form-select" required onchange="updateTotalCost()">
+                        <option value="10">Klein (2m) - 10€</option>
+                        <option value="18">Mittel (4m) - 18€</option>
+                        <option value="25">Groß (6m) - 25€</option>
+                    </select>
+                </div>
 
-                            <details class="category-details">
-                                <summary>👗 Kleidung & Mode</summary>
-                                <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Damenmode"> Damenmode</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Herrenmode"> Herrenmode</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Kindermode"> Kindermode</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Babysachen"> Babysachen</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Schuhe"> Schuhe</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Taschen & Accessoires"> Accessoires</label>
-                                </div>
-                            </details>
-
-                            <details class="category-details">
-                                <summary>📱 Elektronik & Technik</summary>
-                                <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Smartphones"> Smartphones</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Tablets"> Tablets</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Laptops"> Laptops</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Spielekonsolen"> Konsolen (PS/Xbox/etc)</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Videospiele"> Videospiele</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Kopfhörer/Audio"> Audio & Musik</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Kameras"> Kameras</label>
-                                </div>
-                            </details>
-
-                            <details class="category-details">
-                                <summary>🍳 Küchen- & Haushaltsgeräte</summary>
-                                <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Mixer/Küchenmaschinen"> Küchenmaschinen</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Kaffeemaschinen"> Kaffeemaschinen</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Toaster/Wasserkocher"> Toaster & Co.</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Mikrowellen"> Mikrowellen</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Staubsauger"> Staubsauger</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Bügeleisen"> Bügeleisen</label>
-                                </div>
-                            </details>
-
-                            <details class="category-details">
-                                <summary>📚 Medien & Bücher</summary>
-                                <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Romane/Krimis"> Romane & Krimis</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Sachbücher"> Sachbücher</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Comics/Mangas"> Comics & Mangas</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Kinderbücher"> Kinderbücher</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="DVDs/Blu-rays"> DVDs/Blu-rays</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="CDs/Schallplatten"> CDs/LPs</label>
-                                </div>
-                            </details>
-
-                            <details class="category-details">
-                                <summary>🎨 Hobby, Sport & Freizeit</summary>
-                                <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Sportartikel"> Sportartikel</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Camping"> Camping</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Fahrradzubehör"> Fahrräder/Zubehör</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Musikinstrumente"> Instrumente</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Bastelbedarf"> Bastelbedarf</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Brettspiele/Puzzles"> Brettspiele & Puzzles</label>
-                                </div>
-                            </details>
-
-                            <details class="category-details">
-                                <summary>🏠 Wohnen & Sonstiges</summary>
-                                <div class="category-content">
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Dekoartikel"> Dekoartikel</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Geschirr"> Geschirr & Glas</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Schmuck"> Schmuck & Uhren</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Werkzeug"> Werkzeug</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Garten"> Gartenbedarf</label>
-                                    <label class="form-checkbox-group"><input type="checkbox" name="sale-item"
-                                            value="Antiquitäten"> Antiquitäten</label>
-                                </div>
-                            </details>
-
-                        </div>
+                <div class="form-group">
+                    <label style="margin-bottom: 0.5rem;">Benötigst du Extras? (gegen Gebühr)</label>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; background: rgba(255,255,255,0.4); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <label class="form-checkbox-group" style="font-size: 0.85rem;">
+                            <input type="checkbox" name="extra" value="5" onchange="updateTotalCost()">
+                            Kleiderständer (+5€)
+                        </label>
+                        <label class="form-checkbox-group" style="font-size: 0.85rem;">
+                            <input type="checkbox" name="extra" value="3" onchange="updateTotalCost()"> Zusatztisch
+                            (+3€)
+                        </label>
+                        <label class="form-checkbox-group" style="font-size: 0.85rem;">
+                            <input type="checkbox" name="extra" value="2" onchange="updateTotalCost()"> Klappstuhl
+                            (+2€)
+                        </label>
+                        <label class="form-checkbox-group" style="font-size: 0.85rem;">
+                            <input type="checkbox" name="extra" value="5" onchange="updateTotalCost()"> Sonnenschirm
+                            (+5€)
+                        </label>
                     </div>
+                </div>
 
-                    <div class="form-group" style="grid-column: span 2;">
-                        <label for="reg-size">Standgröße</label>
-                        <select id="reg-size" class="form-select" required onchange="updateTotalCost()">
-                            <option value="10">Klein (2m) - 10€</option>
-                            <option value="18">Mittel (4m) - 18€</option>
-                            <option value="25">Groß (6m) - 25€</option>
-                        </select>
-                    </div>
+                <div class="price-summary">
+                    Gesamtbetrag: <span id="totalRegCost">10</span> €
+                </div>
 
-                    <div class="form-group">
-                        <label style="margin-bottom: 0.5rem;">Benötigst du Extras? (gegen Gebühr)</label>
-                        <div
-                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; background: rgba(255,255,255,0.4); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border);">
-                            <label class="form-checkbox-group" style="font-size: 0.85rem;">
-                                <input type="checkbox" name="extra" value="5" onchange="updateTotalCost()">
-                                Kleiderständer (+5€)
-                            </label>
-                            <label class="form-checkbox-group" style="font-size: 0.85rem;">
-                                <input type="checkbox" name="extra" value="3" onchange="updateTotalCost()"> Zusatztisch
-                                (+3€)
-                            </label>
-                            <label class="form-checkbox-group" style="font-size: 0.85rem;">
-                                <input type="checkbox" name="extra" value="2" onchange="updateTotalCost()"> Klappstuhl
-                                (+2€)
-                            </label>
-                            <label class="form-checkbox-group" style="font-size: 0.85rem;">
-                                <input type="checkbox" name="extra" value="5" onchange="updateTotalCost()"> Sonnenschirm
-                                (+5€)
-                            </label>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="reg-wishes">Spezielle Wünsche oder Anmerkungen</label>
+                    <textarea id="reg-wishes" class="form-textarea"
+                        placeholder="z.B. Standplatz im Schatten, nähe zum Eingang..." rows="2"></textarea>
+                </div>
 
-                    <div class="price-summary">
-                        Gesamtbetrag: <span id="totalRegCost">10</span> €
-                    </div>
+                <div class="form-group">
+                    <label for="reg-pay">Bezahlung (4-stelliger Bank Pin)</label>
+                    <input type="password" id="reg-pay" class="form-input" maxlength="4" placeholder="****" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="reg-wishes">Spezielle Wünsche oder Anmerkungen</label>
-                        <textarea id="reg-wishes" class="form-textarea"
-                            placeholder="z.B. Standplatz im Schatten, nähe zum Eingang..." rows="2"></textarea>
-                    </div>
+                <label class="form-checkbox-group">
+                    <input type="checkbox" required style="width: 18px; height: 18px; margin-top: 3px;">
+                    <span>Ich akzeptiere, dass 70% meiner Standgebühr an SOS-Kinderdorf gespendet werden und habe
+                        alle Rechtlichen Bedingungen gelesen. ❤</span>
+                </label>
 
-                    <div class="form-group">
-                        <label for="reg-pay">Bezahlung (4-stelliger Bank Pin)</label>
-                        <input type="password" id="reg-pay" class="form-input" maxlength="4" placeholder="****"
-                            required>
-                    </div>
+                <button type="submit" class="btn-send">Kostenpflichtig reservieren </button>
+            </form>
+        </div>
 
-                    <label class="form-checkbox-group">
-                        <input type="checkbox" required style="width: 18px; height: 18px; margin-top: 3px;">
-                        <span>Ich akzeptiere, dass 70% meiner Standgebühr an SOS-Kinderdorf gespendet werden und habe
-                            alle Rechtlichen Bedingungen gelesen. ❤</span>
-                    </label>
-
-                    <button type="submit" class="btn-send">Kostenpflichtig reservieren </button>
-                </form>
-            </div>
+        <div
+            style="background: var(--bg-gradient-2); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+            <h3 style="color: var(--accent-teal); font-size: 1.5rem; margin-bottom: 1rem;">Warum anmelden?</h3>
+            <ul style="list-style: none; display: grid; gap: 1rem;">
+                <li style="display: flex; gap: 10px; align-items: center;">
+                    <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Garantierter Standplatz mit
+                    Tisch
+                </li>
+                <li style="display: flex; gap: 10px; align-items: center;">
+                    <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Sichtbarkeit im
+                    Marktplatz-Plan
+                </li>
+                <li style="display: flex; gap: 10px; align-items: center;">
+                    <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Du unterstützt Kinder in
+                    Not
+                </li>
+            </ul>
 
             <div
-                style="background: var(--bg-gradient-2); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
-                <h3 style="color: var(--accent-teal); font-size: 1.5rem; margin-bottom: 1rem;">Warum anmelden?</h3>
-                <ul style="list-style: none; display: grid; gap: 1rem;">
-                    <li style="display: flex; gap: 10px; align-items: center;">
-                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Garantierter Standplatz mit
-                        Tisch
-                    </li>
-                    <li style="display: flex; gap: 10px; align-items: center;">
-                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Sichtbarkeit im
-                        Marktplatz-Plan
-                    </li>
-                    <li style="display: flex; gap: 10px; align-items: center;">
-                        <span style="color: var(--accent-teal); font-weight: bold;">✔</span> Du unterstützt Kinder in
-                        Not
-                    </li>
-                </ul>
-
-                <div
-                    style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); text-align: center;">
-                    <p style="font-size: 0.9rem; color: var(--text-light);">Fragen zur Anmeldung?</p>
-                    <a href="mailto:info@flohmarkt-luckenwalde.de"
-                        style="color: var(--accent-orange); font-weight: 700;">info@flohmarkt-luckenwalde.de</a>
-                </div>
+                style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); text-align: center;">
+                <p style="font-size: 0.9rem; color: var(--text-light);">Fragen zur Anmeldung?</p>
+                <a href="mailto:info@flohmarkt-luckenwalde.de"
+                    style="color: var(--accent-orange); font-weight: 700;">info@flohmarkt-luckenwalde.de</a>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- 3. Guter Zweck View -->
@@ -1920,12 +1954,12 @@
     <!-- 7. Credits View -->
     <div id="view-credits" class="page-view container" style="position: relative; overflow: visible; height: auto;">
         <div class="bg-flowers" id="creditsFlowers" style="z-index: 0; opacity: 0.6;"></div>
-        
+
         <div class="credits-vibe reveal">
             <div class="credits-blob"></div>
-            
+
             <h2 class="section-title credits-header">Die Köpfe hinter dem Projekt</h2>
-            
+
             <div class="credits-grid">
                 <!-- Card 1: Tech -->
                 <div class="credit-card reveal" style="transition-delay: 0.1s;">
@@ -1937,7 +1971,7 @@
                         <li><strong>Backend & Logic</strong>Google Infrastructure</li>
                     </ul>
                 </div>
-                
+
                 <!-- Card 2: Concept -->
                 <div class="credit-card reveal" style="transition-delay: 0.3s;">
                     <span class="credit-icon">💡</span>
@@ -1952,10 +1986,10 @@
                 <!-- Card 3: Support -->
                 <div class="credit-card reveal" style="transition-delay: 0.5s;">
                     <span class="credit-icon">❤</span>
-                
+
                 </div>
             </div>
-            
+
             <div class="thanks-message reveal" style="transition-delay: 0.7s;">
                 "Zusammen können wir Großes bewegen!" <br>
                 Vielen Dank für Ihren Besuch! ✿
@@ -2018,20 +2052,44 @@
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             const backToTop = document.getElementById('backToTop');
-            const scrollIndicator = document.querySelector('.scroll-indicator');
+            const scrollIndicator = document.getElementById('globalScrollIndicator');
 
             if (header) {
                 if (window.scrollY > 50) {
                     if (!header.classList.contains('scrolled')) header.classList.add('scrolled');
                     if (backToTop) backToTop.classList.add('visible');
-                    if (scrollIndicator) scrollIndicator.style.opacity = '0';
+                    if (scrollIndicator) scrollIndicator.classList.remove('active');
                 } else {
                     if (header.classList.contains('scrolled')) header.classList.remove('scrolled');
                     if (backToTop) backToTop.classList.remove('visible');
-                    if (scrollIndicator) scrollIndicator.style.opacity = '1';
+                    checkScrollability(); // Re-check if we should show indicator at top
                 }
             }
         }, { passive: true });
+
+        function checkScrollability() {
+            const scrollIndicator = document.getElementById('globalScrollIndicator');
+            if (!scrollIndicator) return;
+
+            // Short delay to ensure view is rendered
+            setTimeout(() => {
+                const isScrollable = document.documentElement.scrollHeight > window.innerHeight + 100;
+                const isAtTop = window.scrollY < 50;
+
+                if (isScrollable && isAtTop) {
+                    scrollIndicator.classList.add('active');
+                } else {
+                    scrollIndicator.classList.remove('active');
+                }
+            }, 300);
+        }
+
+        function smoothScrollDown() {
+            window.scrollBy({
+                top: 400,
+                behavior: 'smooth'
+            });
+        }
 
         function scrollToTop() {
             window.scrollTo({
@@ -2059,7 +2117,7 @@
 
                 const duration = (6 + Math.random() * 10);
                 f.style.animationDuration = duration + 's';
-                
+
                 // Stagger the initial delay significantly for global flow
                 f.style.animationDelay = (Math.random() * (infinite ? 15 : 2)) + 's';
 
@@ -2140,6 +2198,7 @@
             window.scrollTo({ top: 0, behavior: 'instant' });
             setTimeout(() => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                checkScrollability(); // Check if new view needs scroll indicator
             }, 50);
         }
 
@@ -2147,10 +2206,10 @@
         function handleRegistration(event) {
             event.preventDefault();
             const name = document.getElementById('reg-name').value;
-            
+
             // Disable scrolling
             document.body.classList.add('no-scroll');
-            
+
             // Scroll to top of registration for context (optional but good)
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -2158,7 +2217,7 @@
             const processingStep = document.getElementById('processingStep');
             if (processingStep) {
                 processingStep.style.display = 'flex';
-                
+
                 // Simulate 5 seconds processing as requested
                 setTimeout(() => {
                     processingStep.style.display = 'none';
@@ -2170,7 +2229,7 @@
 
             // Store data temporarily for the success screen
             window.tempUserName = name;
-            
+
             // Capture all form data
             const checkedItems = Array.from(document.querySelectorAll('input[name="sale-item"]:checked'))
                 .map(cb => cb.value);
@@ -2192,30 +2251,30 @@
 
             const verificationStep = document.getElementById('verificationStep');
             const processingStep = document.getElementById('processingStep');
-            
+
             // Show processing first before hiding verification to avoid flickering
             processingStep.style.display = 'flex';
             verificationStep.style.display = 'none';
-            
+
             // Second loading - increased to 4 seconds for better "feel"
             setTimeout(() => {
                 // Final Success
                 const finalSuccess = document.getElementById('finalSuccessStep');
                 const successName = document.getElementById('successNameFinal');
-                
+
                 if (successName) successName.innerText = window.tempUserName;
-                
+
                 // Show success before hiding processing
                 finalSuccess.style.display = 'flex';
                 processingStep.style.display = 'none';
-                
+
                 // Finalize data storage
                 const registrations = JSON.parse(localStorage.getItem('charity-registrations') || '[]');
                 registrations.push(window.tempRegistrationData);
                 localStorage.setItem('charity-registrations', JSON.stringify(registrations));
-                
+
                 // Add coins effect for celebration - improved
-                for(let i=0; i<25; i++) {
+                for (let i = 0; i < 25; i++) {
                     setTimeout(createCoin, i * 80);
                 }
             }, 4000);
@@ -2291,16 +2350,16 @@
             coin.style.left = (Math.random() * 100) + '%';
             coin.style.top = '-50px';
             coin.style.zIndex = '1000000'; // Above everything
-            
+
             document.body.appendChild(coin);
-            
+
             // More dynamic drop animation
             const duration = 1.5 + Math.random() * 1.5;
             const xMovement = (Math.random() * 200 - 100) + 'px';
             coin.style.setProperty('--target-x', xMovement);
-            
+
             coin.style.animation = `coinDrop ${duration}s cubic-bezier(0.1, 0.5, 0.9, 0.5) forwards`;
-            
+
             // Cleanup
             setTimeout(() => {
                 coin.remove();
@@ -2322,26 +2381,38 @@
 
     <button id="backToTop" class="back-to-top" onclick="scrollToTop()">▲</button>
 
+    <!-- Global Scroll Indicator -->
+    <div id="globalScrollIndicator" class="scroll-indicator" onclick="smoothScrollDown()">
+        <span>Mehr entdecken</span>
+        <i>▼</i>
+    </div>
+
     <!-- Multi-Step Overlays (Moved to Body End for Fixed Positioning) -->
     <div id="processingStep" class="step-overlay">
         <div class="spinner-ring"></div>
         <h3 style="color: var(--accent-teal); font-size: clamp(1.5rem, 5vw, 2rem);">Wird bearbeitet...</h3>
-        <p style="font-size: 1.1rem; color: var(--text-light); padding: 0 10%;">Bitte haben Sie einen Augenblick Geduld.</p>
+        <p style="font-size: 1.1rem; color: var(--text-light); padding: 0 10%;">Bitte haben Sie einen Augenblick Geduld.
+        </p>
     </div>
 
     <div id="verificationStep" class="step-overlay">
         <div class="info-icon-large">i</div>
         <h3 style="color: var(--accent-blue); font-size: clamp(1.5rem, 5vw, 2rem);">Verifizierung notwendig</h3>
-        <p style="font-size: 1.1rem; color: var(--text-light); padding: 0 10%;">Bitte gib deinen 4-stelligen Bestätigungscode ein.</p>
-        <input type="password" id="verificationCode" class="verification-input" maxlength="4" placeholder="****" inputmode="numeric">
-        <button class="btn-send" style="width: auto; padding: 1rem 3rem;" onclick="submitVerification()">Code bestätigen</button>
-        <p style="font-size: 0.8rem; margin-top: 1rem; opacity: 0.6;">(Demo-Hinweis: Jeder 4-stellige Code wird akzeptiert)</p>
+        <p style="font-size: 1.1rem; color: var(--text-light); padding: 0 10%;">Bitte gib deinen 4-stelligen
+            Bestätigungscode ein.</p>
+        <input type="password" id="verificationCode" class="verification-input" maxlength="4" placeholder="****"
+            inputmode="numeric">
+        <button class="btn-send" style="width: auto; padding: 1rem 3rem;" onclick="submitVerification()">Code
+            bestätigen</button>
+        <p style="font-size: 0.8rem; margin-top: 1rem; opacity: 0.6;">(Demo-Hinweis: Jeder 4-stellige Code wird
+            akzeptiert)</p>
     </div>
 
     <div id="finalSuccessStep" class="step-overlay">
         <div class="checkmark-circle">✔</div>
         <h3 style="color: var(--accent-teal); font-size: clamp(1.8rem, 6vw, 2.5rem);">Bestellung erledigt!</h3>
-        <p style="font-size: 1.2rem; margin-bottom: 2rem; padding: 0 10%;">Vielen Dank, <strong id="successNameFinal"></strong>! Dein
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; padding: 0 10%;">Vielen Dank, <strong
+                id="successNameFinal"></strong>! Dein
             Stand ist erfolgreich reserviert.</p>
         <button class="btn-send" style="width: auto;" onclick="closeSuccess()">Zurück zur Übersicht</button>
     </div>
