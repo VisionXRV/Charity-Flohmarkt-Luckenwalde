@@ -94,8 +94,8 @@ function resetAmount() {
 }
 
 function updateDisplay() {
-    if (potTotalElement) potTotalElement.innerText = potTotal.toFixed(2).replace('.', ',') + ' €';
-    if (currentAmountElement) currentAmountElement.innerText = currentDonation.toFixed(2).replace('.', ',') + ' €';
+    if (potTotalElement) potTotalElement.innerText = Math.floor(potTotal) + ' €';
+    if (currentAmountElement) currentAmountElement.innerText = Math.floor(currentDonation) + ' €';
 }
 
 function createCoins() {
@@ -114,7 +114,7 @@ function createCoins() {
 
 function animatePotUpdate() {
     if (!potTotalElement || !potContainer) return;
-    potTotalElement.innerText = potTotal.toFixed(2).replace('.', ',') + ' €';
+    potTotalElement.innerText = Math.floor(potTotal) + ' €';
     potContainer.style.animation = 'none';
     potContainer.offsetHeight; // force reflow
     potContainer.style.animation = 'fillPotAnim 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
