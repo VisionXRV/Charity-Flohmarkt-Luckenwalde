@@ -58,50 +58,35 @@
         .glass-blob {
             position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
+            filter: blur(60px); /* Slightly reduced blur for performance */
             z-index: -1;
-            opacity: 0.6;
-            will-change: transform;
-            animation: float-blob 20s infinite alternate ease-in-out;
+            opacity: 0.4; /* Slightly more subtle */
             pointer-events: none;
-            transform-style: preserve-3d;
             backface-visibility: hidden;
         }
 
         .blob-1 {
-            top: -10%;
-            left: -10%;
-            width: 50vw;
-            height: 50vw;
+            top: -5%;
+            left: -5%;
+            width: 40vw;
+            height: 40vw;
             background: var(--accent-yellow);
         }
 
         .blob-2 {
-            bottom: -20%;
-            right: -10%;
-            width: 60vw;
-            height: 60vw;
+            bottom: -10%;
+            right: -5%;
+            width: 50vw;
+            height: 50vw;
             background: var(--bg-gradient-1);
-            animation-delay: -5s;
         }
 
         .blob-3 {
-            top: 40%;
-            left: 60%;
-            width: 40vw;
-            height: 40vw;
-            background: rgba(69, 182, 156, 0.2);
-            animation-delay: -10s;
-        }
-
-        @keyframes float-blob {
-            0% {
-                transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-            }
-
-            100% {
-                transform: translate3d(10%, 10%, 0) scale(1.1) rotate(45deg);
-            }
+            top: 30%;
+            left: 55%;
+            width: 30vw;
+            height: 30vw;
+            background: rgba(69, 182, 156, 0.15);
         }
 
         /* --- Scroll Reveal Animations --- */
@@ -1570,10 +1555,8 @@
         <div class="donation-layout">
             <div class="pot-wrapper" id="potWrapper">
                 <div class="pot-container" id="potContainer">
-                    <div class="pot-total" id="potTotal">0,00 €</div>
+                    <div class="pot-total" id="potTotal">0 €</div>
                     <div class="pot-label">Bisher gesammelt</div>
-                    <div id="cloudStatus" style="font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-top: 5px;">☁
-                        Supabase wird geladen...</div>
                 </div>
             </div>
 
@@ -1596,9 +1579,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/gh/VisionXRV/Charity-Flohmarkt-Luckenwalde@829e939bd544e70a105e256b00e83fef62e1df09/cloud-sync.js"
-        defer></script>
     <script>
         // Force scroll to top on refresh
         if ('scrollRestoration' in history) {
@@ -1611,8 +1591,8 @@
             if (viewId === 'view-spenden') {
                 showLoader({
                     title: 'Spendentopf wird vorbereitet',
-                    status: 'Wir verbinden dich mit der Cloud',
-                    duration: 2000
+                    status: 'Lade lokale Daten...',
+                    duration: 1000
                 }, () => finalizeNavigation(viewId));
             } else {
                 finalizeNavigation(viewId);
@@ -1646,26 +1626,17 @@
             }
         }
 
-        // Header Scroll Effect
+        // Header Scroll Effect - Optimized
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (header) {
                 if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
+                    if (!header.classList.contains('scrolled')) header.classList.add('scrolled');
                 } else {
-                    header.classList.remove('scrolled');
+                    if (header.classList.contains('scrolled')) header.classList.remove('scrolled');
                 }
             }
-
-            const blobs = document.querySelectorAll('.glass-blob');
-            const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-
-            blobs.forEach((blob, index) => {
-                const speed = (index + 1) * 20;
-                const yPos = scrollPercent * speed;
-                blob.style.marginTop = `${yPos}px`;
-            });
-        });
+        }, { passive: true });
 
         function showLoader(options, callback) {
             const loader = document.getElementById('loaderOverlay');
@@ -1735,6 +1706,98 @@
             }, 50);
         }
 
+        // --- Donation Logic (LOCAL ONLY) ---
+        const LOCAL_STORAGE_KEY = 'charity-flohmarkt-pot-v2';
+        let potTotal = 0;
+        let currentDonation = 0;
+        const MAX_DONATION = 1000;
+
+        const potTotalElement = document.getElementById('potTotal');
+        const currentAmountElement = document.getElementById('currentAmount');
+        const potContainer = document.getElementById('potContainer');
+        const potWrapper = document.getElementById('potWrapper');
+        const messageElement = document.getElementById('donationMessage');
+
+        function addAmount(amount) {
+            if (currentDonation + amount <= MAX_DONATION) {
+                currentDonation += amount;
+                updateDisplay();
+                clearMessage();
+            } else {
+                showMessage('Maximaler Betrag pro Vorgang sind 1000 €!', 'red');
+            }
+        }
+
+        function resetAmount() {
+            currentDonation = 0;
+            updateDisplay();
+            clearMessage();
+        }
+
+        function updateDisplay() {
+            if (potTotalElement) potTotalElement.innerText = Math.floor(potTotal) + ' €';
+            if (currentAmountElement) currentAmountElement.innerText = Math.floor(currentDonation) + ' €';
+        }
+
+        function showMessage(msg, color) {
+            if (messageElement) {
+                messageElement.innerText = msg;
+                messageElement.style.color = color;
+            }
+        }
+
+        function clearMessage() {
+            if (messageElement) messageElement.innerText = '';
+        }
+
+        function createCoins() {
+            if (!potWrapper) return;
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const coin = document.createElement('div');
+                    coin.className = 'coin';
+                    coin.style.left = (30 + Math.random() * 40) + '%';
+                    coin.style.animation = 'coinDrop 1s ease-in forwards';
+                    potWrapper.appendChild(coin);
+                    setTimeout(() => { coin.remove(); }, 1000);
+                }, i * 150);
+            }
+        }
+
+        function animatePotUpdate() {
+            if (!potTotalElement || !potContainer) return;
+            potTotalElement.innerText = Math.floor(potTotal) + ' €';
+            potContainer.style.animation = 'none';
+            potContainer.offsetHeight; // force reflow
+            potContainer.style.animation = 'fillPotAnim 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            setTimeout(() => {
+                potContainer.style.animation = 'float-pot 6s ease-in-out infinite';
+            }, 600);
+        }
+
+        function sendDonation() {
+            if (currentDonation > 0) {
+                createCoins();
+                setTimeout(() => {
+                    potTotal += currentDonation;
+                    localStorage.setItem(LOCAL_STORAGE_KEY, potTotal);
+                    
+                    animatePotUpdate();
+                    currentDonation = 0;
+                    updateDisplay();
+                    showMessage('Vielen Dank für deine großzügige Spende! ✿', 'var(--accent-teal)');
+
+                    setTimeout(() => {
+                        if (messageElement && messageElement.innerText.includes('Vielen Dank')) {
+                            clearMessage();
+                        }
+                    }, 4000);
+                }, 800);
+            } else {
+                showMessage('Bitte wähle zuerst einen Betrag aus!', 'red');
+            }
+        }
+
         // --- Registration Logic ---
         function handleRegistration(event) {
             event.preventDefault();
@@ -1783,6 +1846,14 @@
         window.addEventListener('DOMContentLoaded', () => {
             updateTotalCost();
             initScrollReveals();
+            
+            // Load local storage
+            const local = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (local) {
+                potTotal = parseFloat(local);
+                updateDisplay();
+            }
+
             showLoader({
                 title: 'Herzlich Willkommen!',
                 status: 'Der Charity-Flohmarkt lädt...',
