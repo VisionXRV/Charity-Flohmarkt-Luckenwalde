@@ -63,6 +63,9 @@
             opacity: 0.6;
             will-change: transform;
             animation: float-blob 20s infinite alternate ease-in-out;
+            pointer-events: none;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
         }
 
         .blob-1 {
@@ -93,12 +96,47 @@
 
         @keyframes float-blob {
             0% {
-                transform: translate3d(0, 0, 0) scale(1);
+                transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
             }
 
             100% {
-                transform: translate3d(10%, 10%, 0) scale(1.1);
+                transform: translate3d(10%, 10%, 0) scale(1.1) rotate(45deg);
             }
+        }
+
+        /* --- Scroll Reveal Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         /* SPA Layout */
@@ -106,9 +144,9 @@
             display: none;
             flex-grow: 1;
             padding-top: 2rem;
-            /* Reduced because header is now sticky */
             padding-bottom: 50px;
-            animation: fadeInPage 0.4s ease-out forwards;
+            animation: fadeInPage 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            content-visibility: auto;
         }
 
         .page-view.active {
@@ -118,20 +156,22 @@
         @keyframes fadeInPage {
             from {
                 opacity: 0;
+                transform: translateY(20px);
             }
 
             to {
                 opacity: 1;
+                transform: translateY(0);
             }
         }
 
         /* Header / Nav */
         header {
-            background: rgba(248, 245, 240, 0.9);
+            background: rgba(248, 245, 240, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--glass-border);
-            padding: 1rem 5%;
+            padding: 0.8rem 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -139,6 +179,15 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 70px;
+        }
+
+        header.scrolled {
+            height: 60px;
+            padding: 0.4rem 5%;
+            background: rgba(248, 245, 240, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .logo {
@@ -154,7 +203,22 @@
 
         .logo-icon {
             font-size: 1.8rem;
-            animation: spin-slow 10s linear infinite;
+            animation: spin-slow 10s linear infinite, color-shift-icon 8s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes color-shift-icon {
+
+            0%,
+            100% {
+                color: var(--accent-orange);
+                filter: drop-shadow(0 0 5px var(--accent-orange));
+            }
+
+            50% {
+                color: var(--accent-teal);
+                filter: drop-shadow(0 0 5px var(--accent-teal));
+            }
         }
 
         @keyframes spin-slow {
@@ -165,18 +229,20 @@
 
         nav {
             display: flex;
-            gap: 1.5rem;
+            gap: 1.2rem;
             align-items: center;
+            flex-wrap: nowrap;
         }
 
         nav a {
             text-decoration: none;
             color: var(--text-dark);
             font-weight: 700;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 0.8rem;
             border-radius: 20px;
             transition: all 0.3s ease;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         nav a:hover,
@@ -216,12 +282,13 @@
             border-radius: 30px;
             padding: 3rem;
             box-shadow: var(--shadow-soft);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            will-change: transform;
         }
 
         .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px 0 rgba(110, 100, 90, 0.15);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 40px 0 rgba(110, 100, 90, 0.2);
         }
 
         .section-title {
@@ -230,6 +297,36 @@
             margin-bottom: 3rem;
             color: var(--accent-teal);
             font-weight: 800;
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-orange), var(--accent-teal));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGradientShift 8s linear infinite;
+        }
+
+        .demo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1.2rem;
+            background: rgba(69, 182, 156, 0.1);
+            color: var(--accent-teal);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(69, 182, 156, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .disclaimer-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            opacity: 0.6;
+            margin-top: 2rem;
+            font-style: italic;
         }
 
         /* --- Home View --- */
@@ -244,11 +341,43 @@
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-teal) 100%);
+            background: linear-gradient(135deg,
+                    var(--accent-orange) 0%,
+                    var(--accent-teal) 30%,
+                    var(--accent-orange) 60%,
+                    var(--accent-teal) 100%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 4px 20px rgba(255, 123, 84, 0.15);
-            /* Soft glowing shadow */
+            text-shadow: 0px 4px 25px rgba(255, 123, 84, 0.2);
+            animation: textGradientShift 6s linear infinite;
+        }
+
+        @keyframes textGradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Specialized Motto Fly-In */
+        .motto.reveal {
+            opacity: 0;
+            transform: scale(0.85) translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.2, 1, 0.3, 1),
+                transform 1.2s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .motto.reveal.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
         }
 
         .hero-subtitle {
@@ -540,7 +669,7 @@
 
         .btn-send:hover {
             background: #3aa289;
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 30px rgba(69, 182, 156, 0.5);
         }
 
@@ -772,7 +901,8 @@
             width: 100%;
             height: 100%;
             background: var(--bg-base);
-            z-index: 9999; /* Ensure it's above everything */
+            z-index: 9999;
+            /* Ensure it's above everything */
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -801,9 +931,17 @@
         }
 
         @keyframes spin-premium {
-            from { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
-            to { transform: rotate(360deg) scale(1); }
+            from {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
+
+            to {
+                transform: rotate(360deg) scale(1);
+            }
         }
 
         .loader-bar-container {
@@ -825,13 +963,23 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
         }
 
         @keyframes loadProgress {
-            0% { width: 0%; }
-            100% { width: 100%; }
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 100%;
+            }
         }
 
         .bg-flowers {
@@ -857,12 +1005,15 @@
                 transform: translateY(-100px) rotate(0deg) translateX(0);
                 opacity: 0;
             }
+
             10% {
                 opacity: 0.8;
             }
+
             90% {
                 opacity: 0.8;
             }
+
             100% {
                 transform: translateY(110vh) rotate(720deg) translateX(100px);
                 opacity: 0;
@@ -885,19 +1036,26 @@
 
             header {
                 flex-direction: column;
-                gap: 1.5rem;
-                padding: 1.5rem 1rem;
+                gap: 1rem;
+                padding: 1rem;
+                height: auto;
+                min-height: 100px;
+            }
+
+            header.scrolled {
+                height: auto;
+                padding: 0.8rem 1rem;
             }
 
             .logo {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
 
             nav {
                 width: 100%;
                 justify-content: center;
                 flex-wrap: wrap;
-                gap: 0.8rem;
+                gap: 0.5rem;
             }
 
             nav a {
@@ -1002,7 +1160,8 @@
         <div class="bg-flowers" id="bgFlowers"></div>
         <div class="loader-content">
             <span class="loader-flower" id="loaderIcon">✿</span>
-            <h2 id="loaderTitle" style="color: var(--accent-teal); font-weight: 800; margin-bottom: 0.5rem;">Herzlich Willkommen!</h2>
+            <h2 id="loaderTitle" style="color: var(--accent-teal); font-weight: 800; margin-bottom: 0.5rem;">Herzlich
+                Willkommen!</h2>
             <div class="loader-bar-container">
                 <div class="loader-bar"></div>
             </div>
@@ -1012,13 +1171,13 @@
 
     <header>
         <a class="logo" onclick="navigateTo('view-home')">
-            <span class="logo-icon">✿</span> Charity-Flohmarkt
+            <span class="logo-icon">✿</span> Charity-Flohmarkt Luckenwalde
         </a>
         <nav id="main-nav">
             <a onclick="navigateTo('view-home')" class="nav-link active-link" data-target="view-home">Infos</a>
             <a onclick="navigateTo('view-verkaeufer')" class="nav-link" data-target="view-verkaeufer">Für Verkäufer</a>
             <a onclick="navigateTo('view-anmeldung')" class="nav-link" data-target="view-anmeldung">Anmelden</a>
-            <a onclick="navigateTo('view-zweck')" class="nav-link" data-target="view-zweck">Guter Zweck</a>
+            <a onclick="navigateTo('view-zweck')" class="nav-link" data-target="view-zweck">Der gute Zweck</a>
             <a onclick="navigateTo('view-spenden')" class="nav-link nav-donate-btn"
                 data-target="view-spenden">Spenden</a>
         </nav>
@@ -1029,15 +1188,19 @@
     <!-- 1. Home / Info View -->
     <div id="view-home" class="page-view active container">
         <div class="hero-section">
-            <h1 class="motto">Ihr Beitrag macht den Unterschied</h1>
-            <p class="hero-subtitle">Ein fröhlicher Charity-Flohmarkt für gebrauchte Gegenstände. Mach mit und hilf
+            <div class="demo-badge reveal">
+                <span>✨</span> Demo-Projekt zur Veranschaulichung
+            </div>
+            <h1 class="motto reveal">Ihr Beitrag macht den Unterschied</h1>
+            <p class="hero-subtitle reveal" style="transition-delay: 0.1s;">Ein fröhlicher Charity-Flohmarkt für
+                gebrauchte Gegenstände. Mach mit und hilf
                 dabei, Großes zu bewirken!</p>
         </div>
 
-        <div class="glass-card">
+        <div class="glass-card reveal" style="transition-delay: 0.2s;">
             <h2 class="section-title" style="margin-bottom: 2rem;">Allgemeine Informationen</h2>
             <div class="info-grid">
-                <div class="info-item">
+                <div class="info-item reveal-left">
                     <h3><span style="margin-right: 10px;">📅</span> Wann & Wo?</h3>
                     <ul
                         style="background: rgba(255,255,255,0.4); padding: 1.5rem; border-radius: 20px; border: 1px solid var(--glass-border);">
@@ -1049,34 +1212,34 @@
                             Parkstraße 59, 14943 Luckenwalde</li>
                     </ul>
 
-                    <div class="map-container">
+                    <div class="map-container reveal" style="transition-delay: 0.3s;">
                         <iframe
                             src="https://maps.google.com/maps?q=Friedrich-Gymnasium%20Parkstra%C3%9Fe%2059%20Luckenwalde&t=&z=15&ie=UTF8&iwloc=&output=embed"
                             allowfullscreen="" loading="lazy">
                         </iframe>
                     </div>
                 </div>
-                <div class="info-item">
+                <div class="info-item reveal-right">
                     <h3><span style="margin-right: 10px;">🤝</span> Verantwortliche</h3>
                     <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--text-light);">Organisiert mit viel
                         Engagement und Herz von:</p>
                     <div style="display: grid; gap: 1rem;">
-                        <div
-                            style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                        <div class="reveal"
+                            style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition-delay: 0.1s;">
                             <span style="font-size: 1.5rem;">👤</span> <strong>Julen</strong>
                         </div>
-                        <div
-                            style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                        <div class="reveal"
+                            style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition-delay: 0.2s;">
                             <span style="font-size: 1.5rem;">👤</span> <strong>Roman</strong>
                         </div>
-                        <div
-                            style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+                        <div class="reveal"
+                            style="background: var(--white); padding: 1rem; border-radius: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition-delay: 0.3s;">
                             <span style="font-size: 1.5rem;">👤</span> <strong>Carlos</strong>
                         </div>
                     </div>
 
-                    <div
-                        style="margin-top: 2rem; background: var(--accent-orange); color: white; padding: 1.5rem; border-radius: 20px; text-align: center;">
+                    <div class="reveal"
+                        style="margin-top: 2rem; background: var(--accent-orange); color: white; padding: 1.5rem; border-radius: 20px; text-align: center; transition-delay: 0.4s;">
                         <h4 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Mach mit!</h4>
                         <p style="font-size: 0.95rem; opacity: 0.9;">Jede Spende und jeder Verkauf hilft Kindern in Not.
                         </p>
@@ -1084,37 +1247,43 @@
                 </div>
             </div>
             <div
-                style="text-align: center; margin-top: 3rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
-                <button class="btn-send" style="width: auto; padding: 1rem 3rem;"
-                    onclick="navigateTo('view-anmeldung')">Jetzt anmelden</button>
-                <button class="btn-send" style="width: auto; padding: 1rem 3rem; background: var(--accent-orange);"
-                    onclick="navigateTo('view-spenden')">Zum Spendentopf</button>
+                style="text-align: center; margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+                <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
+                    <button class="btn-send" style="width: auto; padding: 1rem 3rem;"
+                        onclick="navigateTo('view-anmeldung')">Jetzt anmelden</button>
+                    <button class="btn-send" style="width: auto; padding: 1rem 3rem; background: var(--accent-orange);"
+                        onclick="navigateTo('view-spenden')">Zum Spendentopf</button>
+                </div>
+                <p class="disclaimer-text reveal" style="transition-delay: 0.5s;">
+                    * Hinweis: Diese Webseite dient ausschließlich Demonstrationszwecken. <br>
+                    Es findet kein reales Event statt.
+                </p>
             </div>
         </div>
     </div>
 
     <!-- 2. Verkäufer View -->
     <div id="view-verkaeufer" class="page-view container">
-        <h2 class="section-title">Informationen für Verkäufer</h2>
+        <h2 class="section-title reveal">Informationen für Verkäufer</h2>
 
-        <div class="glass-card" style="margin-bottom: 2rem;">
+        <div class="glass-card reveal" style="margin-bottom: 2rem;">
             <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1.5rem;">Ausführliche Richtlinien
                 zum Verkauf</h3>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                <div>
+                <div class="reveal" style="transition-delay: 0.1s;">
                     <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Was darf verkauft werden?</h4>
                     <p style="color: var(--text-light);">Erlaubt sind gut erhaltene, gebrauchte Gegenstände wie
                         Kleidung, Kinderspielzeug, Bücher, Elektrogeräte, Deko-Artikel und Haushaltswaren. <strong>Bitte
                             beachte:</strong> Der Verkauf von Neuwaren in Massen, Lebensmitteln oder kaputten
                         Gegenständen ist nicht gestattet.</p>
                 </div>
-                <div>
+                <div class="reveal" style="transition-delay: 0.2s;">
                     <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Ablauf am Markttag</h4>
                     <p style="color: var(--text-light);">Der Aufbau beginnt ab <strong>13:30 Uhr</strong>. Bitte
                         erscheine pünktlich, um Chaos zu vermeiden. Der Abbau startet ab 18:00 Uhr. Denke daran, deinen
                         Platz sauber zu hinterlassen und nicht verkaufte Artikel wieder mitzunehmen.</p>
                 </div>
-                <div>
+                <div class="reveal" style="transition-delay: 0.3s;">
                     <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem;">Selbst mitbringen</h4>
                     <p style="color: var(--text-light);">Einen Tisch bekommst du von uns gestellt. Kleiderstangen dürfen
                         gerne selbst mitgebracht werden (bitte bei der Anmeldung kurz erwähnen). Vergiss außerdem nicht,
@@ -1143,8 +1312,8 @@
                 <h3 style="color: var(--accent-orange); font-size: 1.8rem; margin-bottom: 1rem;">Jetzt Standplatz
                     sichern</h3>
                 <div class="form-disclaimer">
-                    🎈 <strong>HINWEIS:</strong> Dies ist eine reine Spaß-Webseite! Bitte gib <u>KEINE</u> echten Namen
-                    oder privaten Daten an. Genieße das Erlebnis!
+                    🎈 <strong>HINWEIS:</strong> Dies ist eine reine Demo-Webseite! Bitte gib <u>KEINE</u> echten Namen
+                    oder privaten Daten an.Viel Spaß !!
                 </div>
 
                 <form id="registrationForm" class="registration-form" onsubmit="handleRegistration(event)">
@@ -1313,17 +1482,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="reg-pay">Fake-Bezahlung (4-stelliger Spaß-Code)</label>
+                        <label for="reg-pay">Bezahlung (4-stelliger Bank Pin)</label>
                         <input type="password" id="reg-pay" class="form-input" maxlength="4" placeholder="****"
                             required>
                     </div>
 
                     <label class="form-checkbox-group">
                         <input type="checkbox" required style="width: 18px; height: 18px; margin-top: 3px;">
-                        <span>Ich akzeptiere, dass 70% meiner Standgebühr an SOS-Kinderdorf gespendet werden. ❤</span>
+                        <span>Ich akzeptiere, dass 70% meiner Standgebühr an SOS-Kinderdorf gespendet werden und habe
+                            alle Rechtlichen Bedingungen gelesen. ❤</span>
                     </label>
 
-                    <button type="submit" class="btn-send">Kostenpflichtig reservieren (Spaß)</button>
+                    <button type="submit" class="btn-send">Kostenpflichtig reservieren </button>
                 </form>
             </div>
 
@@ -1365,9 +1535,9 @@
                 SOS-KINDERDORF <span class="sos-dot"></span>
             </div>
 
-            <div class="zweck-card">
-                <div class="highlight-box"
-                    style="background: rgba(0, 90, 156, 0.05); border: 2px solid var(--accent-blue); border-style: dashed;">
+            <div class="zweck-card reveal">
+                <div class="highlight-box reveal"
+                    style="background: rgba(0, 90, 156, 0.05); border: 2px solid var(--accent-blue); border-style: dashed; transition-delay: 0.2s;">
                     <p style="color: var(--accent-blue); font-size: 1.5rem;">70 % aller Einnahmen gehen direkt an
                         SOS-Kinderdorf!</p>
                 </div>
@@ -1426,6 +1596,12 @@
     </div>
 
     <script>
+        // Force scroll to top on refresh
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
         // ############################################################
         // ZERO-CONFIG CLOUD (Keine Anmeldung nötig!)
         const CLOUD_ID = 'charity-lkw-2026-pot-xyz';
@@ -1437,7 +1613,7 @@
             // Cool loading screen for donation view
             if (viewId === 'view-spenden') {
                 showLoader({
-                    title: 'Spendentopf wird vorbereitet...',
+                    title: 'Spendentopf wird vorbereitet',
                     status: 'Wir verbinden dich mit der Cloud',
                     duration: 2000
                 }, () => finalizeNavigation(viewId));
@@ -1445,6 +1621,54 @@
                 finalizeNavigation(viewId);
             }
         }
+
+        // --- Performance & Animation Helpers ---
+        let revealObserver;
+        function initScrollReveals() {
+            if (revealObserver) revealObserver.disconnect();
+
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            // Important: Only observe elements in the CURRENT active view for performance
+            const activeView = document.querySelector('.page-view.active');
+            if (activeView) {
+                activeView.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+                    el.classList.remove('active');
+                    revealObserver.observe(el);
+                });
+            }
+        }
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            // Parallax Blobs - Subtle & Optimized
+            const blobs = document.querySelectorAll('.glass-blob');
+            const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 20;
+                const yPos = scrollPercent * speed;
+                blob.style.marginTop = `${yPos}px`;
+            });
+        });
 
         function showLoader(options, callback) {
             const loader = document.getElementById('loaderOverlay');
@@ -1462,7 +1686,7 @@
             bgFlowers.innerHTML = '';
             const symbols = ['✿', '❀', '❁', '🌸', '🌼', '✨', '🍃'];
             const colors = ['var(--accent-orange)', 'var(--accent-teal)', 'var(--accent-yellow)', '#FFB7C5'];
-            
+
             for (let i = 0; i < 30; i++) {
                 const f = document.createElement('div');
                 f.className = 'floating-flower';
@@ -1470,16 +1694,16 @@
                 f.style.color = colors[Math.floor(Math.random() * colors.length)];
                 f.style.left = Math.random() * 100 + '%';
                 f.style.fontSize = (1 + Math.random() * 2) + 'rem';
-                
+
                 const duration = 3 + Math.random() * 4;
                 const delay = Math.random() * 2;
-                
+
                 f.style.animationDuration = duration + 's';
                 f.style.animationDelay = delay + 's';
-                
+
                 // Add horizontal variance
                 f.style.setProperty('--target-x', (Math.random() * 200 - 100) + 'px');
-                
+
                 bgFlowers.appendChild(f);
             }
 
@@ -1504,6 +1728,9 @@
             const target = document.getElementById(viewId);
             if (target) {
                 target.classList.add('active');
+
+                // Re-init reveals for the new view
+                setTimeout(initScrollReveals, 100);
             }
 
             // Update Nav Links
@@ -1516,7 +1743,10 @@
             });
 
             // Scroll to top when changing pages
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 50);
         }
 
         // --- Donation Logic ---
@@ -1695,8 +1925,10 @@
 
         // Initialize total cost on load
         window.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0);
             updateTotalCost();
-            
+            initScrollReveals();
+
             // Show loader on every page load/reload
             showLoader({
                 title: 'Herzlich Willkommen!',
