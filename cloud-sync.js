@@ -174,6 +174,23 @@ window.addEventListener('DOMContentLoaded', () => {
         updateDisplay();
     }
 
+    // Initial Sync
     syncPot();
-    setInterval(syncPot, 10000);
+
+    // REALTIME SUBSCRIPTION (True Live Sync)
+    if (supabase) {
+        supabase
+            .channel('public:spenden')
+            .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'spenden', filter: 'id=eq.1' }, payload => {
+                const newVal = parseFloat(payload.new.betrag) || 0;
+                if (newVal !== potTotal) {
+                    potTotal = newVal;
+                    animatePotUpdate();
+                }
+            })
+            .subscribe();
+    }
+
+    // Fallback Polling (Every 30 seconds)
+    setInterval(syncPot, 30000);
 });
