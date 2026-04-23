@@ -214,7 +214,7 @@
 
         nav {
             display: flex;
-            gap: 1.2rem;
+            gap: 1rem;
             align-items: center;
             flex-wrap: nowrap;
         }
@@ -1076,25 +1076,6 @@
                 gap: 2rem;
             }
 
-            .pot-container {
-                width: 250px;
-                height: 250px;
-            }
-
-            .pot-total {
-                font-size: 3rem;
-            }
-
-            .btn-amount {
-                padding: 0.8rem 1.2rem;
-                font-size: 1rem;
-            }
-
-            .current-amount-display {
-                font-size: 2.2rem;
-                min-width: 150px;
-                padding: 1rem 2rem;
-            }
 
             .glass-card {
                 padding: 1.5rem;
@@ -1159,12 +1140,10 @@
             <span class="logo-icon">✿</span> Charity-Flohmarkt Luckenwalde
         </a>
         <nav id="main-nav">
-            <a onclick="navigateTo('view-home')" class="nav-link active-link" data-target="view-home">Infos</a>
-            <a onclick="navigateTo('view-verkaeufer')" class="nav-link" data-target="view-verkaeufer">Für Verkäufer</a>
-            <a onclick="navigateTo('view-anmeldung')" class="nav-link" data-target="view-anmeldung">Anmelden</a>
-            <a onclick="navigateTo('view-zweck')" class="nav-link" data-target="view-zweck">Der gute Zweck</a>
-            <a onclick="navigateTo('view-spenden')" class="nav-link nav-donate-btn"
-                data-target="view-spenden">Spenden</a>
+            <a class="nav-link active-link" data-target="view-home" onclick="navigateTo('view-home')">Home</a>
+            <a class="nav-link" data-target="view-lkw-news" onclick="navigateTo('view-lkw-news')">Kapazität</a>
+            <a class="nav-link" data-target="view-verkaeufer" onclick="navigateTo('view-verkaeufer')">Infos zum Verkauf</a>
+            <a class="nav-link" data-target="view-anmeldung" onclick="navigateTo('view-anmeldung')">Anmeldung</a>
         </nav>
     </header>
 
@@ -1180,7 +1159,7 @@
             <p class="hero-subtitle reveal" style="transition-delay: 0.1s;"> Gebt euren Gegenständen eine zweite Chance!
                 Ein fröhlicher Charity-Flohmarkt für
                 gebrauchte Gegenstände. Mach mit und hilf
-                dabei, Großes zu bewirken ✿</p>
+                dabei, Großes zu bewirken Komm Vorbei ! ✿</p>
         </div>
 
         <div class="glass-card reveal" style="transition-delay: 0.2s;">
@@ -1237,8 +1216,6 @@
                 <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
                     <button class="btn-send" style="width: auto; padding: 1rem 3rem;"
                         onclick="navigateTo('view-anmeldung')">Jetzt anmelden</button>
-                    <button class="btn-send" style="width: auto; padding: 1rem 3rem; background: var(--accent-orange);"
-                        onclick="navigateTo('view-spenden')">Zum Spendentopf</button>
                 </div>
                 <p class="disclaimer-text reveal" style="transition-delay: 0.5s;">
                     * Hinweis: Diese Webseite dient ausschließlich Demonstrationszwecken. <br>
@@ -1548,34 +1525,35 @@
         </div>
     </div>
 
-    <!-- 4. Spenden View -->
-    <div id="view-spenden" class="page-view container">
-        <h2 class="section-title">Virtueller Spendentopf</h2>
 
-        <div class="donation-layout">
-            <div class="pot-wrapper" id="potWrapper">
-                <div class="pot-container" id="potContainer">
-                    <div class="pot-total" id="potTotal">0 €</div>
-                    <div class="pot-label">Bisher gesammelt</div>
-                </div>
+    <!-- 6. LKW-News View -->
+    <div id="view-lkw-news" class="page-view container">
+        <h2 class="section-title">Projekt-Fortschritt & Logistik</h2>
+        
+        <div class="glass-card reveal" style="margin-bottom: 3rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="color: var(--accent-blue);">Kapazitätsplanung</h3>
+                <span style="background: var(--accent-yellow); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 800; font-size: 0.8rem;">RESERVIERUNGSSTAND: 65%</span>
             </div>
-
-            <div class="donation-controls">
-                <p style="font-weight: 700; color: var(--text-light); margin-bottom: 1rem; font-size: 1.1rem;">Dein
-                    Spendenbetrag (max. 1000 €):</p>
-
-                <div class="amount-buttons">
-                    <button class="btn-amount" onclick="addAmount(15)">+ 15 €</button>
-                    <button class="btn-amount" onclick="addAmount(50)">+ 50 €</button>
-                    <button class="btn-amount" onclick="addAmount(100)">+ 100 €</button>
-                    <button class="btn-amount btn-reset" onclick="resetAmount()">Zurücksetzen</button>
-                </div>
-
-                <div class="current-amount-display" id="currentAmount">0 €</div>
-
-                <button class="btn-send" onclick="sendDonation()">Spende Senden</button>
-                <div class="donation-message" id="donationMessage"></div>
+            <div style="width: 100%; height: 20px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; margin-bottom: 1rem;">
+                <div style="width: 65%; height: 100%; background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow)); border-radius: 10px; transition: width 1s ease-out;"></div>
             </div>
+            <p style="font-size: 0.9rem; color: var(--text-light);">Aktuell sind 65% der verfügbaren Standflächen für den 11. September reserviert. Die Logistikplanung für den Transport der Sachspenden läuft nach Plan.</p>
+        </div>
+
+        <div class="info-grid">
+            <div class="glass-card reveal-left">
+                <h4 style="color: var(--accent-orange); margin-bottom: 1rem;">Logistik-Update</h4>
+                <p>Die Zufahrt zum Schulhof für den Aufbau ist am Veranstaltungstag ab 13:00 Uhr über das Haupttor an der Parkstraße koordiniert. Einweiser werden vor Ort sein.</p>
+            </div>
+            <div class="glass-card reveal-right">
+                <h4 style="color: var(--accent-teal); margin-bottom: 1rem;">Meilenstein</h4>
+                <p>Wir haben bereits Zusagen für über 100 hochwertige Sachspenden erhalten. Der Erlös aus dem Verkauf geht zu 70% an die SOS-Kinderdorf Projekte.</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="btn-amount" onclick="simulateRefresh()" id="refreshBtn">Logistik-Daten aktualisieren ↻</button>
         </div>
     </div>
 
@@ -1588,11 +1566,12 @@
 
         // --- Navigation Logic (SPA) ---
         function navigateTo(viewId) {
-            if (viewId === 'view-spenden') {
+            if (viewId === 'view-lkw-news') {
                 showLoader({
-                    title: 'Spendentopf wird vorbereitet',
-                    status: 'Lade lokale Daten...',
-                    duration: 1000
+                    title: 'Kapazitäten werden geprüft',
+                    status: 'Logistikdaten werden abgerufen...',
+                    duration: 1500,
+                    icon: '🚚'
                 }, () => finalizeNavigation(viewId));
             } else {
                 finalizeNavigation(viewId);
@@ -1706,98 +1685,6 @@
             }, 50);
         }
 
-        // --- Donation Logic (LOCAL ONLY) ---
-        const LOCAL_STORAGE_KEY = 'charity-flohmarkt-pot-v2';
-        let potTotal = 0;
-        let currentDonation = 0;
-        const MAX_DONATION = 1000;
-
-        const potTotalElement = document.getElementById('potTotal');
-        const currentAmountElement = document.getElementById('currentAmount');
-        const potContainer = document.getElementById('potContainer');
-        const potWrapper = document.getElementById('potWrapper');
-        const messageElement = document.getElementById('donationMessage');
-
-        function addAmount(amount) {
-            if (currentDonation + amount <= MAX_DONATION) {
-                currentDonation += amount;
-                updateDisplay();
-                clearMessage();
-            } else {
-                showMessage('Maximaler Betrag pro Vorgang sind 1000 €!', 'red');
-            }
-        }
-
-        function resetAmount() {
-            currentDonation = 0;
-            updateDisplay();
-            clearMessage();
-        }
-
-        function updateDisplay() {
-            if (potTotalElement) potTotalElement.innerText = Math.floor(potTotal) + ' €';
-            if (currentAmountElement) currentAmountElement.innerText = Math.floor(currentDonation) + ' €';
-        }
-
-        function showMessage(msg, color) {
-            if (messageElement) {
-                messageElement.innerText = msg;
-                messageElement.style.color = color;
-            }
-        }
-
-        function clearMessage() {
-            if (messageElement) messageElement.innerText = '';
-        }
-
-        function createCoins() {
-            if (!potWrapper) return;
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    const coin = document.createElement('div');
-                    coin.className = 'coin';
-                    coin.style.left = (30 + Math.random() * 40) + '%';
-                    coin.style.animation = 'coinDrop 1s ease-in forwards';
-                    potWrapper.appendChild(coin);
-                    setTimeout(() => { coin.remove(); }, 1000);
-                }, i * 150);
-            }
-        }
-
-        function animatePotUpdate() {
-            if (!potTotalElement || !potContainer) return;
-            potTotalElement.innerText = Math.floor(potTotal) + ' €';
-            potContainer.style.animation = 'none';
-            potContainer.offsetHeight; // force reflow
-            potContainer.style.animation = 'fillPotAnim 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            setTimeout(() => {
-                potContainer.style.animation = 'float-pot 6s ease-in-out infinite';
-            }, 600);
-        }
-
-        function sendDonation() {
-            if (currentDonation > 0) {
-                createCoins();
-                setTimeout(() => {
-                    potTotal += currentDonation;
-                    localStorage.setItem(LOCAL_STORAGE_KEY, potTotal);
-                    
-                    animatePotUpdate();
-                    currentDonation = 0;
-                    updateDisplay();
-                    showMessage('Vielen Dank für deine großzügige Spende! ✿', 'var(--accent-teal)');
-
-                    setTimeout(() => {
-                        if (messageElement && messageElement.innerText.includes('Vielen Dank')) {
-                            clearMessage();
-                        }
-                    }, 4000);
-                }, 800);
-            } else {
-                showMessage('Bitte wähle zuerst einen Betrag aus!', 'red');
-            }
-        }
-
         // --- Registration Logic ---
         function handleRegistration(event) {
             event.preventDefault();
@@ -1847,13 +1734,6 @@
             updateTotalCost();
             initScrollReveals();
             
-            // Load local storage
-            const local = localStorage.getItem(LOCAL_STORAGE_KEY);
-            if (local) {
-                potTotal = parseFloat(local);
-                updateDisplay();
-            }
-
             showLoader({
                 title: 'Herzlich Willkommen!',
                 status: 'Der Charity-Flohmarkt lädt...',
@@ -1861,7 +1741,40 @@
                 icon: '🌸'
             });
         });
+
+        function countFlea() {
+            const countEl = document.getElementById('fleaCount');
+            let count = parseInt(countEl.innerText);
+            count++;
+            countEl.innerText = count;
+            // Little bounce animation
+            const parent = document.getElementById('fleaCounter');
+            parent.style.transform = 'scale(1.2)';
+            setTimeout(() => parent.style.transform = 'scale(1)', 100);
+        }
+
+        function simulateRefresh() {
+            const btn = document.getElementById('refreshBtn');
+            btn.innerText = 'Suche nach News...';
+            btn.disabled = true;
+            setTimeout(() => {
+                btn.innerText = 'News aktualisiert ✓';
+                setTimeout(() => {
+                    btn.innerText = 'News aktualisieren ↻';
+                    btn.disabled = false;
+                }, 2000);
+            }, 1500);
+        }
     </script>
+    <footer>
+        <p>&copy; 2026 LER-Schulprojekt "Charity-Flohmarkt Luckenwalde"</p>
+        <div style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">
+            <span id="fleaCounter" style="cursor: pointer; background: rgba(255,255,255,0.1); padding: 0.3rem 0.8rem; border-radius: 10px;" onclick="countFlea()">
+                🪲 Gefundene Flöhe: <span id="fleaCount">0</span>
+            </span>
+        </div>
+        <p class="disclaimer-text">Dies ist eine reine Spaß-Webseite im Rahmen eines Schulprojekts. Es findet kein realer Verkauf statt.</p>
+    </footer>
 </body>
 
 </html>
