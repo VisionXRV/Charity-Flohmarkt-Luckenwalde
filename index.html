@@ -1192,9 +1192,10 @@
                 <span>✨</span> Demo-Projekt zur Veranschaulichung
             </div>
             <h1 class="motto reveal">Ihr Beitrag macht den Unterschied</h1>
-            <p class="hero-subtitle reveal" style="transition-delay: 0.1s;">Ein fröhlicher Charity-Flohmarkt für
+            <p class="hero-subtitle reveal" style="transition-delay: 0.1s;"> Gebt euren Gegenständen eine zweite Chance!
+                Ein fröhlicher Charity-Flohmarkt für
                 gebrauchte Gegenstände. Mach mit und hilf
-                dabei, Großes zu bewirken!</p>
+                dabei, Großes zu bewirken ✿</p>
         </div>
 
         <div class="glass-card reveal" style="transition-delay: 0.2s;">
@@ -1595,6 +1596,8 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/gh/VisionXRV/Charity-Flohmarkt-Luckenwalde@main/cloud-sync.js" defer></script>
     <script>
         // Force scroll to top on refresh
         if ('scrollRestoration' in history) {
@@ -1602,15 +1605,8 @@
         }
         window.scrollTo(0, 0);
 
-        // ############################################################
-        // ZERO-CONFIG CLOUD (Keine Anmeldung nötig!)
-        const CLOUD_ID = 'charity-lkw-2026-pot-xyz';
-        const CLOUD_URL = `https://api.keyvalue.xyz/${CLOUD_ID}/pot`;
-        // ############################################################
-
         // --- Navigation Logic (SPA) ---
         function navigateTo(viewId) {
-            // Cool loading screen for donation view
             if (viewId === 'view-spenden') {
                 showLoader({
                     title: 'Spendentopf wird vorbereitet',
@@ -1640,7 +1636,6 @@
                 });
             }, observerOptions);
 
-            // Important: Only observe elements in the CURRENT active view for performance
             const activeView = document.querySelector('.page-view.active');
             if (activeView) {
                 activeView.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
@@ -1653,13 +1648,14 @@
         // Header Scroll Effect
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+            if (header) {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
             }
 
-            // Parallax Blobs - Subtle & Optimized
             const blobs = document.querySelectorAll('.glass-blob');
             const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
 
@@ -1677,34 +1673,29 @@
             const statusEl = document.getElementById('loaderStatus');
             const iconEl = document.getElementById('loaderIcon');
 
-            // Set content
-            if (options.title) titleEl.innerText = options.title;
-            if (options.status) statusEl.innerText = options.status;
-            if (options.icon) iconEl.innerText = options.icon;
+            if (!loader) { if (callback) callback(); return; }
 
-            // Clear and add flowers
-            bgFlowers.innerHTML = '';
-            const symbols = ['✿', '❀', '❁', '🌸', '🌼', '✨', '🍃'];
-            const colors = ['var(--accent-orange)', 'var(--accent-teal)', 'var(--accent-yellow)', '#FFB7C5'];
+            if (options.title && titleEl) titleEl.innerText = options.title;
+            if (options.status && statusEl) statusEl.innerText = options.status;
+            if (options.icon && iconEl) iconEl.innerText = options.icon;
 
-            for (let i = 0; i < 30; i++) {
-                const f = document.createElement('div');
-                f.className = 'floating-flower';
-                f.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                f.style.color = colors[Math.floor(Math.random() * colors.length)];
-                f.style.left = Math.random() * 100 + '%';
-                f.style.fontSize = (1 + Math.random() * 2) + 'rem';
+            if (bgFlowers) {
+                bgFlowers.innerHTML = '';
+                const symbols = ['✿', '❀', '❁', '🌸', '🌼', '✨', '🍃'];
+                const colors = ['var(--accent-orange)', 'var(--accent-teal)', 'var(--accent-yellow)', '#FFB7C5'];
 
-                const duration = 3 + Math.random() * 4;
-                const delay = Math.random() * 2;
-
-                f.style.animationDuration = duration + 's';
-                f.style.animationDelay = delay + 's';
-
-                // Add horizontal variance
-                f.style.setProperty('--target-x', (Math.random() * 200 - 100) + 'px');
-
-                bgFlowers.appendChild(f);
+                for (let i = 0; i < 30; i++) {
+                    const f = document.createElement('div');
+                    f.className = 'floating-flower';
+                    f.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                    f.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    f.style.left = Math.random() * 100 + '%';
+                    f.style.fontSize = (1 + Math.random() * 2) + 'rem';
+                    f.style.animationDuration = (3 + Math.random() * 4) + 's';
+                    f.style.animationDelay = (Math.random() * 2) + 's';
+                    f.style.setProperty('--target-x', (Math.random() * 200 - 100) + 'px');
+                    bgFlowers.appendChild(f);
+                }
             }
 
             loader.style.display = 'flex';
@@ -1720,20 +1711,15 @@
         }
 
         function finalizeNavigation(viewId) {
-            // Hide all views
             document.querySelectorAll('.page-view').forEach(view => {
                 view.classList.remove('active');
             });
-            // Show target view
             const target = document.getElementById(viewId);
             if (target) {
                 target.classList.add('active');
-
-                // Re-init reveals for the new view
                 setTimeout(initScrollReveals, 100);
             }
 
-            // Update Nav Links
             document.querySelectorAll('.nav-link').forEach(link => {
                 if (link.getAttribute('data-target') === viewId) {
                     link.classList.add('active-link');
@@ -1742,145 +1728,10 @@
                 }
             });
 
-            // Scroll to top when changing pages
             window.scrollTo({ top: 0, behavior: 'instant' });
             setTimeout(() => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }, 50);
-        }
-
-        // --- Donation Logic ---
-        const LOCAL_STORAGE_KEY = 'charity-flohmarkt-pot-v2';
-        let potTotal = 0;
-        let currentDonation = 0;
-        const MAX_DONATION = 1000;
-
-        const potTotalElement = document.getElementById('potTotal');
-        const currentAmountElement = document.getElementById('currentAmount');
-        const potContainer = document.getElementById('potContainer');
-        const potWrapper = document.getElementById('potWrapper');
-        const messageElement = document.getElementById('donationMessage');
-        const cloudStatus = document.getElementById('cloudStatus');
-
-        // EINFACHE CLOUD-LOGIK (Kein Firebase nötig)
-        async function syncPot() {
-            try {
-                const response = await fetch(CLOUD_URL);
-                if (response.ok) {
-                    const val = await response.text();
-                    const cloudValue = parseFloat(val) || 0;
-                    if (cloudValue > potTotal) {
-                        potTotal = cloudValue;
-                        animatePotUpdate();
-                    }
-                    cloudStatus.innerText = '☁ Cloud Aktiv (Verbunden)';
-                    cloudStatus.style.color = 'white';
-                } else if (response.status === 404) {
-                    // Initialisierung falls der Key noch nicht existiert
-                    await pushToCloud(potTotal);
-                }
-            } catch (e) {
-                cloudStatus.innerText = '☁ Lokal-Modus (Offline)';
-                cloudStatus.style.color = 'rgba(255,255,255,0.5)';
-            }
-        }
-
-        async function pushToCloud(val) {
-            try {
-                await fetch(`${CLOUD_URL}/${val}`, { method: 'POST' });
-            } catch (e) { console.log("Cloud-Update fehlgeschlagen"); }
-        }
-
-        // Alle 5 Sekunden prüfen
-        setInterval(syncPot, 5000);
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const local = localStorage.getItem(LOCAL_STORAGE_KEY);
-            if (local) {
-                potTotal = parseFloat(local);
-                updateDisplay();
-            }
-            syncPot();
-        });
-
-        function addAmount(amount) {
-            if (currentDonation + amount <= MAX_DONATION) {
-                currentDonation += amount;
-                updateDisplay();
-                clearMessage();
-            } else {
-                showMessage('Maximaler Betrag pro Vorgang sind 1000 €!', 'red');
-            }
-        }
-
-        function resetAmount() {
-            currentDonation = 0;
-            updateDisplay();
-            clearMessage();
-        }
-
-        function updateDisplay() {
-            potTotalElement.innerText = potTotal.toFixed(2).replace('.', ',') + ' €';
-            currentAmountElement.innerText = currentDonation.toFixed(2).replace('.', ',') + ' €';
-        }
-
-        function showMessage(msg, color) {
-            messageElement.innerText = msg;
-            messageElement.style.color = color;
-        }
-
-        function clearMessage() {
-            messageElement.innerText = '';
-        }
-
-        function createCoins() {
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    const coin = document.createElement('div');
-                    coin.className = 'coin';
-                    const left = 30 + Math.random() * 40;
-                    coin.style.left = left + '%';
-                    coin.style.animation = 'coinDrop 1s ease-in forwards';
-                    potWrapper.appendChild(coin);
-                    setTimeout(() => { coin.remove(); }, 1000);
-                }, i * 150);
-            }
-        }
-
-        function animatePotUpdate() {
-            potTotalElement.innerText = potTotal.toFixed(2).replace('.', ',') + ' €';
-            potContainer.style.animation = 'none';
-            potContainer.offsetHeight; // force reflow
-            potContainer.style.animation = 'fillPotAnim 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            setTimeout(() => {
-                potContainer.style.animation = 'float-pot 6s ease-in-out infinite';
-            }, 600);
-        }
-
-        async function sendDonation() {
-            if (currentDonation > 0) {
-                createCoins();
-                setTimeout(async () => {
-                    potTotal += currentDonation;
-                    localStorage.setItem(LOCAL_STORAGE_KEY, potTotal);
-
-                    // In die Cloud pushen
-                    await pushToCloud(potTotal);
-
-                    animatePotUpdate();
-                    currentDonation = 0;
-                    updateDisplay();
-                    showMessage('Vielen Dank für deine großzügige Spende! ✿', 'var(--accent-teal)');
-
-                    setTimeout(() => {
-                        if (messageElement.innerText.includes('Vielen Dank')) {
-                            clearMessage();
-                        }
-                    }, 4000);
-                }, 800);
-            } else {
-                showMessage('Bitte wähle zuerst einen Betrag aus!', 'red');
-            }
         }
 
         // --- Registration Logic ---
@@ -1890,14 +1741,12 @@
             const successOverlay = document.getElementById('successOverlay');
             const successName = document.getElementById('successName');
 
-            successName.innerText = name;
-            successOverlay.style.display = 'flex';
+            if (successName) successName.innerText = name;
+            if (successOverlay) successOverlay.style.display = 'flex';
 
-            // Collect checked items
             const checkedItems = Array.from(document.querySelectorAll('input[name="sale-item"]:checked'))
                 .map(cb => cb.value);
 
-            // Save to fake registration list
             const registrations = JSON.parse(localStorage.getItem('charity-registrations') || '[]');
             registrations.push({
                 name,
@@ -1909,27 +1758,30 @@
         }
 
         function closeSuccess() {
-            document.getElementById('successOverlay').style.display = 'none';
-            document.getElementById('registrationForm').reset();
+            const overlay = document.getElementById('successOverlay');
+            if (overlay) overlay.style.display = 'none';
+            const form = document.getElementById('registrationForm');
+            if (form) form.reset();
             updateTotalCost();
         }
 
         function updateTotalCost() {
-            const sizeCost = parseInt(document.getElementById('reg-size').value) || 0;
+            const sizeEl = document.getElementById('reg-size');
+            const totalEl = document.getElementById('totalRegCost');
+            if (!sizeEl || !totalEl) return;
+
+            const sizeCost = parseInt(sizeEl.value) || 0;
             const extras = document.querySelectorAll('input[name="extra"]:checked');
             let extrasCost = 0;
             extras.forEach(ex => extrasCost += parseInt(ex.value));
 
-            document.getElementById('totalRegCost').innerText = sizeCost + extrasCost;
+            totalEl.innerText = sizeCost + extrasCost;
         }
 
-        // Initialize total cost on load
+        // Initialization
         window.addEventListener('DOMContentLoaded', () => {
-            window.scrollTo(0, 0);
             updateTotalCost();
             initScrollReveals();
-
-            // Show loader on every page load/reload
             showLoader({
                 title: 'Herzlich Willkommen!',
                 status: 'Der Charity-Flohmarkt lädt...',
