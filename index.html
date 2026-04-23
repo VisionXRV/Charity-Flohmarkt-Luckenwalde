@@ -132,6 +132,7 @@
             padding-bottom: 50px;
             animation: fadeInPage 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             content-visibility: auto;
+            overflow-x: hidden;
         }
 
         .page-view.active {
@@ -1078,11 +1079,27 @@
 
 
             .glass-card {
-                padding: 1.5rem;
+                padding: 1.2rem;
             }
 
             .info-grid {
                 grid-template-columns: 1fr;
+            }
+
+            /* Fix for capacity header wrapping */
+            .card-header-flex {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.5rem;
+                gap: 1rem;
+            }
+
+            @media (max-width: 600px) {
+                .card-header-flex {
+                    flex-direction: column;
+                    align-items: flex-start !important;
+                }
             }
 
             /* Registration Form Mobile Fixes */
@@ -1110,6 +1127,84 @@
                 text-align: center;
                 padding: 1rem;
             }
+
+            .hero-section {
+                padding: 4rem 0 1rem 0;
+            }
+
+            .scroll-indicator {
+                bottom: 10px;
+            }
+        }
+
+        /* Scroll Down Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: var(--accent-teal);
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            z-index: 5;
+            animation: bounce 2s infinite;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .scroll-indicator.active {
+            opacity: 1;
+        }
+
+        .scroll-indicator i {
+            font-size: 1.5rem;
+            font-style: normal;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-teal);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(69, 182, 156, 0.4);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: #3aa289;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(69, 182, 156, 0.5);
         }
     </style>
 </head>
@@ -1144,6 +1239,7 @@
             <a class="nav-link" data-target="view-lkw-news" onclick="navigateTo('view-lkw-news')">Kapazität</a>
             <a class="nav-link" data-target="view-verkaeufer" onclick="navigateTo('view-verkaeufer')">Infos zum Verkauf</a>
             <a class="nav-link" data-target="view-anmeldung" onclick="navigateTo('view-anmeldung')">Anmeldung</a>
+            <a class="nav-link" data-target="view-credits" onclick="navigateTo('view-credits')">Credits</a>
         </nav>
     </header>
 
@@ -1160,6 +1256,11 @@
                 Ein fröhlicher Charity-Flohmarkt für
                 gebrauchte Gegenstände. Mach mit und hilf
                 dabei, Großes zu bewirken Komm Vorbei ! ✿</p>
+            
+            <div class="scroll-indicator active" onclick="document.querySelector('.glass-card').scrollIntoView({behavior: 'smooth'})">
+                <span>Mehr entdecken</span>
+                <i>▼</i>
+            </div>
         </div>
 
         <div class="glass-card reveal" style="transition-delay: 0.2s;">
@@ -1487,7 +1588,6 @@
             </div>
         </div>
     </div>
-    </div>
 
     <!-- 3. Guter Zweck View -->
     <div id="view-zweck" class="page-view container">
@@ -1527,11 +1627,12 @@
 
 
     <!-- 6. LKW-News View -->
-    <div id="view-lkw-news" class="page-view container">
-        <h2 class="section-title">Projekt-Fortschritt & Logistik</h2>
+    <div id="view-lkw-news" class="page-view container" style="position: relative; overflow-y: hidden; height: auto;">
+        <div class="bg-flowers" id="capacityFlowers" style="z-index: 0; opacity: 0.3;"></div>
+        <h2 class="section-title" style="margin-bottom: 1.5rem;">Projekt-Fortschritt</h2>
         
-        <div class="glass-card reveal" style="margin-bottom: 3rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div class="glass-card reveal" style="margin-bottom: 1.5rem;">
+            <div class="card-header-flex">
                 <h3 style="color: var(--accent-blue);">Kapazitätsplanung</h3>
                 <span style="background: var(--accent-yellow); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 800; font-size: 0.8rem;">RESERVIERUNGSSTAND: 65%</span>
             </div>
@@ -1557,6 +1658,35 @@
         </div>
     </div>
 
+    <!-- 7. Credits View -->
+    <div id="view-credits" class="page-view container" style="position: relative; overflow-y: hidden; height: auto;">
+        <div class="bg-flowers" id="creditsFlowers" style="z-index: 0; opacity: 0.4;"></div>
+        <h2 class="section-title">Projekt-Credits</h2>
+        <div class="glass-card reveal" style="position: relative; z-index: 1;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div>
+                    <h3 style="color: var(--accent-orange); margin-bottom: 1rem;">Technik & Realisierung</h3>
+                    <ul style="list-style: none; display: grid; gap: 0.8rem;">
+                        <li><strong>Programmierung:</strong> Antigravity AI</li>
+                        <li><strong>Hosting:</strong> GitHub Pages</li>
+                        <li><strong>Infrastruktur:</strong> Google Server</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--accent-teal); margin-bottom: 1rem;">Idee & Konzept</h3>
+                    <ul style="list-style: none; display: grid; gap: 0.8rem;">
+                        <li><strong>Initiatoren:</strong> Julen & Roman</li>
+                        <li><strong>Projekt:</strong> LER-Schulprojekt</li>
+                        <li><strong>Team:</strong> Julen, Carlos & Roman</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--glass-border); text-align: center;">
+                <p style="font-size: 1.1rem; color: var(--text-dark); font-weight: 700;">"Dieses Projekt zeigt, was wir gemeinsam als Team erreichen können. Vielen Dank an alle Beteiligten! ✿"</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Force scroll to top on refresh
         if ('scrollRestoration' in history) {
@@ -1566,11 +1696,14 @@
 
         // --- Navigation Logic (SPA) ---
         function navigateTo(viewId) {
+            const currentView = document.querySelector('.page-view.active');
+            if (currentView && currentView.id === viewId) return;
+
             if (viewId === 'view-lkw-news') {
                 showLoader({
                     title: 'Kapazitäten werden geprüft',
                     status: 'Logistikdaten werden abgerufen...',
-                    duration: 1500,
+                    duration: 1800,
                     icon: '🚚'
                 }, () => finalizeNavigation(viewId));
             } else {
@@ -1608,57 +1741,96 @@
         // Header Scroll Effect - Optimized
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
+            const backToTop = document.getElementById('backToTop');
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+
             if (header) {
                 if (window.scrollY > 50) {
                     if (!header.classList.contains('scrolled')) header.classList.add('scrolled');
+                    if (backToTop) backToTop.classList.add('visible');
+                    if (scrollIndicator) scrollIndicator.style.opacity = '0';
                 } else {
                     if (header.classList.contains('scrolled')) header.classList.remove('scrolled');
+                    if (backToTop) backToTop.classList.remove('visible');
+                    if (scrollIndicator) scrollIndicator.style.opacity = '1';
                 }
             }
         }, { passive: true });
 
-        function showLoader(options, callback) {
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function createFlowers(containerId, count = 30, infinite = false) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = '';
+            const symbols = ['✿', '❀', '❁', '🌸', '🌼', '✨', '🍃'];
+            const colors = ['var(--accent-orange)', 'var(--accent-teal)', 'var(--accent-yellow)', '#FFB7C5'];
+
+            for (let i = 0; i < count; i++) {
+                const f = document.createElement('div');
+                f.className = 'floating-flower';
+                f.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                f.style.color = colors[Math.floor(Math.random() * colors.length)];
+                f.style.left = Math.random() * 100 + '%';
+                f.style.fontSize = (1 + Math.random() * 2) + 'rem';
+                
+                const duration = (4 + Math.random() * 6);
+                f.style.animationDuration = duration + 's';
+                f.style.animationDelay = (Math.random() * (infinite ? 10 : 2)) + 's';
+                
+                if (infinite) {
+                    f.style.animationIterationCount = 'infinite';
+                }
+                
+                f.style.setProperty('--target-x', (Math.random() * 200 - 100) + 'px');
+                container.appendChild(f);
+            }
+        }
+
+        function showLoader(options, midCallback, finalCallback) {
             const loader = document.getElementById('loaderOverlay');
             const bgFlowers = document.getElementById('bgFlowers');
             const titleEl = document.getElementById('loaderTitle');
             const statusEl = document.getElementById('loaderStatus');
             const iconEl = document.getElementById('loaderIcon');
 
-            if (!loader) { if (callback) callback(); return; }
+            if (!loader) { 
+                if (midCallback) midCallback();
+                if (finalCallback) finalCallback();
+                return; 
+            }
 
             if (options.title && titleEl) titleEl.innerText = options.title;
             if (options.status && statusEl) statusEl.innerText = options.status;
             if (options.icon && iconEl) iconEl.innerText = options.icon;
 
             if (bgFlowers) {
-                bgFlowers.innerHTML = '';
-                const symbols = ['✿', '❀', '❁', '🌸', '🌼', '✨', '🍃'];
-                const colors = ['var(--accent-orange)', 'var(--accent-teal)', 'var(--accent-yellow)', '#FFB7C5'];
-
-                for (let i = 0; i < 30; i++) {
-                    const f = document.createElement('div');
-                    f.className = 'floating-flower';
-                    f.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                    f.style.color = colors[Math.floor(Math.random() * colors.length)];
-                    f.style.left = Math.random() * 100 + '%';
-                    f.style.fontSize = (1 + Math.random() * 2) + 'rem';
-                    f.style.animationDuration = (3 + Math.random() * 4) + 's';
-                    f.style.animationDelay = (Math.random() * 2) + 's';
-                    f.style.setProperty('--target-x', (Math.random() * 200 - 100) + 'px');
-                    bgFlowers.appendChild(f);
-                }
+                createFlowers('bgFlowers', 30, false);
             }
 
             loader.style.display = 'flex';
             loader.style.opacity = '1';
 
+            // Execute the switch while loader is fully opaque
+            const duration = options.duration || 2500;
+            
+            setTimeout(() => {
+                if (midCallback) midCallback();
+            }, Math.min(800, duration / 2));
+
             setTimeout(() => {
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
-                    if (callback) callback();
+                    if (finalCallback) finalCallback();
                 }, 800);
-            }, options.duration || 2500);
+            }, duration);
         }
 
         function finalizeNavigation(viewId) {
@@ -1669,6 +1841,13 @@
             if (target) {
                 target.classList.add('active');
                 setTimeout(initScrollReveals, 100);
+
+                // Special background animations
+                if (viewId === 'view-credits') {
+                    createFlowers('creditsFlowers', 25, true);
+                } else if (viewId === 'view-lkw-news') {
+                    createFlowers('capacityFlowers', 20, true);
+                }
             }
 
             document.querySelectorAll('.nav-link').forEach(link => {
@@ -1732,12 +1911,14 @@
         // Initialization
         window.addEventListener('DOMContentLoaded', () => {
             updateTotalCost();
-            initScrollReveals();
+            
+            // Initial call to reveal visible elements
+            setTimeout(initScrollReveals, 500);
             
             showLoader({
                 title: 'Herzlich Willkommen!',
                 status: 'Der Charity-Flohmarkt lädt...',
-                duration: 3000,
+                duration: 2500,
                 icon: '🌸'
             });
         });
@@ -1775,6 +1956,8 @@
         </div>
         <p class="disclaimer-text">Dies ist eine reine Spaß-Webseite im Rahmen eines Schulprojekts. Es findet kein realer Verkauf statt.</p>
     </footer>
+
+    <button id="backToTop" class="back-to-top" onclick="scrollToTop()">▲</button>
 </body>
 
 </html>
