@@ -1813,30 +1813,78 @@
             z-index: 2;
         }
 
-        .chat-options {
+        .faq-toggle-btn {
+            background: rgba(69, 182, 156, 0.1);
+            border: 1px dashed var(--accent-teal);
+            color: var(--accent-teal);
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .faq-toggle-btn:hover {
+            background: var(--accent-teal);
+            color: white;
+        }
+
+        .faq-toggle-btn .icon {
+            transition: transform 0.3s;
+        }
+
+        .faq-toggle-btn.open .icon {
+            transform: rotate(180deg);
+        }
+
+        .chat-options {
+            display: none;
+            flex-direction: column;
             gap: 10px;
-            justify-content: flex-start;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 5px;
+            margin-top: 10px;
+            animation: chatPopIn 0.3s forwards;
+        }
+
+        .chat-options.open {
+            display: flex;
+        }
+
+        .chat-options::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-options::-webkit-scrollbar-thumb {
+            background: rgba(69, 182, 156, 0.5);
+            border-radius: 10px;
         }
 
         .chat-option-btn {
             background: var(--bg-base);
-            border: 1px solid var(--accent-teal);
-            color: var(--accent-teal);
-            padding: 0.6rem 1rem;
-            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            color: var(--text-dark);
+            padding: 0.8rem 1rem;
+            border-radius: 15px;
             font-size: 0.9rem;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            text-align: left;
+            line-height: 1.4;
+            white-space: normal;
         }
 
         .chat-option-btn:hover {
-            background: var(--accent-teal);
-            color: white;
+            border-color: var(--accent-teal);
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(69, 182, 156, 0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            color: var(--accent-teal);
         }
 
         .chat-text-input-wrapper {
@@ -1896,6 +1944,53 @@
             opacity: 0.8;
             animation: chatPopIn 0.4s forwards;
         }
+
+        /* Tech Loader Theme */
+        #loaderOverlay.tech-theme {
+            background: #0a0a12;
+            color: #00f3ff;
+        }
+
+        #loaderOverlay.tech-theme h2 {
+            color: #00f3ff !important;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+            letter-spacing: 2px;
+        }
+
+        #loaderOverlay.tech-theme .loader-bar {
+            background: linear-gradient(90deg, #00f3ff, #ff00ff);
+            box-shadow: 0 0 15px #00f3ff;
+        }
+
+        #loaderOverlay.tech-theme #loaderIcon {
+            color: #00f3ff;
+            text-shadow: 0 0 20px #00f3ff;
+            animation: tech-pulse 1s infinite alternate;
+        }
+
+        @keyframes tech-pulse {
+            from { transform: scale(1); opacity: 0.8; }
+            to { transform: scale(1.2); opacity: 1; }
+        }
+
+        .bg-matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        #loaderOverlay.tech-theme .bg-matrix {
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -1909,6 +2004,7 @@
     <!-- Loading Screen Overlay -->
     <div id="loaderOverlay">
         <div class="bg-flowers" id="bgFlowers"></div>
+        <div class="bg-matrix"></div>
         <div class="loader-content">
             <span class="loader-flower" id="loaderIcon">✿</span>
             <h2 id="loaderTitle" style="color: var(--accent-teal); font-weight: 800; margin-bottom: 0.5rem;">Herzlich
@@ -2380,22 +2476,31 @@
             <div class="chatbot-header">
                 <div class="bot-avatar">🤖</div>
                 <div class="bot-info">
-                    <h3>FLOHBOT_3000</h3>
+                    <h3>FLO-BOT</h3>
                     <p>System online & bereit</p>
                 </div>
             </div>
             
             <div class="chat-window" id="chatWindow">
                 <div class="chat-message bot-message">
-                    <div class="message-content">Hallo! Ich bin Flohbot 3000. Wie kann ich dir heute weiterhelfen?</div>
+                    <div class="message-content">Hallo! Ich bin Flo-Bot. Wie kann ich dir heute weiterhelfen?</div>
                 </div>
             </div>
 
             <div class="chat-input-area" id="chatInputArea">
-                <div class="chat-options" id="chatOptions">
-                    <button class="chat-option-btn" onclick="sendFAQ('Wann und wo findet der Flohmarkt statt?', 'Der Flohmarkt findet am 11. September 2026 von 15:00 bis 18:00 Uhr auf dem Schulhof des Friedrich-Gymnasiums in Luckenwalde statt.')">📅 Wann & Wo?</button>
-                    <button class="chat-option-btn" onclick="sendFAQ('Wohin gehen die Spenden?', '70% der Einnahmen werden direkt an SOS-Kinderdorf gespendet, um Kindern in Not zu helfen. ❤')">🤝 Spenden</button>
-                    <button class="chat-option-btn" onclick="sendFAQ('Was darf ich verkaufen?', 'Du darfst gut erhaltene Gegenstände wie Kleidung, Spielzeug, Bücher und Dekoartikel verkaufen.')">🛍️ Was darf verkauft werden?</button>
+                <div class="faq-dropdown-container" id="faqDropdownContainer">
+                    <button class="faq-toggle-btn" id="faqToggleBtn" onclick="toggleFAQ()">
+                        Häufig gestellte Fragen (FAQ) <span class="icon">▼</span>
+                    </button>
+                    <div class="chat-options" id="chatOptions">
+                        <button class="chat-option-btn" onclick="sendFAQ('Wann und wo findet der Flohmarkt statt?', 'Der Flohmarkt findet am 11. September 2026 von 15:00 bis 18:00 Uhr auf dem Schulhof des Friedrich-Gymnasiums in Luckenwalde statt.')">📅 Wann und wo findet der Flohmarkt statt?</button>
+                        <button class="chat-option-btn" onclick="sendFAQ('Was passiert eigentlich, wenn es am 11. September regnet? Fällt der Flohmarkt dann aus?', 'Das haben wir in der Planung bedacht. Da der Schulhof unser Hauptort ist, wäre der Plan B, in die Aula oder die Turnhalle auszuweichen. So bleibt alles trocken und der Flohmarkt kann auf jeden Fall stattfinden.')">🌧️ Was passiert eigentlich, wenn es am 11. September regnet? Fällt der Flohmarkt dann aus?</button>
+                        <button class="chat-option-btn" onclick="sendFAQ('Darf ich auch selbstgebackenen Kuchen oder Kaffee an meinem Stand verkaufen?', 'In unserem aktuellen Konzept konzentrieren wir uns erst einmal auf Sachspenden und Flohmarktartikel (Kleidung, Elektronik etc.). Ein zentraler Essensstand wäre aber eine super Ergänzung für die Zukunft, um noch mehr Spenden zu sammeln.')">☕ Darf ich auch selbstgebackenen Kuchen oder Kaffee an meinem Stand verkaufen?</button>
+                        <button class="chat-option-btn" onclick="sendFAQ('Wie wird das mit den 70 % Spenden genau kontrolliert? Muss ich nach jedem Verkauf das Geld abgeben?', 'Wir setzen hier auf Vertrauen und eine einfache Abrechnung am Ende. Jeder Verkäufer führt eine Liste oder wir rechnen gemeinsam ab. Die Standgebühr von 10 € ist ja sowieso schon fest als Spende eingeplant.')">💰 Wie wird das mit den 70 % Spenden genau kontrolliert? Muss ich nach jedem Verkauf das Geld abgeben?</button>
+                        <button class="chat-option-btn" onclick="sendFAQ('Kann ich mir aussuchen, wo genau auf dem Schulhof mein Tisch steht, oder wird das zugeteilt?', 'Genau dafür haben wir die Webseite entwickelt. Bei der Anmeldung könnte man dort auf einem digitalen Lageplan seinen Wunschplatz auswählen, ähnlich wie bei einer Sitzplatzreservierung im Kino.')">📍 Kann ich mir aussuchen, wo genau auf dem Schulhof mein Tisch steht, oder wird das zugeteilt?</button>
+                        <button class="chat-option-btn" onclick="sendFAQ('Was passiert mit Elektronikgeräten, die ich verkaufe, wenn sie beim Käufer zu Hause doch nicht funktionieren?', 'Das ist ein wichtiger Punkt. Wir empfehlen, Geräte vor Ort kurz vorzuführen. Da es ein Privatverkauf ist, gilt: Gekauft wie gesehen, aber wir setzen auf die Ehrlichkeit unserer Mitschüler.')">🔌 Was passiert mit Elektronikgeräten, die ich verkaufe, wenn sie beim Käufer zu Hause doch nicht funktionieren?</button>
+                        <button class="chat-option-btn" onclick="sendFAQ('Was mache ich mit Sachen, die ich am Ende nicht verkauft habe? Muss ich die wieder mitnehmen?', 'Man kann sie natürlich wieder mitnehmen. Wir planen aber auch eine Kooperation mit einem lokalen Sozialkaufhaus, wo man Übriggebliebenes am Ende direkt als Spende abgeben kann.')">📦 Was mache ich mit Sachen, die ich am Ende nicht verkauft habe? Muss ich die wieder mitnehmen?</button>
+                    </div>
                 </div>
                 
                 <div class="chat-text-input-wrapper" id="chatTextInputWrapper">
@@ -2492,6 +2597,14 @@
                     status: 'Logistikdaten werden abgerufen...',
                     duration: 1800,
                     icon: '🚚'
+                }, () => finalizeNavigation(viewId));
+            } else if (viewId === 'view-kontakt') {
+                showLoader({
+                    title: 'FLO-BOT SYSTEM BOOTING...',
+                    status: 'Cloud wird geladen... Bot wird initialisiert...',
+                    duration: 4500,
+                    icon: '🤖',
+                    theme: 'tech-theme'
                 }, () => finalizeNavigation(viewId));
             } else {
                 finalizeNavigation(viewId);
@@ -2637,6 +2750,12 @@
                 if (midCallback) midCallback();
                 if (finalCallback) finalCallback();
                 return;
+            }
+
+            if (options.theme) {
+                loader.className = options.theme;
+            } else {
+                loader.className = '';
             }
 
             if (options.title && titleEl) titleEl.innerText = options.title;
@@ -2863,9 +2982,24 @@
             if (indicator) indicator.remove();
         }
 
+        function toggleFAQ() {
+            const btn = document.getElementById('faqToggleBtn');
+            const options = document.getElementById('chatOptions');
+            btn.classList.toggle('open');
+            options.classList.toggle('open');
+        }
+
         function sendFAQ(question, answer) {
             if (chatState !== 0) return;
             chatState = 1;
+            
+            // Auto-collapse the FAQ menu
+            const btn = document.getElementById('faqToggleBtn');
+            const options = document.getElementById('chatOptions');
+            if (btn && options) {
+                btn.classList.remove('open');
+                options.classList.remove('open');
+            }
             
             addChatMessage(question, 'user');
             
@@ -2884,7 +3018,7 @@
             
             addChatMessage(text, 'user');
             input.value = '';
-            document.getElementById('chatOptions').style.display = 'none';
+            document.getElementById('faqDropdownContainer').style.display = 'none';
             chatState = 1;
             
             showTypingIndicator();
@@ -2904,10 +3038,10 @@
                             setTimeout(() => {
                                 document.getElementById('chatWindow').innerHTML = `
                                     <div class="chat-message bot-message">
-                                        <div class="message-content">Hallo! Ich bin Flohbot 3000. Wie kann ich dir heute weiterhelfen?</div>
+                                        <div class="message-content">Hallo! Ich bin Flo-Bot. Wie kann ich dir heute weiterhelfen?</div>
                                     </div>
                                 `;
-                                document.getElementById('chatOptions').style.display = 'flex';
+                                document.getElementById('faqDropdownContainer').style.display = 'block';
                                 chatState = 0;
                             }, 8000);
                         }, 1200);
