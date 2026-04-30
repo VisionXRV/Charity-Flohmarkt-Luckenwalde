@@ -3169,10 +3169,26 @@
             addChatMessage(question, 'user');
             
             showTypingIndicator();
+            
+            const phrases = [
+                `Interessante Frage, ${currentBotUser}. Lass mich kurz nachsehen...`,
+                `Gute Frage, ${currentBotUser}! Einen Moment bitte...`,
+                `Das ist ein wichtiger Punkt, ${currentBotUser}. Ich rufe die Info ab...`,
+                `Ah, verstehe, ${currentBotUser}. Ich schaue gleich mal im System nach...`,
+                `Gleich hab ich's, ${currentBotUser}. Ich initialisiere die Antwort...`
+            ];
+            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+
             setTimeout(() => {
                 removeTypingIndicator();
-                addChatMessage(answer, 'bot');
-                chatState = 0;
+                addChatMessage(randomPhrase, 'bot');
+                
+                showTypingIndicator();
+                setTimeout(() => {
+                    removeTypingIndicator();
+                    addChatMessage(answer, 'bot');
+                    chatState = 0;
+                }, 3000);
             }, 3000);
         }
 
@@ -3187,9 +3203,18 @@
             chatState = 1;
             
             showTypingIndicator();
+
+            const phrases = [
+                `Sehr interessante Frage, ${currentBotUser}. Warten Sie kurz...`,
+                `Gute Frage, ${currentBotUser}! Ich prüfe das mal...`,
+                `Spannend, ${currentBotUser}. Lass mich kurz überlegen...`,
+                `Oh, das ist spezifisch, ${currentBotUser}. Moment bitte...`
+            ];
+            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+
             setTimeout(() => {
                 removeTypingIndicator();
-                addChatMessage('Sehr interessante Frage, ' + currentBotUser + '. Warten Sie kurz...', 'bot');
+                addChatMessage(randomPhrase, 'bot');
                 
                 setTimeout(() => {
                     showTypingIndicator();
