@@ -1505,6 +1505,106 @@
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(69, 182, 156, 0.5);
         }
+
+        /* Shutdown Popup */
+        .shutdown-popup {
+            position: fixed;
+            bottom: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 77, 77, 0.2);
+            border-top: 4px solid #ff4d4d;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(255, 77, 77, 0.15), 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 1.2rem 1.8rem;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            opacity: 0;
+            transition: opacity 0.6s ease, bottom 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            width: 90%;
+            max-width: 480px;
+        }
+
+        .shutdown-popup.show {
+            bottom: 40px;
+            opacity: 1;
+            animation: float-popup 4s ease-in-out infinite 0.8s;
+        }
+
+        @keyframes float-popup {
+            0% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); box-shadow: 0 25px 45px rgba(255, 77, 77, 0.2), 0 5px 15px rgba(0, 0, 0, 0.05); }
+            100% { transform: translateX(-50%) translateY(0); }
+        }
+
+        .shutdown-icon {
+            font-size: 2.8rem;
+            color: #ff4d4d;
+            animation: pulse-icon 2.5s infinite;
+            filter: drop-shadow(0 4px 8px rgba(255, 77, 77, 0.3));
+        }
+
+        @keyframes pulse-icon {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(8deg); }
+            50% { transform: scale(1.2) rotate(0deg); }
+            75% { transform: scale(1.1) rotate(-8deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .shutdown-text {
+            flex-grow: 1;
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .shutdown-text strong {
+            color: #ff4d4d;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .shutdown-text span {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .shutdown-close {
+            background: var(--bg-base);
+            border: 1px solid rgba(0,0,0,0.05);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--text-light);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .shutdown-close:hover {
+            background: #ff4d4d;
+            color: white;
+            transform: rotate(90deg) scale(1.1);
+            border-color: #ff4d4d;
+            box-shadow: 0 6px 15px rgba(255, 77, 77, 0.4);
+        }
     </style>
 </head>
 
@@ -2365,7 +2465,21 @@
                 duration: 2500,
                 icon: '🌸'
             });
+
+            // Show shutdown popup 1 second after loader finishes (2.5s + 1s = 3.5s)
+            setTimeout(() => {
+                const popup = document.getElementById('shutdownPopup');
+                if (popup) popup.classList.add('show');
+            }, 3500);
         });
+
+        function closeShutdownPopup() {
+            const popup = document.getElementById('shutdownPopup');
+            popup.classList.remove('show');
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 600);
+        }
 
         function countFlea() {
             const countEl = document.getElementById('fleaCount');
@@ -2466,6 +2580,17 @@
                 id="successNameFinal"></strong>! Dein
             Stand ist erfolgreich reserviert.</p>
         <button class="btn-send" style="width: auto;" onclick="closeSuccess()">Zurück zur Übersicht</button>
+    </div>
+
+    <!-- Shutdown Popup -->
+    <div id="shutdownPopup" class="shutdown-popup">
+        <span class="shutdown-icon">❗</span>
+        <div class="shutdown-text">
+            <strong>Achtung</strong>
+            Die Webseite wird am Mittwoch, den 06.05.2026, abgeschaltet.
+            <span>Danke für deinen Besuch!</span>
+        </div>
+        <button class="shutdown-close" onclick="closeShutdownPopup()">✖</button>
     </div>
 </body>
 
