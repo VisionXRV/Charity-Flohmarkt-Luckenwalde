@@ -1945,33 +1945,160 @@
             animation: chatPopIn 0.4s forwards;
         }
 
-        /* Tech Loader Theme */
+        /* Tech Start Button */
+        .tech-start-btn {
+            background: linear-gradient(135deg, #00f3ff, #00838f);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+            white-space: nowrap;
+        }
+        
+        .tech-start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
+        }
+
+        /* Bright Future Chatbot Style */
+        .chatbot-container.future-style {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #00f3ff;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+            color: var(--text-dark);
+            backdrop-filter: blur(10px);
+        }
+
+        .chatbot-container.future-style .chat-window {
+            background: rgba(245, 247, 250, 0.8);
+        }
+
+        .chatbot-container.future-style .chatbot-header {
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            color: #00838f;
+            border-bottom: 2px solid #00f3ff;
+            box-shadow: none;
+        }
+
+        .chatbot-container.future-style .bot-avatar {
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+            border: 2px solid #00f3ff;
+            color: #00838f;
+        }
+
+        .chatbot-container.future-style .bot-info h3 {
+            color: #00838f;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: none;
+        }
+
+        .chatbot-container.future-style .bot-info p {
+            color: #00acc1;
+        }
+
+        .chatbot-container.future-style .chat-message.bot-message .message-content {
+            background: white;
+            border: 1px solid #00f3ff;
+            color: var(--text-dark);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 243, 255, 0.2);
+            border-bottom-left-radius: 5px;
+        }
+
+        .chatbot-container.future-style .chat-message.user-message .message-content {
+            background: linear-gradient(135deg, #00f3ff, #00838f);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chatbot-container.future-style .chat-input-area {
+            background: white;
+            border-top: 1px solid #00f3ff;
+        }
+
+        .chatbot-container.future-style .chat-text-input {
+            background: rgba(245, 247, 250, 0.8);
+            border: 1px solid #00f3ff;
+            color: var(--text-dark);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+        }
+
+        .chatbot-container.future-style .chat-text-input::placeholder {
+            color: rgba(0, 131, 143, 0.5);
+        }
+
+        .chatbot-container.future-style .chat-option-btn {
+            background: white;
+            border: 1px solid #00f3ff;
+            color: #00838f;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .chatbot-container.future-style .chat-option-btn:hover {
+            background: #e0f7fa;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .chatbot-container.future-style .faq-toggle-btn {
+            background: #e0f7fa;
+            border: 1px dashed #00f3ff;
+            color: #00838f;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+        }
+        
+        .chatbot-container.future-style .faq-toggle-btn:hover {
+            background: #b2ebf2;
+        }
+
+        .chatbot-container.future-style .chat-send-btn {
+            background: linear-gradient(135deg, #00f3ff, #00838f);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 243, 255, 0.3);
+        }
+
+
+        /* Bright Tech Loader Theme */
         #loaderOverlay.tech-theme {
-            background: #0a0a12;
-            color: #00f3ff;
+            background: rgba(255, 255, 255, 0.95);
+            color: #00838f;
+            backdrop-filter: blur(10px);
         }
 
         #loaderOverlay.tech-theme h2 {
-            color: #00f3ff !important;
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-            letter-spacing: 2px;
+            color: #00838f !important;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 900;
+            text-shadow: none;
+            letter-spacing: 3px;
         }
 
         #loaderOverlay.tech-theme .loader-bar {
-            background: linear-gradient(90deg, #00f3ff, #ff00ff);
-            box-shadow: 0 0 15px #00f3ff;
+            background: linear-gradient(90deg, #00f3ff, #00838f);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
         }
 
         #loaderOverlay.tech-theme #loaderIcon {
-            color: #00f3ff;
-            text-shadow: 0 0 20px #00f3ff;
+            color: #00838f;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
             animation: tech-pulse 1s infinite alternate;
-        }
-
-        @keyframes tech-pulse {
-            from { transform: scale(1); opacity: 0.8; }
-            to { transform: scale(1.2); opacity: 1; }
         }
 
         .bg-matrix {
@@ -2471,8 +2598,19 @@
     <!-- 8. Kontakt View -->
     <div id="view-kontakt" class="page-view container">
         <h2 class="section-title">Kontakt & Hilfe</h2>
+        
+        <!-- Bot Setup Container -->
+        <div id="botSetupContainer" class="glass-card reveal" style="max-width: 600px; margin: 0 auto; text-align: center; border: 2px solid #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); background: rgba(255,255,255,0.9);">
+            <div style="font-size: 3rem; margin-bottom: 1rem; animation: float 3s ease-in-out infinite;">🤖</div>
+            <h3 style="color: #00838f; margin-bottom: 1rem; font-family: 'Poppins', sans-serif; font-weight: 900; letter-spacing: 2px;">SYSTEM INITIALISIERT</h3>
+            <p style="margin-bottom: 1.5rem; color: var(--text-dark);">Bitte gib deinen Namen ein, um die Bot-Verbindung herzustellen.<br><span style="font-size: 0.8rem; color: var(--text-light);">(Am besten nicht dein echter Name für dieses Demo-Projekt)</span></p>
+            <div style="display: flex; gap: 10px; max-width: 400px; margin: 0 auto;">
+                <input type="text" id="botUserName" class="form-input" placeholder="Deckname eingeben..." style="border-radius: 8px; border: 2px solid #00f3ff; font-family: 'Nunito', sans-serif; font-weight: 600; background: rgba(255,255,255,0.8);">
+                <button class="tech-start-btn" onclick="startBotSession()">STARTEN</button>
+            </div>
+        </div>
 
-        <div class="chatbot-container reveal">
+        <div id="mainChatbotContainer" class="chatbot-container reveal future-style" style="display: none;">
             <div class="chatbot-header">
                 <div class="bot-avatar">🤖</div>
                 <div class="bot-info">
@@ -2482,9 +2620,7 @@
             </div>
             
             <div class="chat-window" id="chatWindow">
-                <div class="chat-message bot-message">
-                    <div class="message-content">Hallo! Ich bin Flo-Bot. Wie kann ich dir heute weiterhelfen?</div>
-                </div>
+                <!-- Initial message injected via JS -->
             </div>
 
             <div class="chat-input-area" id="chatInputArea">
@@ -2982,6 +3118,35 @@
             if (indicator) indicator.remove();
         }
 
+        let currentBotUser = '';
+
+        function startBotSession() {
+            const input = document.getElementById('botUserName');
+            const name = input.value.trim();
+            if (!name) return;
+            
+            currentBotUser = name;
+            
+            document.getElementById('botSetupContainer').style.display = 'none';
+            
+            showLoader({
+                title: 'VERBINDUNG WIRD HERGESTELLT',
+                status: 'Sichere Leitung zu ' + currentBotUser + ' wird aufgebaut...',
+                duration: 2000,
+                icon: '🔌',
+                theme: 'tech-theme'
+            }, () => {
+                const chatContainer = document.getElementById('mainChatbotContainer');
+                chatContainer.style.display = 'flex';
+                
+                document.getElementById('chatWindow').innerHTML = `
+                    <div class="chat-message bot-message">
+                        <div class="message-content">Hallo ${currentBotUser}! Ich bin Flo-Bot. Wie kann ich dir heute weiterhelfen?</div>
+                    </div>
+                `;
+            });
+        }
+
         function toggleFAQ() {
             const btn = document.getElementById('faqToggleBtn');
             const options = document.getElementById('chatOptions');
@@ -3008,7 +3173,7 @@
                 removeTypingIndicator();
                 addChatMessage(answer, 'bot');
                 chatState = 0;
-            }, 1000);
+            }, 3000);
         }
 
         function sendChatText() {
@@ -3024,7 +3189,7 @@
             showTypingIndicator();
             setTimeout(() => {
                 removeTypingIndicator();
-                addChatMessage('Sehr interessante Frage. Warten Sie kurz...', 'bot');
+                addChatMessage('Sehr interessante Frage, ' + currentBotUser + '. Warten Sie kurz...', 'bot');
                 
                 setTimeout(() => {
                     showTypingIndicator();
@@ -3038,16 +3203,16 @@
                             setTimeout(() => {
                                 document.getElementById('chatWindow').innerHTML = `
                                     <div class="chat-message bot-message">
-                                        <div class="message-content">Hallo! Ich bin Flo-Bot. Wie kann ich dir heute weiterhelfen?</div>
+                                        <div class="message-content">Hallo ${currentBotUser}! Ich bin Flo-Bot. Wie kann ich dir heute weiterhelfen?</div>
                                     </div>
                                 `;
                                 document.getElementById('faqDropdownContainer').style.display = 'block';
                                 chatState = 0;
                             }, 8000);
                         }, 1200);
-                    }, 2000);
+                    }, 3500);
                 }, 1000);
-            }, 1500);
+            }, 3000);
         }
 
         function closeShutdownPopup() {
