@@ -1605,6 +1605,259 @@
             border-color: #ff4d4d;
             box-shadow: 0 6px 15px rgba(255, 77, 77, 0.4);
         }
+
+        /* Chatbot Styles */
+        .chatbot-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 25px;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--glass-border);
+            height: 60vh;
+            min-height: 400px;
+            max-height: 600px;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #00f3ff;
+            padding: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-bottom: 2px solid #0f3460;
+            z-index: 2;
+        }
+
+        .bot-avatar {
+            font-size: 2.2rem;
+            background: rgba(0, 243, 255, 0.1);
+            color: #00f3ff;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #00f3ff;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+            animation: float-bot 3s ease-in-out infinite, pulse-glow 2s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 5px rgba(0, 243, 255, 0.2); }
+            to { box-shadow: 0 0 15px rgba(0, 243, 255, 0.6); }
+        }
+
+        @keyframes float-bot {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .bot-info h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 800;
+            font-family: 'Courier New', Courier, monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .bot-info p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #a0aec0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bot-info p::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #00f3ff;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #00f3ff;
+        }
+
+        .chat-window {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: var(--bg-base);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-message {
+            max-width: 85%;
+            display: flex;
+            flex-direction: column;
+            animation: chatPopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+            transform: scale(0.9);
+            transform-origin: bottom left;
+        }
+
+        .chat-message.user-message {
+            align-self: flex-end;
+            transform-origin: bottom right;
+        }
+
+        @keyframes chatPopIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .message-content {
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            line-height: 1.4;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .bot-message .message-content {
+            background: var(--white);
+            color: var(--text-dark);
+            border-bottom-left-radius: 5px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .user-message .message-content {
+            background: var(--accent-teal);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 1rem 1.2rem;
+            background: var(--white);
+            border-radius: 20px;
+            border-bottom-left-radius: 5px;
+            width: fit-content;
+            border: 1px solid var(--glass-border);
+            animation: chatPopIn 0.3s forwards;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text-light);
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        .chat-input-area {
+            padding: 1.2rem;
+            background: var(--white);
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .chat-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        .chat-option-btn {
+            background: var(--bg-base);
+            border: 1px solid var(--accent-teal);
+            color: var(--accent-teal);
+            padding: 0.6rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-option-btn:hover {
+            background: var(--accent-teal);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(69, 182, 156, 0.3);
+        }
+
+        .chat-text-input-wrapper {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            animation: chatPopIn 0.4s forwards;
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--glass-border);
+        }
+
+        .chat-text-input {
+            flex-grow: 1;
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            background: var(--bg-base);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-text-input:focus {
+            border-color: var(--accent-teal);
+        }
+
+        .chat-send-btn {
+            background: var(--accent-teal);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(69, 182, 156, 0.3);
+            flex-shrink: 0;
+        }
+
+        .chat-send-btn:hover {
+            transform: scale(1.1);
+            background: #3aa289;
+        }
+
+        .bot-subtext {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: 5px;
+            text-align: left;
+            padding-left: 10px;
+            opacity: 0.8;
+            animation: chatPopIn 0.4s forwards;
+        }
     </style>
 </head>
 
@@ -1639,6 +1892,7 @@
             <a class="nav-link" data-target="view-zweck" onclick="navigateTo('view-zweck')"><span>Guter</span> Zweck</a>
             <a class="nav-link" data-target="view-verkaeufer" onclick="navigateTo('view-verkaeufer')">Verkauf<span>s-Infos</span></a>
             <a class="nav-link" data-target="view-anmeldung" onclick="navigateTo('view-anmeldung')">Anmeldung</a>
+            <a class="nav-link" data-target="view-kontakt" onclick="navigateTo('view-kontakt')">Kontakt</a>
             <a class="nav-link" data-target="view-credits" onclick="navigateTo('view-credits')">Credits</a>
         </nav>
     </header>
@@ -2077,6 +2331,40 @@
         </div>
     </div>
 
+    <!-- 8. Kontakt View -->
+    <div id="view-kontakt" class="page-view container">
+        <h2 class="section-title">Kontakt & Hilfe</h2>
+
+        <div class="chatbot-container reveal">
+            <div class="chatbot-header">
+                <div class="bot-avatar">🤖</div>
+                <div class="bot-info">
+                    <h3>FLOHBOT_3000</h3>
+                    <p>System online & bereit</p>
+                </div>
+            </div>
+            
+            <div class="chat-window" id="chatWindow">
+                <div class="chat-message bot-message">
+                    <div class="message-content">Hallo! Ich bin Flohbot 3000. Wie kann ich dir heute weiterhelfen?</div>
+                </div>
+            </div>
+
+            <div class="chat-input-area" id="chatInputArea">
+                <div class="chat-options" id="chatOptions">
+                    <button class="chat-option-btn" onclick="sendFAQ('Wann und wo findet der Flohmarkt statt?', 'Der Flohmarkt findet am 11. September 2026 von 15:00 bis 18:00 Uhr auf dem Schulhof des Friedrich-Gymnasiums in Luckenwalde statt.')">📅 Wann & Wo?</button>
+                    <button class="chat-option-btn" onclick="sendFAQ('Wohin gehen die Spenden?', '70% der Einnahmen werden direkt an SOS-Kinderdorf gespendet, um Kindern in Not zu helfen. ❤')">🤝 Spenden</button>
+                    <button class="chat-option-btn" onclick="sendFAQ('Was darf ich verkaufen?', 'Du darfst gut erhaltene Gegenstände wie Kleidung, Spielzeug, Bücher und Dekoartikel verkaufen.')">🛍️ Was darf verkauft werden?</button>
+                </div>
+                
+                <div class="chat-text-input-wrapper" id="chatTextInputWrapper">
+                    <input type="text" id="chatInput" class="chat-text-input" placeholder="Schreibe eine eigene Frage...">
+                    <button class="chat-send-btn" onclick="sendChatText()">➤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 7. Credits View -->
     <div id="view-credits" class="page-view container" style="position: relative; overflow: visible; height: auto;">
         <div class="bg-flowers" id="creditsFlowers" style="z-index: 0; opacity: 0.6;"></div>
@@ -2471,7 +2759,99 @@
                 const popup = document.getElementById('shutdownPopup');
                 if (popup) popup.classList.add('show');
             }, 3500);
+
+            // Chat Input Enter Key
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') sendChatText();
+                });
+            }
         });
+
+        // --- Chatbot Logic ---
+        let chatState = 0; // 0: initial, 1: waiting for input, 2: processing
+        
+        function addChatMessage(content, sender, isSubtext = false) {
+            const chatWindow = document.getElementById('chatWindow');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-message ${sender}-message`;
+            if (isSubtext) {
+                msgDiv.innerHTML = `<div class="bot-subtext">${content}</div>`;
+            } else {
+                msgDiv.innerHTML = `<div class="message-content">${content}</div>`;
+            }
+            chatWindow.appendChild(msgDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const chatWindow = document.getElementById('chatWindow');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            chatWindow.appendChild(typingDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        }
+
+        function sendFAQ(question, answer) {
+            if (chatState !== 0) return;
+            chatState = 1;
+            
+            addChatMessage(question, 'user');
+            
+            showTypingIndicator();
+            setTimeout(() => {
+                removeTypingIndicator();
+                addChatMessage(answer, 'bot');
+                chatState = 0;
+            }, 1000);
+        }
+
+        function sendChatText() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text || chatState !== 0) return;
+            
+            addChatMessage(text, 'user');
+            input.value = '';
+            document.getElementById('chatOptions').style.display = 'none';
+            chatState = 1;
+            
+            showTypingIndicator();
+            setTimeout(() => {
+                removeTypingIndicator();
+                addChatMessage('Sehr interessante Frage. Warten Sie kurz...', 'bot');
+                
+                setTimeout(() => {
+                    showTypingIndicator();
+                    setTimeout(() => {
+                        removeTypingIndicator();
+                        addChatMessage('Die Frage wurde an einen Mitarbeiter gesendet. Warten Sie einen Moment.', 'bot');
+                        setTimeout(() => {
+                            addChatMessage('(Du brauchst nicht warten, da wird nichts weiter passieren 😅)', 'bot', true);
+                            
+                            // Reset option after 8 seconds
+                            setTimeout(() => {
+                                document.getElementById('chatWindow').innerHTML = `
+                                    <div class="chat-message bot-message">
+                                        <div class="message-content">Hallo! Ich bin Flohbot 3000. Wie kann ich dir heute weiterhelfen?</div>
+                                    </div>
+                                `;
+                                document.getElementById('chatOptions').style.display = 'flex';
+                                chatState = 0;
+                            }, 8000);
+                        }, 1200);
+                    }, 2000);
+                }, 1000);
+            }, 1500);
+        }
 
         function closeShutdownPopup() {
             const popup = document.getElementById('shutdownPopup');
