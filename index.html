@@ -4,298 +4,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anglerverein Ortsgruppe Luckenwalde e.V.</title>
-    <meta name="description"
-        content="Offizielle Website des Anglerverein Ortsgruppe Luckenwalde e.V. - Termine, Gewässer und Informationen für Mitglieder und Interessierte.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Charity-Flohmarkt-Luckenwalde</title>
+    <!-- Modern and friendly Google Font -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@300;400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Poppins:wght@400;600;800;900&display=swap"
         rel="stylesheet">
-
     <style>
+        :root {
+            /* Premium Beige & Joyful Color Palette */
+            --bg-base: #F8F5F0;
+            --bg-gradient-1: #F0E6D2;
+            --bg-gradient-2: #FFFBF4;
+            --accent-orange: #FF7B54;
+            --accent-orange-dark: #E0603D;
+            --accent-yellow: #FFD56F;
+            --accent-teal: #45B69C;
+            --accent-blue: #005A9C;
+            --text-dark: #3A322B;
+            --text-light: #6A5F52;
+            --white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --shadow-soft: 0 8px 32px 0 rgba(110, 100, 90, 0.1);
+        }
+
         * {
-            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: radial-gradient(circle at 15% 50%, var(--bg-gradient-2), transparent 25%),
+                radial-gradient(circle at 85% 30%, var(--bg-gradient-1), transparent 25%);
+            color: var(--text-dark);
+            font-family: 'Nunito', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         h1,
         h2,
-        h3 {
-            font-family: 'Oswald', sans-serif;
+        h3,
+        h4 {
+            font-family: 'Poppins', sans-serif;
         }
 
-        body {
-            background: linear-gradient(135deg, #0a1e2e 0%, #16213e 50%, #0f3460 100%);
-            min-height: 100vh;
-            position: relative;
+        /* Background Decorations - Optimized for performance */
+        .glass-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            /* Slightly reduced blur for performance */
+            z-index: -1;
+            opacity: 0.4;
+            /* Slightly more subtle */
+            pointer-events: none;
+            backface-visibility: hidden;
+        }
+
+        .blob-1 {
+            top: -5%;
+            left: -5%;
+            width: 40vw;
+            height: 40vw;
+            background: var(--accent-yellow);
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -5%;
+            width: 50vw;
+            height: 50vw;
+            background: var(--bg-gradient-1);
+        }
+
+        .blob-3 {
+            top: 30%;
+            left: 55%;
+            width: 30vw;
+            height: 30vw;
+            background: rgba(69, 182, 156, 0.15);
+        }
+
+        /* --- Scroll Reveal Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* SPA Layout */
+        .page-view {
+            display: none;
+            flex-grow: 1;
+            padding-top: 2rem;
+            padding-bottom: 50px;
+            animation: fadeInPage 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            content-visibility: auto;
             overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(circle at 20% 30%, rgba(16, 185, 230, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(1, 167, 74, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(1, 135, 134, 0.08) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .content-wrapper {
-            position: relative;
-            z-index: 1;
-        }
-
-        .nav-link {
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: -100%;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #1fb9e6, transparent);
-            transition: left 0.4s ease;
-        }
-
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            left: 100%;
-        }
-
-        .nav-link.active {
-            color: #1fb9e6;
-        }
-
-        .card {
-            background: rgba(20, 30, 48, 0.7);
-            border: 2px solid rgba(31, 185, 230, 0.4);
-            box-shadow: 0 20px 60px rgba(31, 185, 230, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            color: #e8e8e8;
-        }
-
-        .card:hover {
-            box-shadow: 0 30px 80px rgba(31, 185, 230, 0.4), inset 0 1px 0 rgba(31, 185, 230, 0.2);
-            border-color: rgba(31, 185, 230, 0.8);
-            background: rgba(20, 40, 60, 0.8);
-            transform: translateY(-5px);
-        }
-
-        .btn {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, #01a74a 0%, #01796f 100%);
-            transition: all 0.3s;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(31, 185, 230, 0.4), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn:hover {
-            background: linear-gradient(135deg, #01796f 0%, #005555 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(31, 185, 230, 0.5);
-        }
-
-        .gallery-img {
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            filter: brightness(0.8) saturate(1.2);
-        }
-
-        .gallery-img:hover {
-            transform: scale(1.08) rotateY(-5deg);
-            filter: brightness(1.2) saturate(1.4);
-            box-shadow: 0 0 30px rgba(31, 185, 230, 0.6);
-        }
-
-        @keyframes float-up {
-            0% {
-                transform: translateY(0) rotateX(0);
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-100px) rotateX(45deg);
-                opacity: 0;
-            }
-        }
-
-        .bubble {
-            animation: float-up 2s ease-out forwards;
-        }
-
-        .glow-text {
-            color: #1fb9e6;
-            text-shadow: 0 0 30px rgba(31, 185, 230, 0.5), 0 0 60px rgba(31, 185, 230, 0.2);
-        }
-
-        .section-divider {
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #1fb9e6, transparent);
-            margin: 2rem 0;
-            box-shadow: 0 0 15px rgba(31, 185, 230, 0.5);
-        }
-
-        header {
-            background: linear-gradient(135deg, #0f3460 0%, #015773 100%) !important;
-            border-bottom: 3px solid rgba(31, 185, 230, 0.5);
-            box-shadow: 0 10px 40px rgba(31, 185, 230, 0.2);
-        }
-
-        nav {
-            background: rgba(22, 52, 100, 0.98) !important;
-            border-bottom: 2px solid rgba(31, 185, 230, 0.3);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        footer {
-            background: linear-gradient(135deg, #0f3460 0%, #015773 100%) !important;
-            border-top: 3px solid rgba(31, 185, 230, 0.5);
-            box-shadow: 0 -10px 40px rgba(31, 185, 230, 0.2);
-        }
-
-        .typewriter {
-            overflow: hidden;
-            border-right: .15em solid #1fb9e6;
-            white-space: nowrap;
-            margin: 10px 0;
-            letter-spacing: .10em;
-            width: fit-content;
-            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
-        }
-
-        @keyframes typing {
-            from {
-                width: 0
-            }
-
-            to {
-                width: 100%
-            }
-        }
-
-        @keyframes blink-caret {
-
-            from,
-            to {
-                border-color: transparent
-            }
-
-            50% {
-                border-color: #1fb9e6;
-            }
-        }
-
-        /* Table Styles for Termine */
-        .styled-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            font-size: 0.9em;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-            background-color: rgba(20, 30, 48, 0.7);
-            border: 2px solid rgba(31, 185, 230, 0.4);
-        }
-
-        .styled-table thead tr {
-            background-color: rgba(15, 52, 96, 0.95);
-            color: #1fb9e6;
-            text-align: left;
-        }
-
-        .styled-table th,
-        .styled-table td {
-            padding: 15px 20px;
-        }
-
-        .styled-table tbody tr {
-            border-bottom: 1px solid rgba(31, 185, 230, 0.1);
-            transition: all 0.3s ease-in-out;
-            background: rgba(255, 255, 255, 0.02);
-            color: #e8e8e8;
-        }
-
-        .styled-table tbody tr:hover {
-            background-color: rgba(31, 185, 230, 0.1);
-            transform: scale(1.01);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 10;
-            position: relative;
-        }
-
-        .styled-table tbody tr:last-of-type {
-            border-bottom: 2px solid #1fb9e6;
-        }
-
-        .empty-message {
-            text-align: center;
-            padding: 40px;
-            font-style: italic;
-            color: #b0bec5;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            border: 1px dashed rgba(31, 185, 230, 0.3);
-        }
-
-        .swipe-hint {
-            display: none;
-            text-align: center;
-            color: #1fb9e6;
-            font-size: 0.8em;
-            padding: 6px 0 2px 0;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            .swipe-hint {
-                display: block;
-            }
-        }
-
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .content-section.active {
+        .page-view.active {
             display: block;
         }
 
-        @keyframes fadeIn {
+        @keyframes fadeInPage {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px);
             }
 
             to {
@@ -304,524 +153,733 @@
             }
         }
 
-        /* Performance Optimizations */
-        .card,
-        nav,
-        header,
-        footer {
+        /* Header / Nav */
+        header {
+            background: rgba(248, 245, 240, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.8rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 70px;
+        }
+
+        header.scrolled {
+            height: 60px;
+            padding: 0.4rem 5%;
+            background: rgba(248, 245, 240, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--accent-orange);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            animation: spin-slow 10s linear infinite, color-shift-icon 8s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes color-shift-icon {
+
+            0%,
+            100% {
+                color: var(--accent-orange);
+                filter: drop-shadow(0 0 5px var(--accent-orange));
+            }
+
+            50% {
+                color: var(--accent-teal);
+                filter: drop-shadow(0 0 5px var(--accent-teal));
+            }
+        }
+
+        @keyframes spin-slow {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        nav {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            padding: 0.5rem 0.8rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        nav a:hover,
+        nav a.active-link {
+            background: var(--white);
+            color: var(--accent-teal);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-donate-btn {
+            background: var(--accent-orange);
+            color: var(--white) !important;
+            padding: 0.6rem 1.5rem !important;
+            border-radius: 50px !important;
+            box-shadow: 0 4px 15px rgba(255, 123, 84, 0.4);
+        }
+
+        .nav-donate-btn:hover {
+            background: var(--accent-orange-dark) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 123, 84, 0.5);
+            color: var(--white) !important;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--accent-orange);
+            cursor: pointer;
+            z-index: 1001;
+            padding: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-btn.active {
+            transform: rotate(90deg);
+        }
+
+        /* Shared Components */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
             will-change: transform;
         }
 
-        body {
-            -webkit-overflow-scrolling: touch;
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 40px 0 rgba(110, 100, 90, 0.2);
         }
 
-        .card {
-            background: rgba(18, 28, 46, 0.97) !important;
-            backdrop-filter: none !important;
-        }
-    </style>
-</head>
-
-<body class="min-h-screen text-white">
-    <div class="content-wrapper">
-
-        <!-- Header -->
-        <header class="bg-[#0f3460]/90 text-white py-4 px-6 shadow-lg">
-            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-                <div
-                    class="flex flex-col md:flex-row items-center gap-2 md:gap-4 w-full md:w-auto text-center md:text-left">
-                    <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold glow-text leading-tight">
-                        Ortsgruppe Luckenwalde</h1>
-                    <p class="text-sm sm:text-base md:text-lg text-[#1fb9e6]/80 font-medium">Anglerverein</p>
-                </div>
-                <div class="text-xs sm:text-sm md:text-base text-center md:text-right flex-shrink-0">
-                    <p>Gegründet 1952</p>
-                    <p>Mitglied im Landesanglerverband Brandenburg</p>
-                </div>
-            </div>
-        </header>
-
-        <!-- Navigation -->
-        <nav class="bg-[#1a3c6e]/95 text-white shadow-lg border-b border-[#1fb9e6]/40 sticky top-0 z-50">
-            <div class="container mx-auto px-6">
-                <ul class="flex flex-col md:flex-row justify-center md:justify-start gap-1 md:gap-0">
-                    <li class="w-full md:w-auto">
-                        <a onclick="showSection('startseite')" id="nav-startseite"
-                            class="block py-2 md:py-3 px-4 nav-link font-medium text-center md:text-left active cursor-pointer">Startseite</a>
-                    </li>
-                    <li class="w-full md:w-auto">
-                        <a onclick="showSection('ansprechpartner')" id="nav-ansprechpartner"
-                            class="block py-2 md:py-3 px-4 nav-link font-medium text-center md:text-left cursor-pointer">Ansprechpartner</a>
-                    </li>
-                    <li class="w-full md:w-auto">
-                        <a onclick="showSection('termine')" id="nav-termine"
-                            class="block py-2 md:py-3 px-4 nav-link font-medium text-center md:text-left cursor-pointer">Termine</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <div class="container mx-auto px-4 py-8 md:py-12">
-
-            <!-- SECTION: STARTSEITE -->
-            <main id="section-startseite" class="content-section active">
-                <div class="card p-6 md:p-12 max-w-4xl mx-auto rounded-lg">
-                    <div class="inline-block mb-6">
-                        <h2 class="text-2xl md:text-3xl font-bold text-[#1fb9e6] typewriter glow-text">
-                            Petri Heil und willkommen!
-                        </h2>
-                    </div>
-
-                    <div class="space-y-6 text-lg leading-relaxed text-[#e8e8e8]">
-                        <p>
-                            Unser Anglerverein vereint passionierte Naturfreunde aus Luckenwalde und Umgebung.
-                            Wir setzen uns aktiv für den Gewässerschutz und eine starke Gemeinschaft ein.
-                        </p>
-                        <p class="font-semibold text-[#1fb9e6]">
-                            Auf dieser Internetseite finden Sie alle wichtigen Informationen rund um unseren Verein.
-                        </p>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
-                            <div class="card p-6 rounded-xl border border-white/5 bg-black/20">
-                                <h3 class="text-xl font-bold text-[#1fb9e6] mb-3">🎣 Mitgliedschaft</h3>
-                                <p class="text-sm mb-4">Werde Teil unserer Gemeinschaft und genieße Zugang zu exklusiven
-                                    Gewässern.</p>
-                                <a onclick="showSection('ansprechpartner')"
-                                    class="btn inline-block px-5 py-2 rounded-lg text-white font-bold text-sm cursor-pointer">Jetzt
-                                    anfragen</a>
-                            </div>
-                        </div>
-
-                        <div class="card p-6 rounded-xl border border-white/5 bg-black/20 mt-8">
-                            <h3 class="text-xl font-bold text-[#1fb9e6] mb-3">📱 WhatsApp Gruppe</h3>
-                            <div class="flex flex-col md:flex-row gap-6 items-center">
-                                <div class="w-full md:w-1/3">
-                                    <div
-                                        class="bg-white/5 rounded-lg border border-white/10 flex items-center justify-center overflow-hidden">
-                                        <img src="https://raw.githubusercontent.com/Ortsgruppe-Luckenwalde-EV/Haubtseite/1f33edfe3fe9b3969cc83d02377a0d48f4caf493/Bild_2026-02-19_173455031.png"
-                                            alt="WhatsApp QR Code" class="w-full h-auto object-cover rounded-lg">
-                                    </div>
-                                </div>
-                                <div class="w-full md:w-2/3">
-                                    <p class="text-sm mb-4">
-                                        Wir haben eine WhatsApp-Gruppe für unsere Mitglieder! Hier erfährst du das
-                                        Neueste direkt auf dein Handy.
-                                    </p>
-                                    <p class="text-sm font-bold text-[#e8e8e8] mb-2">Du möchtest aufgenommen werden?</p>
-                                    <p class="text-sm mb-4">Bitte rufe unseren Ansprechpartner an, um dich hinzufügen zu
-                                        lassen.</p>
-                                    <a onclick="showSection('ansprechpartner')"
-                                        class="btn inline-block px-5 py-2 rounded-lg text-white font-bold text-sm cursor-pointer">Kontakt
-                                        aufnehmen</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Karpfen-Cup Section -->
-                        <div class="card p-6 rounded-xl border border-white/5 bg-black/20 mt-8">
-                            <h3 class="text-xl font-bold text-[#1fb9e6] mb-3">🏆 Karpfen-Cup</h3>
-                            <p class="text-sm mb-4 text-[#e8e8e8]">
-                                Einmal jährlich veranstalten wir unseren großen Karpfen-Cup!
-                                Hier messen sich unsere Mitglieder im freundschaftlichen Wettstreit um den schwersten
-                                Fang.
-                            </p>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                                <div class="rounded-lg overflow-hidden flex items-center justify-center">
-                                    <img src="https://raw.githubusercontent.com/Ortsgruppe-Luckenwalde-EV/Haubtseite/2bdbac940bbbc84dc1f10beb700a0851b7b7a444/karpfen%20cup.png"
-                                        alt="Karpfen-Cup Logo"
-                                        class="w-full h-auto object-contain hover:scale-105 transition-transform duration-300">
-                                </div>
-                                <div
-                                    class="bg-white/5 rounded-lg border border-white/10 h-48 flex items-center justify-center text-gray-400 italic flex-col gap-2">
-                                    <span class="text-2xl">🏆</span>
-                                    <span>Bild: Siegerehrung</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Arbeitseinsätze Section -->
-                        <div class="card p-6 rounded-xl border border-white/5 bg-black/20 mt-8">
-                            <h3 class="text-xl font-bold text-[#1fb9e6] mb-3">🛠️ Arbeitseinsätze</h3>
-                            <p class="text-sm mb-4 text-[#e8e8e8]">
-                                Gemeinsam pflegen wir unsere Gewässer und das Vereinsgelände.
-                                Regelmäßige Arbeitseinsätze sorgen dafür, dass alles in bestem Zustand bleibt.
-                            </p>
-                            <div class="bg-[#01a74a]/10 border border-[#01a74a]/30 rounded-lg p-4 mt-2">
-                                <p class="text-sm font-bold text-[#e8e8e8] flex items-center gap-2">
-                                    🌭 Für das leibliche Wohl ist immer gesorgt!
-                                </p>
-                                <p class="text-xs text-gray-300 mt-1">
-                                    Nach getaner Arbeit stärken wir uns gemeinsam mit leckerem Essen und Getränken.
-                                </p>
-                            </div>
-                        </div>
-
-                        <h3 class="text-2xl md:text-3xl font-bold text-[#1fb9e6] pt-8 mb-4 glow-text">Impressionen</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <img src="../hauptseite/bild1.jpg" alt="See"
-                                class="rounded-lg h-40 w-full object-cover gallery-img">
-                            <img src="../hauptseite/bild2.jpg" alt="Verein"
-                                class="rounded-lg h-40 w-full object-cover gallery-img">
-                            <img src="../hauptseite/bild3.jpg" alt="Fang"
-                                class="rounded-lg h-40 w-full object-cover gallery-img">
-                        </div>
-                    </div>
-                </div>
-            </main>
-
-            <!-- SECTION: ANSPRECHPARTNER -->
-            <main id="section-ansprechpartner" class="content-section">
-                <div class="card p-6 md:p-8 max-w-4xl mx-auto rounded-lg">
-                    <h2 class="text-2xl md:text-4xl font-bold text-[#1fb9e6] mb-8 glow-text text-center">🎣
-                        Ansprechpartner</h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Vorsitzender Card -->
-                        <div class="card p-6 md:p-8">
-                            <h3 class="text-xl md:text-2xl font-bold text-[#1fb9e6] mb-4">Vorsitzender</h3>
-                            <p class="text-[#e8e8e8] mb-2"><strong>Thomas Meske</strong></p>
-                            <p class="text-[#e8e8e8] mb-6">
-                                <a href="tel:+4916095611230"
-                                    class="text-[#1fb9e6] hover:text-[#01a74a] hover:underline transition">
-                                    📞 0160 - 956 11 230
-                                </a>
-                            </p>
-                            <button onclick="copyToClipboard('+4916095611230', this)"
-                                class="btn text-white font-bold py-2 px-4 rounded hover:shadow-lg transition inline-block">
-                                Kopieren
-                            </button>
-                        </div>
-
-                        <!-- Schatzmeister Card -->
-                        <div class="card p-6 md:p-8">
-                            <h3 class="text-xl md:text-2xl font-bold text-[#1fb9e6] mb-4">Schatzmeister</h3>
-                            <p class="text-[#e8e8e8] mb-2"><strong>Jack Holznagel</strong></p>
-                            <p class="text-[#e8e8e8] mb-6">
-                                <a href="tel:+4915165111237"
-                                    class="text-[#1fb9e6] hover:text-[#01a74a] hover:underline transition">
-                                    📞 0151 - 651 11 237
-                                </a>
-                            </p>
-                            <button onclick="copyToClipboard('+4915165111237', this)"
-                                class="btn text-white font-bold py-2 px-4 rounded hover:shadow-lg transition inline-block">
-                                Kopieren
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="section-divider mt-8 mb-8"></div>
-
-                    <!-- Postal Address Card -->
-                    <div class="card p-6 md:p-8 mb-6">
-                        <h3 class="text-xl md:text-2xl font-bold text-[#1fb9e6] mb-4">📮 Postanschrift</h3>
-                        <p class="text-[#e8e8e8] mb-1">Jack Holznagel</p>
-                        <p class="text-[#e8e8e8] mb-1">Anglerverein Ortsgruppe Luckenwalde e.V.</p>
-                        <p class="text-[#e8e8e8] mb-1">Am Vordersee 2</p>
-                        <p class="text-[#e8e8e8]">14947 Nuthe Urstromtal</p>
-                    </div>
-
-                    <!-- Email Card -->
-                    <div class="card p-6 md:p-8">
-                        <h3 class="text-xl md:text-2xl font-bold text-[#1fb9e6] mb-4">✉️ E-Mail Kontakt</h3>
-                        <p class="text-[#e8e8e8] mb-4">
-                            <strong>Jack Holznagel:</strong>
-                            <a href="mailto:jack-holznagel@web.de"
-                                class="text-[#1fb9e6] hover:text-[#01a74a] hover:underline transition">
-                                jack-holznagel@web.de
-                            </a>
-                        </p>
-                        <p class="text-[#e8e8e8] text-sm italic">Bitte nutzen Sie vorrangig die angegebenen
-                            Telefonnummern für dringende Anfragen.</p>
-                    </div>
-                </div>
-            </main>
-
-            <!-- SECTION: TERMINE -->
-            <main id="section-termine" class="content-section">
-                <div class="card p-6 md:p-12 max-w-5xl mx-auto rounded-lg">
-                    <div class="text-center mb-10">
-                        <h2 class="text-3xl md:text-4xl font-bold text-[#1fb9e6] glow-text mb-4 inline-block">
-                            📅 Veranstaltungskalender 2026
-                        </h2>
-                        <p class="text-gray-300 max-w-2xl mx-auto mb-6">
-                            Hier finden Sie die aktuellsten Termine für 2026. Diese Liste wird laufend aktualisiert und
-                            zeigt Ihnen immer den neuesten Stand.
-                        </p>
-
-                        <!-- General Info Box -->
-                        <div
-                            class="bg-black/20 border border-[#1fb9e6]/30 rounded-lg p-4 md:p-6 max-w-3xl mx-auto text-left mb-8">
-                            <h3 class="text-lg md:text-xl font-bold text-[#1fb9e6] mb-3">📍 Veranstaltungsorte</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-sm">
-                                <div>
-                                    <p class="font-bold text-white mb-1">Gaststätte Royal Mahal</p>
-                                    <p class="text-gray-400">Breite Straße 16, 14943 Luckenwalde</p>
-                                </div>
-                                <div>
-                                    <p class="font-bold text-white mb-1">Vereinsbungalow Dobbrikow</p>
-                                    <p class="text-gray-400">Am Vordersee 2, 14947 Nuthe Urstromtal</p>
-                                    <p class="text-gray-400 text-xs italic mt-1">Ausweichort bei Bedarf</p>
-                                    <p class="mt-2 font-bold text-white">Bekanntmachungen:</p>
-                                    <p class="text-gray-400">Schaukästen (Schützenstraße 52 & Landmarkt Poststraße 4a)
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="swipe-hint">👈 Nach rechts wischen, um die ganze Tabelle zu sehen 👉</p>
-                    <div class="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
-                        <table class="styled-table min-w-[600px] md:min-w-full">
-                            <thead>
-                                <tr>
-                                    <th class="rounded-tl-lg">Datum</th>
-                                    <th>Uhrzeit</th>
-                                    <th>Veranstaltung</th>
-                                    <th class="rounded-tr-lg">Ort / Treffpunkt</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="4">
-                                        <div class="empty-message">
-                                            <div class="text-4xl mb-2">📭</div>
-                                            <p class="text-lg">Tabelle wird geladen...</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="mt-12 text-center border-t border-white/5 pt-8">
-                        <p class="text-sm text-gray-400 mb-4">
-                            Benötigen Sie den gesamten Jahresplan zum Ausdrucken oder für den Aushang?
-                        </p>
-                        <a href="https://raw.githubusercontent.com/Ortsgruppe-Luckenwalde-EV/Haubtseite/ab60cc3cd4d34509a97740298b6c7296655cc587/IMG_14022026131513.pdf"
-                            target="_blank"
-                            class="inline-flex items-center gap-2 px-6 py-2 rounded-lg border border-[#1fb9e6]/30 text-[#1fb9e6] hover:bg-[#1fb9e6]/10 transition-all text-sm font-medium">
-                            📄 Jahresplan 2026 als PDF herunterladen
-                        </a>
-                    </div>
-
-                    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Contact Info -->
-                        <div class="bg-black/20 border border-[#1fb9e6]/20 rounded-lg p-5">
-                            <h4 class="text-lg font-bold text-[#1fb9e6] mb-2">📞 Kontakt</h4>
-                            <p class="text-gray-300 text-sm">Vorsitzender Thomas Meske: <a href="tel:016095611230"
-                                    class="text-white hover:text-[#1fb9e6]">0160 95611230</a></p>
-                            <p class="text-gray-300 text-sm">Schatzmeister Jack Holznagel: <a href="tel:015165111237"
-                                    class="text-white hover:text-[#1fb9e6]">0151 65111237</a></p>
-                        </div>
-
-                        <!-- Disclaimer -->
-                        <div class="bg-black/20 border border-[#1fb9e6]/20 rounded-lg p-5">
-                            <h4 class="text-lg font-bold text-[#1fb9e6] mb-2">ℹ️ Hinweise</h4>
-                            <p class="text-sm text-gray-400">
-                                Um eine rege Beteiligung und eine rechtzeitige Anmeldung wird gebeten.
-                                Der Vorstand wünscht allen Mitgliedern ein gesundes und erfolgreiches Angeljahr 2026.
-                            </p>
-                            <p class="text-md font-bold text-[#1fb9e6] mt-2 italic">PETRI HEIL</p>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 text-center border-t border-white/10 pt-4">
-                        <p class="text-xs text-gray-500">
-                            * Änderungen vorbehalten. Bitte achten Sie auf Aushänge und Benachrichtigungen.
-                        </p>
-                    </div>
-                </div>
-            </main>
-
-        </div>
-
-        <!-- Footer -->
-        <footer class="bg-[#0f3460]/90 text-white py-8 mt-12 backdrop-blur-sm">
-            <div class="container mx-auto px-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="hover:translate-y-[-5px] transition-transform hover:text-[#1fb9e6]">
-                        <h3 class="text-lg font-bold mb-4 text-[#1fb9e6]">📍 Kontakt</h3>
-                        <p class="text-gray-300">Anglerverein Ortsgruppe Luckenwalde e.V.</p>
-                        <p class="text-gray-300">Am Vordersee 2</p>
-                        <p class="text-gray-300">14947 Nuthe Urstromtal</p>
-                        <p class="mt-2 text-gray-300">jack-holznagel@web.de</p>
-                    </div>
-                    <div class="hover:translate-y-[-5px] transition-transform">
-                        <h3 class="text-lg font-bold mb-4 text-[#1fb9e6]">🔗 Schnellzugriff</h3>
-                        <ul class="space-y-2">
-                            <li><a onclick="showSection('startseite')"
-                                    class="text-gray-300 hover:text-[#1fb9e6] hover:underline transition cursor-pointer">Startseite</a>
-                            </li>
-                            <li><a onclick="showSection('ansprechpartner')"
-                                    class="text-gray-300 hover:text-[#1fb9e6] hover:underline transition cursor-pointer">Ansprechpartner</a>
-                            </li>
-                            <li><a onclick="showSection('termine')"
-                                    class="text-gray-300 hover:text-[#1fb9e6] hover:underline transition cursor-pointer">Termine</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <div class="border-t border-[#1fb9e6]/30 mt-8 pt-6 text-center text-sm text-gray-400">
-                    <p>&copy; 2026 Anglerverein Ortsgruppe Luckenwalde e.V. - Alle Rechte vorbehalten.</p>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Scripts -->
-    <script>
-        // Section Navigation
-        function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('.content-section').forEach(el => {
-                el.classList.remove('active');
-            });
-
-            // Show selected section
-            document.getElementById('section-' + sectionId).classList.add('active');
-
-            // Update nav links
-            document.querySelectorAll('.nav-link').forEach(el => {
-                el.classList.remove('active');
-            });
-            const navLink = document.getElementById('nav-' + sectionId);
-            if (navLink) navLink.classList.add('active');
-
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--accent-teal);
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-orange), var(--accent-teal));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGradientShift 8s linear infinite;
         }
 
-        // Bubble effect on click
-        document.body.addEventListener('click', function (e) {
-            // Don't create bubble on links/buttons
-            if (e.target.tagName === 'A' || e.target.closest('a') !== null || e.target.tagName === 'BUTTON') return;
-
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble fixed rounded-full bg-gradient-to-br from-[#1fb9e6] to-[#01a74a] pointer-events-none';
-            bubble.style.left = `${e.clientX}px`;
-            bubble.style.top = `${e.clientY}px`;
-            bubble.style.width = '15px';
-            bubble.style.height = '15px';
-            bubble.style.transform = 'translate(-50%, -50%) scale(0)';
-            bubble.style.opacity = '0.7';
-            bubble.style.boxShadow = '0 0 15px rgba(31, 185, 230, 0.6)';
-
-            document.body.appendChild(bubble);
-
-            setTimeout(() => {
-                bubble.style.transform = 'translate(-50%, -50%) scale(1)';
-                bubble.style.opacity = '0';
-            }, 10);
-
-            setTimeout(() => {
-                bubble.remove();
-            }, 2000);
-        });
-
-        // Copy to clipboard
-        function copyToClipboard(text, btn) {
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = btn.innerHTML;
-                btn.innerHTML = 'Kopiert! ✓';
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                }, 2000);
-            }).catch(err => console.error('Fehler beim Kopieren: ', err));
+        .demo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.4rem 1.2rem;
+            background: rgba(69, 182, 156, 0.1);
+            color: var(--accent-teal);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(69, 182, 156, 0.2);
+            backdrop-filter: blur(5px);
         }
 
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
+        .disclaimer-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            opacity: 0.6;
+            margin-top: 2rem;
+            font-style: italic;
+        }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+        /* --- Home View --- */
+        .hero-section {
+            text-align: center;
+            padding: 6rem 0 2rem 0;
+            /* Increased top padding for headline */
+        }
 
-        setTimeout(() => {
-            document.querySelectorAll('table, .card, h2').forEach(el => {
-                observer.observe(el);
-            });
-        }, 500);
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/Ortsgruppe-Luckenwalde-EV/Termine@main/ssd.js"></script>
-    <script>
-        // Termine laden
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof termine !== 'undefined') {
-                const tableBody = document.querySelector('.styled-table tbody');
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
+        .motto {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg,
+                    var(--accent-orange) 0%,
+                    var(--accent-teal) 30%,
+                    var(--accent-orange) 60%,
+                    var(--accent-teal) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 4px 25px rgba(255, 123, 84, 0.2);
+            animation: textGradientShift 6s linear infinite;
+        }
 
-                const futureEvents = termine.filter(event => {
-                    const [year, month, day] = event.date.split('-').map(Number);
-                    const eventDate = new Date(year, month - 1, day);
-                    if (event.time) {
-                        const timeMatch = event.time.match(/(\d{1,2}):(\d{2})/);
-                        if (timeMatch) eventDate.setHours(parseInt(timeMatch[1], 10), parseInt(timeMatch[2], 10));
-                    }
-                    const expirationDate = new Date(eventDate.getTime() + (24 * 60 * 60 * 1000));
-                    return new Date() < expirationDate;
-                });
-
-                futureEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-                if (futureEvents.length > 0) {
-                    tableBody.innerHTML = '';
-                    futureEvents.forEach(event => {
-                        const row = document.createElement('tr');
-                        const dateObj = new Date(event.date);
-                        const dateStr = dateObj.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                        row.innerHTML = `
-                            <td class="font-bold text-[#1fb9e6]">${dateStr}</td>
-                            <td>${event.time}</td>
-                            <td>${event.title}</td>
-                            <td>${event.location}</td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="4">
-                                <div class="empty-message">
-                                    <div class="text-4xl mb-2">📭</div>
-                                    <p class="text-lg">Derzeit sind keine Termine eingetragen.</p>
-                                    <p class="text-sm opacity-70 mt-1">Schauen Sie später wieder vorbei!</p>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                }
+        @keyframes textGradientShift {
+            0% {
+                background-position: 0% 50%;
             }
 
-            // GSAP animations
-            gsap.from("nav li", { duration: 0.8, y: 50, opacity: 0, stagger: 0.15, ease: "back.out(1.7)" });
-            gsap.from(".card", {
-                duration: 0.6, scale: 0.95, opacity: 0, ease: "power2.out", delay: 0.1,
-                onComplete: () => gsap.set(".card", { opacity: 1, scale: 1 })
-            });
+            50% {
+                background-position: 100% 50%;
+            }
 
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fadeInUp {
-                    from { opacity: 0; transform: translateY(30px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-            `;
-            document.head.appendChild(style);
-        });
-    </script>
-</body>
+            100% {
+                background-position: 0% 50%;
+            }
+        }
 
-</html>
+        /* Specialized Motto Fly-In */
+        .motto.reveal {
+            opacity: 0;
+            transform: scale(0.85) translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.2, 1, 0.3, 1),
+                transform 1.2s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .motto.reveal.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+            font-weight: 600;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-item h3 {
+            color: var(--accent-orange);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-item ul {
+            list-style: none;
+        }
+
+        .info-item ul li {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-item ul li::before {
+            content: '✿';
+            color: var(--accent-yellow);
+            font-size: 1.2rem;
+        }
+
+        /* --- Verkäufer View --- */
+        .verkaeufer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .steps-list {
+            list-style: none;
+            counter-reset: my-counter;
+        }
+
+        .steps-list li {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 4rem;
+            font-size: 1.1rem;
+        }
+
+        .steps-list li::before {
+            counter-increment: my-counter;
+            content: counter(my-counter);
+            position: absolute;
+            left: 0;
+            top: -5px;
+            width: 35px;
+            height: 35px;
+            background: var(--accent-teal);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .sos-container {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .sos-brand {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--accent-blue);
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .sos-dot {
+            width: 15px;
+            height: 15px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .zweck-card {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: var(--shadow-soft);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .zweck-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-teal));
+        }
+
+        .highlight-box {
+            background: rgba(255, 213, 111, 0.3);
+            border: 2px dashed var(--accent-orange);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .highlight-box p {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-orange);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        .zweck-text {
+            font-size: 1.2rem;
+        }
+
+        /* --- Spenden View --- */
+        .donation-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .pot-wrapper {
+            position: relative;
+            margin: 3rem 0;
+        }
+
+        .pot-container {
+            width: 320px;
+            height: 320px;
+            background: linear-gradient(135deg, var(--accent-yellow) 0%, #FFB703 100%);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-dark);
+            box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6), inset 0 -10px 20px rgba(0, 0, 0, 0.1);
+            animation: float-pot 6s ease-in-out infinite;
+            border: 10px solid var(--white);
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes float-pot {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes fillPotAnim {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6);
+            }
+
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 30px 70px rgba(255, 213, 111, 0.9);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 20px 50px rgba(255, 213, 111, 0.6);
+            }
+        }
+
+        .pot-total {
+            font-size: 4rem;
+            font-weight: 900;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1;
+        }
+
+        .pot-label {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .donation-controls {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: var(--shadow-soft);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .amount-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-amount {
+            background: var(--bg-base);
+            color: var(--text-dark);
+            border: 2px solid var(--bg-gradient-1);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-amount:hover {
+            background: var(--accent-orange);
+            color: var(--white);
+            border-color: var(--accent-orange);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 123, 84, 0.3);
+        }
+
+        .btn-reset {
+            background: var(--bg-gradient-1);
+            border-color: var(--bg-gradient-1);
+        }
+
+        .btn-amount:active {
+            transform: scale(0.95);
+        }
+
+        .current-amount-display {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent-teal);
+            margin: 1rem 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-send {
+            background: var(--accent-teal);
+            color: white;
+            padding: 1.2rem 4rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+            box-shadow: 0 8px 25px rgba(69, 182, 156, 0.4);
+            transition: all 0.3s;
+        }
+
+        .btn-send:hover {
+            background: #3aa289;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(69, 182, 156, 0.5);
+        }
+
+        .donation-message {
+            font-size: 1.2rem;
+            font-weight: 700;
+            height: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        /* Map styling */
+        .map-container {
+            margin-top: 2rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            height: 350px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* SOS Button */
+        .btn-sos {
+            background: var(--accent-blue);
+            color: var(--white) !important;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 90, 156, 0.3);
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-sos:hover {
+            background: #004a80;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 90, 156, 0.4);
+        }
+
+        /* Form styling */
+        .registration-form {
+            display: grid;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.8);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(255, 123, 84, 0.1);
+        }
+
+        .form-checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .form-disclaimer {
+            font-size: 0.85rem;
+            color: var(--accent-orange-dark);
+            font-weight: 600;
+            background: rgba(255, 123, 84, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-orange);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .price-summary {
+            background: var(--accent-teal);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: right;
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(69, 182, 156, 0.3);
+        }
+
+        .category-details {
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.4);
+            overflow: hidden;
+        }
+
+        .category-details summary {
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            font-weight: 800;
+            color: var(--accent-teal);
+            background: rgba(255, 255, 255, 0.6);
+            transition: background 0.3s;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-details summary::after {
+            content: '▼';
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+
+        .category-details[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .category-details summary:hover {
+            background: var(--white);
+        }
+
+        .category-content {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .success-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            z-index: 100;
+            animation: fadeInPage 0.4s ease-out;
+        }
+
+        /* Floating Coins Animation - Hardware Accelerated */
+        .coin {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            background: #FFD700;
+            border-radius: 50%;
+            border: 2px solid #DAA520;
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.8), 0 5px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000001;
+            pointer-events: none;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        @keyframes coinDrop {
+            0% {
+                transform: translate3d(0, 0, 0) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+      XferJson
