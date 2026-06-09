@@ -1310,7 +1310,7 @@
                 background: rgba(248, 245, 240, 0.98);
                 backdrop-filter: blur(10px);
                 border-radius: 15px;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
                 margin-top: 10px;
                 animation: navSlideDown 0.3s ease forwards;
             }
@@ -1320,8 +1320,15 @@
             }
 
             @keyframes navSlideDown {
-                from { opacity: 0; transform: translateY(-10px); }
-                to { opacity: 1; transform: translateY(0); }
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
 
             nav a {
@@ -1575,9 +1582,18 @@
         }
 
         @keyframes float-popup {
-            0% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); box-shadow: 0 25px 45px rgba(255, 77, 77, 0.2), 0 5px 15px rgba(0, 0, 0, 0.05); }
-            100% { transform: translateX(-50%) translateY(0); }
+            0% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-10px);
+                box-shadow: 0 25px 45px rgba(255, 77, 77, 0.2), 0 5px 15px rgba(0, 0, 0, 0.05);
+            }
+
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
         }
 
         .shutdown-icon {
@@ -1588,11 +1604,25 @@
         }
 
         @keyframes pulse-icon {
-            0% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.1) rotate(8deg); }
-            50% { transform: scale(1.2) rotate(0deg); }
-            75% { transform: scale(1.1) rotate(-8deg); }
-            100% { transform: scale(1) rotate(0deg); }
+            0% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            25% {
+                transform: scale(1.1) rotate(8deg);
+            }
+
+            50% {
+                transform: scale(1.2) rotate(0deg);
+            }
+
+            75% {
+                transform: scale(1.1) rotate(-8deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
         }
 
         .shutdown-text {
@@ -1621,7 +1651,7 @@
 
         .shutdown-close {
             background: var(--bg-base);
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -1632,7 +1662,7 @@
             font-size: 1rem;
             color: var(--text-light);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             flex-shrink: 0;
         }
 
@@ -1667,7 +1697,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             border-bottom: 2px solid #0f3460;
             z-index: 2;
         }
@@ -1688,13 +1718,25 @@
         }
 
         @keyframes pulse-glow {
-            from { box-shadow: 0 0 5px rgba(0, 243, 255, 0.2); }
-            to { box-shadow: 0 0 15px rgba(0, 243, 255, 0.6); }
+            from {
+                box-shadow: 0 0 5px rgba(0, 243, 255, 0.2);
+            }
+
+            to {
+                box-shadow: 0 0 15px rgba(0, 243, 255, 0.6);
+            }
         }
 
         @keyframes float-bot {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
         }
 
         .bot-info h3 {
@@ -1751,7 +1793,10 @@
         }
 
         @keyframes chatPopIn {
-            to { opacity: 1; transform: scale(1); }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .message-content {
@@ -1759,7 +1804,7 @@
             border-radius: 20px;
             font-size: 1rem;
             line-height: 1.4;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
         .bot-message .message-content {
@@ -1795,12 +1840,27 @@
             animation: typingBounce 1.4s infinite ease-in-out both;
         }
 
-        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        .typing-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
 
         @keyframes typingBounce {
-            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
-            40% { transform: scale(1); opacity: 1; }
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .chat-input-area {
@@ -1860,6 +1920,7 @@
         .chat-options::-webkit-scrollbar {
             width: 6px;
         }
+
         .chat-options::-webkit-scrollbar-thumb {
             background: rgba(69, 182, 156, 0.5);
             border-radius: 10px;
@@ -1883,7 +1944,7 @@
         .chat-option-btn:hover {
             border-color: var(--accent-teal);
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             color: var(--accent-teal);
         }
 
@@ -1961,7 +2022,7 @@
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
             white-space: nowrap;
         }
-        
+
         .tech-start-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
@@ -2048,13 +2109,13 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
         }
-        
+
         .chatbot-container.future-style .chat-option-btn:hover {
             background: #e0f7fa;
             box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
             transform: translateY(-2px);
         }
-        
+
         .chatbot-container.future-style .faq-toggle-btn {
             background: #e0f7fa;
             border: 1px dashed #00f3ff;
@@ -2062,7 +2123,7 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 800;
         }
-        
+
         .chatbot-container.future-style .faq-toggle-btn:hover {
             background: #b2ebf2;
         }
@@ -2108,7 +2169,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+                linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
             background-size: 30px 30px;
             opacity: 0;
             transition: opacity 0.5s;
@@ -2145,7 +2206,7 @@
 
     <header>
         <a class="logo" onclick="navigateTo('view-home')">
-            <span class="logo-icon">✿</span> Charity-Flohmarkt 
+            <span class="logo-icon">✿</span> Charity-Flohmarkt
         </a>
         <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Menü öffnen">
             ☰
@@ -2154,9 +2215,10 @@
             <a class="nav-link active-link" data-target="view-home" onclick="navigateTo('view-home')">Home</a>
             <a class="nav-link" data-target="view-lkw-news" onclick="navigateTo('view-lkw-news')">Kapazität</a>
             <a class="nav-link" data-target="view-zweck" onclick="navigateTo('view-zweck')"><span>Guter</span> Zweck</a>
-            <a class="nav-link" data-target="view-verkaeufer" onclick="navigateTo('view-verkaeufer')">Verkauf<span>s-Infos</span></a>
+            <a class="nav-link" data-target="view-verkaeufer"
+                onclick="navigateTo('view-verkaeufer')">Verkauf<span>s-Infos</span></a>
             <a class="nav-link" data-target="view-anmeldung" onclick="navigateTo('view-anmeldung')">Anmeldung</a>
-            <a class="nav-link" data-target="view-kontakt" onclick="navigateTo('view-kontakt')">Kontakt</a>
+
             <a class="nav-link" data-target="view-credits" onclick="navigateTo('view-credits')">Credits</a>
         </nav>
     </header>
@@ -2505,47 +2567,62 @@
             <div class="glass-card reveal" style="padding: 0; overflow: hidden; border: none; background: transparent;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
                     <!-- Left: Text content -->
-                    <div style="padding: 3rem; background: var(--white); display: flex; flex-direction: column; justify-content: center;">
-                        <div class="demo-badge" style="background: rgba(0, 90, 156, 0.1); color: var(--accent-blue); border-color: rgba(0, 90, 156, 0.2);">
+                    <div
+                        style="padding: 3rem; background: var(--white); display: flex; flex-direction: column; justify-content: center;">
+                        <div class="demo-badge"
+                            style="background: rgba(0, 90, 156, 0.1); color: var(--accent-blue); border-color: rgba(0, 90, 156, 0.2);">
                             Gemeinsam Gutes tun
                         </div>
-                        <h3 style="color: var(--accent-blue); font-size: 2.2rem; margin-bottom: 1.5rem; line-height: 1.2;">
+                        <h3
+                            style="color: var(--accent-blue); font-size: 2.2rem; margin-bottom: 1.5rem; line-height: 1.2;">
                             Jeder Gegenstand schenkt Kindern ein Lächeln.
                         </h3>
                         <p style="font-size: 1.1rem; color: var(--text-light); line-height: 1.8; margin-bottom: 2rem;">
-                            Wir glauben daran, dass jedes Kind ein liebevolles Zuhause verdient. Deshalb unterstützen wir die wertvolle Arbeit von <strong>SOS-Kinderdorf</strong>. 
+                            Wir glauben daran, dass jedes Kind ein liebevolles Zuhause verdient. Deshalb unterstützen
+                            wir die wertvolle Arbeit von <strong>SOS-Kinderdorf</strong>.
                             <br><br>
-                            Mit Ihrer Teilnahme am Charity-Flohmarkt ermöglichen Sie Schutz, Bildung und eine sichere Perspektive für Kinder in Not.
+                            Mit Ihrer Teilnahme am Charity-Flohmarkt ermöglichen Sie Schutz, Bildung und eine sichere
+                            Perspektive für Kinder in Not.
                         </p>
-                        
+
                         <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                            <a href="https://www.sos-kinderdorf.de/" target="_blank" class="btn-sos" style="margin-top: 0;">
+                            <a href="https://www.sos-kinderdorf.de/" target="_blank" class="btn-sos"
+                                style="margin-top: 0;">
                                 <span>❤</span> Mehr erfahren
                             </a>
-                            <button class="btn-amount" style="font-size: 1rem; padding: 0.8rem 1.5rem;" onclick="navigateTo('view-anmeldung')">
+                            <button class="btn-amount" style="font-size: 1rem; padding: 0.8rem 1.5rem;"
+                                onclick="navigateTo('view-anmeldung')">
                                 Jetzt unterstützen
                             </button>
                         </div>
                     </div>
 
                     <!-- Right: Creative 70% Badge -->
-                    <div style="background: var(--accent-blue); padding: 4rem; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; position: relative; overflow: hidden;">
+                    <div
+                        style="background: var(--accent-blue); padding: 4rem; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; position: relative; overflow: hidden;">
                         <!-- Animated background elements -->
-                        <div style="position: absolute; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%); top: -50%; left: -50%; animation: spin-slow 20s linear infinite;"></div>
-                        
+                        <div
+                            style="position: absolute; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%); top: -50%; left: -50%; animation: spin-slow 20s linear infinite;">
+                        </div>
+
                         <div class="reveal" style="z-index: 2; text-align: center;">
-                            <div style="font-size: 7rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; font-family: 'Poppins', sans-serif; display: flex; align-items: center; justify-content: center;">
+                            <div
+                                style="font-size: 7rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; font-family: 'Poppins', sans-serif; display: flex; align-items: center; justify-content: center;">
                                 70<span style="font-size: 3rem; color: var(--accent-yellow);">%</span>
                             </div>
-                            <div style="font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">
+                            <div
+                                style="font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">
                                 der Einnahmen
                             </div>
-                            <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); padding: 1rem 2rem; border-radius: 20px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3);">
+                            <div
+                                style="background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); padding: 1rem 2rem; border-radius: 20px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3);">
                                 gehen direkt an SOS Kinder Dorf
                             </div>
-                            
+
                             <!-- Floating hearts animation area -->
-                            <div id="sosHearts" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+                            <div id="sosHearts"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2595,57 +2672,6 @@
         </div>
     </div>
 
-    <!-- 8. Kontakt View -->
-    <div id="view-kontakt" class="page-view container">
-        <h2 class="section-title">Kontakt & Hilfe</h2>
-        
-        <!-- Bot Setup Container -->
-        <div id="botSetupContainer" class="glass-card reveal" style="max-width: 600px; margin: 0 auto; text-align: center; border: 2px solid #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); background: rgba(255,255,255,0.9);">
-            <div style="font-size: 3rem; margin-bottom: 1rem; animation: float 3s ease-in-out infinite;">🤖</div>
-            <h3 style="color: #00838f; margin-bottom: 1rem; font-family: 'Poppins', sans-serif; font-weight: 900; letter-spacing: 2px;">SYSTEM INITIALISIERT</h3>
-            <p style="margin-bottom: 1.5rem; color: var(--text-dark);">Bitte gib deinen Namen ein, um die Bot-Verbindung herzustellen.<br><span style="font-size: 0.8rem; color: var(--text-light);">(Am besten nicht dein echter Name für dieses Demo-Projekt)</span></p>
-            <div style="display: flex; gap: 10px; max-width: 400px; margin: 0 auto;">
-                <input type="text" id="botUserName" class="form-input" placeholder="Deckname eingeben..." style="border-radius: 8px; border: 2px solid #00f3ff; font-family: 'Nunito', sans-serif; font-weight: 600; background: rgba(255,255,255,0.8);">
-                <button class="tech-start-btn" onclick="startBotSession()">STARTEN</button>
-            </div>
-        </div>
-
-        <div id="mainChatbotContainer" class="chatbot-container reveal future-style" style="display: none;">
-            <div class="chatbot-header">
-                <div class="bot-avatar">🤖</div>
-                <div class="bot-info">
-                    <h3>FLO-BOT</h3>
-                    <p>System online & bereit</p>
-                </div>
-            </div>
-            
-            <div class="chat-window" id="chatWindow">
-                <!-- Initial message injected via JS -->
-            </div>
-
-            <div class="chat-input-area" id="chatInputArea">
-                <div class="faq-dropdown-container" id="faqDropdownContainer">
-                    <button class="faq-toggle-btn" id="faqToggleBtn" onclick="toggleFAQ()">
-                        Häufig gestellte Fragen (FAQ) <span class="icon">▼</span>
-                    </button>
-                    <div class="chat-options" id="chatOptions">
-                        <button class="chat-option-btn" onclick="sendFAQ('Wann und wo findet der Flohmarkt statt?', 'Der Flohmarkt findet am 11. September 2026 von 15:00 bis 18:00 Uhr auf dem Schulhof des Friedrich-Gymnasiums in Luckenwalde statt.')">📅 Wann und wo findet der Flohmarkt statt?</button>
-                        <button class="chat-option-btn" onclick="sendFAQ('Was passiert eigentlich, wenn es am 11. September regnet? Fällt der Flohmarkt dann aus?', 'Das haben wir in der Planung bedacht. Da der Schulhof unser Hauptort ist, wäre der Plan B, in die Aula oder die Turnhalle auszuweichen. So bleibt alles trocken und der Flohmarkt kann auf jeden Fall stattfinden.')">🌧️ Was passiert eigentlich, wenn es am 11. September regnet? Fällt der Flohmarkt dann aus?</button>
-                        <button class="chat-option-btn" onclick="sendFAQ('Darf ich auch selbstgebackenen Kuchen oder Kaffee an meinem Stand verkaufen?', 'In unserem aktuellen Konzept konzentrieren wir uns erst einmal auf Sachspenden und Flohmarktartikel (Kleidung, Elektronik etc.). Ein zentraler Essensstand wäre aber eine super Ergänzung für die Zukunft, um noch mehr Spenden zu sammeln.')">☕ Darf ich auch selbstgebackenen Kuchen oder Kaffee an meinem Stand verkaufen?</button>
-                        <button class="chat-option-btn" onclick="sendFAQ('Wie wird das mit den 70 % Spenden genau kontrolliert? Muss ich nach jedem Verkauf das Geld abgeben?', 'Wir setzen hier auf Vertrauen und eine einfache Abrechnung am Ende. Jeder Verkäufer führt eine Liste oder wir rechnen gemeinsam ab. Die Standgebühr von 10 € ist ja sowieso schon fest als Spende eingeplant.')">💰 Wie wird das mit den 70 % Spenden genau kontrolliert? Muss ich nach jedem Verkauf das Geld abgeben?</button>
-                        <button class="chat-option-btn" onclick="sendFAQ('Kann ich mir aussuchen, wo genau auf dem Schulhof mein Tisch steht, oder wird das zugeteilt?', 'Genau dafür haben wir die Webseite entwickelt. Bei der Anmeldung könnte man dort auf einem digitalen Lageplan seinen Wunschplatz auswählen, ähnlich wie bei einer Sitzplatzreservierung im Kino.')">📍 Kann ich mir aussuchen, wo genau auf dem Schulhof mein Tisch steht, oder wird das zugeteilt?</button>
-                        <button class="chat-option-btn" onclick="sendFAQ('Was passiert mit Elektronikgeräten, die ich verkaufe, wenn sie beim Käufer zu Hause doch nicht funktionieren?', 'Das ist ein wichtiger Punkt. Wir empfehlen, Geräte vor Ort kurz vorzuführen. Da es ein Privatverkauf ist, gilt: Gekauft wie gesehen, aber wir setzen auf die Ehrlichkeit unserer Mitschüler.')">🔌 Was passiert mit Elektronikgeräten, die ich verkaufe, wenn sie beim Käufer zu Hause doch nicht funktionieren?</button>
-                        <button class="chat-option-btn" onclick="sendFAQ('Was mache ich mit Sachen, die ich am Ende nicht verkauft habe? Muss ich die wieder mitnehmen?', 'Man kann sie natürlich wieder mitnehmen. Wir planen aber auch eine Kooperation mit einem lokalen Sozialkaufhaus, wo man Übriggebliebenes am Ende direkt als Spende abgeben kann.')">📦 Was mache ich mit Sachen, die ich am Ende nicht verkauft habe? Muss ich die wieder mitnehmen?</button>
-                    </div>
-                </div>
-                
-                <div class="chat-text-input-wrapper" id="chatTextInputWrapper">
-                    <input type="text" id="chatInput" class="chat-text-input" placeholder="Schreibe eine eigene Frage...">
-                    <button class="chat-send-btn" onclick="sendChatText()">➤</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- 7. Credits View -->
     <div id="view-credits" class="page-view container" style="position: relative; overflow: visible; height: auto;">
@@ -2705,7 +2731,7 @@
             const nav = document.getElementById('main-nav');
             const btn = document.getElementById('mobileMenuBtn');
             nav.classList.toggle('show-mobile');
-            if(nav.classList.contains('show-mobile')) {
+            if (nav.classList.contains('show-mobile')) {
                 btn.innerHTML = '✕';
                 btn.classList.add('active');
             } else {
@@ -2718,7 +2744,7 @@
             // Close mobile menu if open
             const nav = document.getElementById('main-nav');
             const btn = document.getElementById('mobileMenuBtn');
-            if(nav.classList.contains('show-mobile')) {
+            if (nav.classList.contains('show-mobile')) {
                 nav.classList.remove('show-mobile');
                 btn.innerHTML = '☰';
                 btn.classList.remove('active');
@@ -2734,14 +2760,7 @@
                     duration: 1800,
                     icon: '🚚'
                 }, () => finalizeNavigation(viewId));
-            } else if (viewId === 'view-kontakt') {
-                showLoader({
-                    title: 'FLO-BOT SYSTEM BOOTING...',
-                    status: 'Cloud wird geladen... Bot wird initialisiert...',
-                    duration: 4500,
-                    icon: '🤖',
-                    theme: 'tech-theme'
-                }, () => finalizeNavigation(viewId));
+
             } else {
                 finalizeNavigation(viewId);
             }
@@ -3089,7 +3108,7 @@
 
         // --- Chatbot Logic ---
         let chatState = 0; // 0: initial, 1: waiting for input, 2: processing
-        
+
         function addChatMessage(content, sender, isSubtext = false) {
             const chatWindow = document.getElementById('chatWindow');
             const msgDiv = document.createElement('div');
@@ -3124,11 +3143,11 @@
             const input = document.getElementById('botUserName');
             const name = input.value.trim();
             if (!name) return;
-            
+
             currentBotUser = name;
-            
+
             document.getElementById('botSetupContainer').style.display = 'none';
-            
+
             showLoader({
                 title: 'VERBINDUNG WIRD HERGESTELLT',
                 status: 'Sichere Leitung zu ' + currentBotUser + ' wird aufgebaut...',
@@ -3138,7 +3157,7 @@
             }, () => {
                 const chatContainer = document.getElementById('mainChatbotContainer');
                 chatContainer.style.display = 'flex';
-                
+
                 document.getElementById('chatWindow').innerHTML = `
                     <div class="chat-message bot-message">
                         <div class="message-content">Hallo ${currentBotUser}! Ich bin Flo-Bot. Wie kann ich dir heute weiterhelfen?</div>
@@ -3157,7 +3176,7 @@
         function sendFAQ(question, answer) {
             if (chatState !== 0) return;
             chatState = 1;
-            
+
             // Auto-collapse the FAQ menu
             const btn = document.getElementById('faqToggleBtn');
             const options = document.getElementById('chatOptions');
@@ -3165,11 +3184,11 @@
                 btn.classList.remove('open');
                 options.classList.remove('open');
             }
-            
+
             addChatMessage(question, 'user');
-            
+
             showTypingIndicator();
-            
+
             const phrases = [
                 `Interessante Frage, ${currentBotUser}. Lass mich kurz nachsehen...`,
                 `Gute Frage, ${currentBotUser}! Einen Moment bitte...`,
@@ -3182,7 +3201,7 @@
             setTimeout(() => {
                 removeTypingIndicator();
                 addChatMessage(randomPhrase, 'bot');
-                
+
                 showTypingIndicator();
                 setTimeout(() => {
                     removeTypingIndicator();
@@ -3196,12 +3215,12 @@
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
             if (!text || chatState !== 0) return;
-            
+
             addChatMessage(text, 'user');
             input.value = '';
             document.getElementById('faqDropdownContainer').style.display = 'none';
             chatState = 1;
-            
+
             showTypingIndicator();
 
             const phrases = [
@@ -3215,7 +3234,7 @@
             setTimeout(() => {
                 removeTypingIndicator();
                 addChatMessage(randomPhrase, 'bot');
-                
+
                 setTimeout(() => {
                     showTypingIndicator();
                     setTimeout(() => {
@@ -3223,7 +3242,7 @@
                         addChatMessage('Die Frage wurde an einen Mitarbeiter gesendet. Warten Sie einen Moment.', 'bot');
                         setTimeout(() => {
                             addChatMessage('(Du brauchst nicht warten, da wird nichts weiter passieren 😅)', 'bot', true);
-                            
+
                             // Reset option after 8 seconds
                             setTimeout(() => {
                                 document.getElementById('chatWindow').innerHTML = `
@@ -3354,7 +3373,7 @@
         <span class="shutdown-icon">❗</span>
         <div class="shutdown-text">
             <strong>Achtung</strong>
-            Die Webseite wird am Mittwoch, den 06.05.2026, abgeschaltet.
+            Die Webseite wird bald abgeschaltet.
             <span>Danke für deinen Besuch!</span>
         </div>
         <button class="shutdown-close" onclick="closeShutdownPopup()">✖</button>
